@@ -161,7 +161,14 @@ Sources:
 
 ## GDPR-bedömningar – viktig brasklapp
 
-Fälten `gdpr.score` och `gdpr.notes` i `tools.json` är redaktionella, generella bedömningar baserade på offentligt tillgänglig information om respektive leverantörs datahantering. De är **inte juridisk rådgivning** och bör verifieras mot leverantörens aktuella DPA/dataskyddspolicy innan de används som beslutsunderlag, särskilt för företagskunder med specifika compliance-krav.
+Fälten `gdpr.score` och `gdpr.notes` i `tools.json` är redaktionella, generella bedömningar baserade på offentligt tillgänglig information om respektive leverantörs datahantering – **inte juridisk rådgivning**, och inte verifierade av jurist. Skalan (1–5) är genomgången för intern konsekvens (se nedan) men bygger på min tolkning av leverantörernas egna sidor, inte en formell DPA-granskning:
+
+- **5** – EU-baserat bolag, EU-datalagring som standard (idag bara Sana).
+- **4** – EU-datalagring finns som tydligt, etablerat alternativ (t.ex. för Enterprise-kunder), eller bolaget är EU-domicilierat men mindre/mindre dokumenterat än en 5:a.
+- **3** – DPA och/eller standardavtalsklausuler (SCC) finns, men ingen tydlig EU-datalagring för vanliga kunder.
+- **2** – Amerikanskt/utomeuropeiskt bolag utan tydligt dokumenterad EU-hantering, ofta mindre leverantör med begränsad enterprise-dokumentation.
+
+**Innan ni marknadsför GDPR-vänlighet aggressivt** (t.ex. i annonser eller riktade utskick till företagskunder) – låt en jurist eller GDPR-kunnig person stämma av bedömningarna mot leverantörernas faktiska, aktuella DPA-avtal. Fel eller inaktuell information om GDPR-efterlevnad är ett område där felaktiga påståenden kan få juridiska konsekvenser, till skillnad från t.ex. en optimistisk prisuppgift.
 
 ## Utveckling lokalt
 
