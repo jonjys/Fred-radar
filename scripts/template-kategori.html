@@ -5,9 +5,25 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>{{TITLE}}</title>
   <meta name="description" content="{{DESCRIPTION}}" />
+  <link rel="canonical" href="{{CANONICAL_URL}}" />
+
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Radar" />
+  <meta property="og:url" content="{{CANONICAL_URL}}" />
+  <meta property="og:title" content="{{TITLE}}" />
+  <meta property="og:description" content="{{DESCRIPTION}}" />
+  <meta property="og:locale" content="sv_SE" />
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="{{TITLE}}" />
+  <meta name="twitter:description" content="{{DESCRIPTION}}" />
+
   <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📡</text></svg>" />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="/assets/css/style.css" />
+
+  <script type="application/ld+json">
+{{JSON_LD}}
+  </script>
 </head>
 <body>
   <div id="site-header"></div>
@@ -61,6 +77,7 @@
   <div id="site-footer"></div>
 
   <script src="/assets/js/partials.js"></script>
+  <script src="/assets/js/analytics.js"></script>
   <script src="/assets/js/kategori.js"></script>
 </body>
 </html>

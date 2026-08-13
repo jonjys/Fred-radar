@@ -17,6 +17,7 @@ const { toolCardHTML } = require(path.join(ROOT, "assets/js/tool-card-template.j
 
 const tools = JSON.parse(fs.readFileSync(path.join(ROOT, "data/tools.json"), "utf8"));
 const categories = JSON.parse(fs.readFileSync(path.join(ROOT, "data/categories.json"), "utf8"));
+const site = JSON.parse(fs.readFileSync(path.join(ROOT, "data/site.json"), "utf8"));
 const template = fs.readFileSync(path.join(__dirname, "template-kategori.html"), "utf8");
 
 const outDir = path.join(ROOT, "kategori");
@@ -33,13 +34,49 @@ for (const category of categories) {
     .map((t) => toolCardHTML(t, { showFeaturedBadge: true, showProsCons: true, context: "kategori" }))
     .join("\n");
 
+  const title = `${category.name} – bästa AI-verktygen 2026 | Radar`;
+  const canonicalUrl = `${site.siteUrl}/kategori/${category.id}.html`;
+
+  // Ingen AggregateRating/Review-schema här medvetet – vi har inga riktiga
+  // användarrecensioner, och att fabricera betyg strider mot Googles
+  // riktlinjer för strukturerad data. ItemList + SoftwareApplication utan
+  // rating är det ärliga valet tills riktiga recensioner finns.
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "CollectionPage",
+    name: category.name,
+    description: category.description,
+    url: canonicalUrl,
+    inLanguage: "sv-SE",
+    mainEntity: {
+      "@type": "ItemList",
+      itemListElement: matchingTools.map((t, i) => ({
+        "@type": "ListItem",
+        position: i + 1,
+        item: {
+          "@type": "SoftwareApplication",
+          name: t.name,
+          url: t.website,
+          applicationCategory: "BusinessApplication",
+          offers: {
+            "@type": "Offer",
+            price: String(t.pricing.fromPriceSEK),
+            priceCurrency: "SEK",
+          },
+        },
+      })),
+    },
+  };
+
   const html = template
-    .replaceAll("{{TITLE}}", `${category.name} – bästa AI-verktygen 2026 | Radar`)
+    .replaceAll("{{TITLE}}", title)
     .replaceAll("{{DESCRIPTION}}", category.description)
     .replaceAll("{{CATEGORY_ICON}}", category.icon)
     .replaceAll("{{CATEGORY_NAME}}", category.name)
     .replaceAll("{{CATEGORY_INTRO}}", category.intro)
     .replaceAll("{{TOOL_COUNT}}", String(matchingTools.length))
+    .replaceAll("{{CANONICAL_URL}}", canonicalUrl)
+    .replaceAll("{{JSON_LD}}", JSON.stringify(jsonLd, null, 2))
     .replaceAll("{{TOOL_CARDS}}", cardsHTML || "<p class=\"empty-state\">Inga verktyg i den här kategorin ännu.</p>");
 
   const outPath = path.join(outDir, `${category.id}.html`);

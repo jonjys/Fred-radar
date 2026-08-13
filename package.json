@@ -5,7 +5,8 @@
   "description": "Radar – smarta rekommendationer och jämförelser av AI- och produktivitetsverktyg för svenska och nordiska användare.",
   "scripts": {
     "build:kategori": "node scripts/generate-kategori.js",
-    "build": "npm run build:kategori",
+    "build:sitemap": "node scripts/generate-sitemap.js",
+    "build": "npm run build:kategori && npm run build:sitemap",
     "serve": "npx --yes serve . -l 3000"
   },
   "engines": {

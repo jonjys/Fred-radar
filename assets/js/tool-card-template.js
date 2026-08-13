@@ -66,7 +66,7 @@
           <a class="btn btn-primary" href="/go/?tool=${tool.id}&src=${src}" target="_blank" rel="sponsored noopener">Besök ${tool.name}</a>
           <a class="btn btn-ghost" href="/go/?tool=${tool.id}&src=${src}-website" target="_blank" rel="sponsored noopener">Webbplats</a>
         </div>
-        <p class="ad-note">Annonslänk – Radar kan få provision om du köper via länken.</p>
+        <p class="ad-note">Annonslänk – vi kan få provision. Påverkar inte priset eller rankingen.</p>
       </article>
     `;
   }

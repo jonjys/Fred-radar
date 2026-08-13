@@ -156,14 +156,44 @@
 
   function saveEmailSignup(email) {
     state.email = email;
+    const entry = { email, ts: Date.now(), source: "quiz" };
+
+    // Sparas ALLTID lokalt, oavsett om en riktig e-postleverantör är
+    // konfigurerad – så ingen adress går förlorad om nätverksanropet
+    // nedan misslyckas eller ingen endpoint är satt än.
     try {
       const key = "radar_email_signups";
       const list = JSON.parse(localStorage.getItem(key) || "[]");
-      list.push({ email, ts: Date.now() });
+      list.push(entry);
       localStorage.setItem(key, JSON.stringify(list));
     } catch (e) {
       /* localStorage otillgängligt, ignorera tyst */
     }
+
+    // Skickas till en riktig leverantör om data/site.json → newsletter.endpoint
+    // är ifyllt. Medvetet "fire and forget" – ett misslyckat nätverksanrop ska
+    // aldrig blockera eller krascha quizflödet för användaren.
+    submitToNewsletterProvider(entry).catch(() => {});
+  }
+
+  let siteConfigPromise = null;
+  function getSiteConfig() {
+    if (!siteConfigPromise) {
+      siteConfigPromise = fetch("/data/site.json").then((r) => r.json()).catch(() => ({}));
+    }
+    return siteConfigPromise;
+  }
+
+  async function submitToNewsletterProvider(entry) {
+    const site = await getSiteConfig();
+    const nl = site.newsletter;
+    if (!nl || nl.provider === "none" || !nl.endpoint) return;
+
+    await fetch(nl.endpoint, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(entry),
+    });
   }
 
   // ---------- Scoring ----------
@@ -283,7 +313,7 @@
               <a class="btn btn-primary" href="/go/?tool=${r.tool.id}&src=quiz" target="_blank" rel="sponsored noopener">Besök ${r.tool.name}</a>
               <a class="btn btn-ghost" href="/kategori/${r.tool.categories[0]}.html#${r.tool.id}">Läs mer</a>
             </div>
-            <p class="ad-note">Annonslänk – Radar kan få provision om du köper via länken.</p>
+            <p class="ad-note">Annonslänk – vi kan få provision. Påverkar inte priset eller rankingen.</p>
           </article>
         `
           )

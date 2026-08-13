@@ -66,10 +66,7 @@
         dest.searchParams.set("utm_content", tool.id);
         dest.searchParams.set("utm_term", src);
 
-        // Plats för framtida klickloggning, t.ex.:
-        //   navigator.sendBeacon("/api/click", JSON.stringify({ tool: tool.id, src, ts: Date.now() }));
-        // Görs som en separat, icke-blockerande anropspunkt här – kräver
-        // bara en riktig endpoint, inga ändringar i länkarna på sajten.
+        logClick({ tool: tool.id, src, hasAffiliateProgram: tool.hasAffiliateProgram, dest: dest.toString(), ts: Date.now() });
 
         msg.textContent = "Skickar dig vidare till " + tool.name + " …";
         fallback.textContent = "Klicka här om du inte skickas vidare automatiskt";
@@ -79,6 +76,29 @@
         window.location.replace("/");
       }
     })();
+
+    /**
+     * Klickloggning – just nu console + localStorage (senaste 200 klick,
+     * nyckel "radar_click_log"), inte kopplat mot någon backend. Räcker för
+     * att manuellt se klickmönster under en tidig launch (öppna DevTools
+     * → Application → Local Storage, eller kör i konsolen:
+     *   JSON.parse(localStorage.getItem("radar_click_log"))
+     *
+     * Uppgradera till riktig loggning genom att lägga till EN rad här:
+     *   navigator.sendBeacon("/api/click", JSON.stringify(entry));
+     * Ingen annan fil behöver ändras – alla klick går redan via denna sida.
+     */
+    function logClick(entry) {
+      console.debug("[radar:click]", entry);
+      try {
+        const key = "radar_click_log";
+        const log = JSON.parse(localStorage.getItem(key) || "[]");
+        log.push(entry);
+        localStorage.setItem(key, JSON.stringify(log.slice(-200)));
+      } catch (e) {
+        /* localStorage otillgängligt (privat läge m.m.) – tyst no-op */
+      }
+    }
   </script>
 </body>
 </html>
