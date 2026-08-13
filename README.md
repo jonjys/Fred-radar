@@ -47,13 +47,52 @@ Radar är en statisk sajt (HTML/CSS/vanilla JS, ingen backend) som:
 
 Kortmarkeringen (`.tool-card`) är definierad **en gång**, i `assets/js/tool-card-template.js`, och delas mellan webbläsaren (`window.ToolCardTemplate`) och Node-generatorn (`module.exports`) – så genererade kategorisidor kan aldrig hamna i otakt med korten som renderas dynamiskt på index/quiz.
 
-## Lägga till eller ändra ett verktyg
+## Hur man lägger till ett nytt verktyg – steg för steg
 
-1. Redigera `data/tools.json` (lägg till/ändra ett objekt – se befintliga för fältstruktur: pris, GDPR-bedömning, poäng per delkategori, `bestFor`, etc.).
-2. Kör `npm run build:kategori` för att regenerera kategorisidorna.
-3. Committa både `data/tools.json` och de uppdaterade filerna i `kategori/`.
+1. **Öppna `data/tools.json`** och kopiera in ett nytt objekt i listan (kopiera gärna ett befintligt verktyg i samma kategori som utgångspunkt). Minimalt exempel:
 
-Vercel kör `npm run build` automatiskt vid varje deploy (se `vercel.json`), så kategorisidorna byggs alltid om från senaste `tools.json` – men filerna är även committade så sajten fungerar direkt utan byggsteg om man föredrar det.
+   ```json
+   {
+     "id": "mitt-verktyg",
+     "name": "Mitt Verktyg",
+     "vendor": "Leverantör AB",
+     "categories": ["ai-writing"],
+     "logo": "🛠️",
+     "tagline": "Kort, säljande underrubrik",
+     "description": "1–2 meningar om vad verktyget gör och för vem.",
+     "website": "https://exempel.se",
+     "affiliateUrl": "https://exempel.se/?ref=radar",
+     "hasAffiliateProgram": true,
+     "pricing": { "model": "freemium", "fromPriceSEK": 150, "currency": "SEK", "billingNote": "Gratisnivå finns, betalplan från 150 kr/mån" },
+     "score": 8.0,
+     "scores": { "quality": 8, "easeOfUse": 8, "valueForMoney": 7, "support": 6 },
+     "gdpr": { "score": 3, "dataResidency": "USA", "notes": "Kort motivering till bedömningen." },
+     "difficulty": "beginner",
+     "bestFor": ["Användningsfall 1", "Användningsfall 2"],
+     "pros": ["Fördel 1", "Fördel 2"],
+     "cons": ["Nackdel 1"],
+     "languages": ["sv", "en"],
+     "swedishSupport": false,
+     "featured": false,
+     "lastVerified": "2026-08"
+   }
+   ```
+
+   `id` måste vara unikt och URL-vänligt (a-ö, bindestreck) – det används i `/go/?tool=<id>` och som ankarlänk på kategorisidan. `categories` kan innehålla flera kategori-id:n om verktyget passar i mer än en (se t.ex. `canva-magic-media`).
+
+2. **Kör generatorn:**
+
+   ```bash
+   npm run build:kategori
+   ```
+
+   Detta skriver om `kategori/*.html` så det nya verktyget dyker upp, sorterat efter `score`.
+
+3. **Committa** både `data/tools.json` och de omgenererade filerna i `kategori/`.
+
+Det är allt – verktyget syns nu automatiskt på rätt kategorisida, tas med i quizets viktade ranking, och kan dyka upp bland "Utvalda verktyg" på startsidan om du sätter `"featured": true`.
+
+Vercel kör dessutom `npm run build` automatiskt vid varje deploy (se `vercel.json`), så kategorisidorna byggs alltid om från senaste `tools.json` – men filerna är även committade så sajten fungerar direkt utan byggsteg om man föredrar det.
 
 ## Lägga till en ny kategori
 
@@ -84,6 +123,8 @@ Alla "Besök"-knappar pekar på `/go/?tool=<id>` istället för direkt till leve
 - affiliate-URL:er för ett verktyg bara behöver uppdateras på **ett** ställe,
 - klickspårning/analytics kan läggas till senare utan att röra länkar på index/quiz/kategorisidor,
 - vi kan visa tydlig annonsdisclosure (footer på varje sida) enligt marknadsföringslagens krav på att sponsrade länkar ska vara tydligt markerade.
+
+**Testa flödet:** tre verktyg har redan realistiska (men falska) affiliate-spårningslänkar för att `/go/` ska gå att testa end-to-end – `jasper` (`?fpr=...`), `adobe-firefly` (`?sdid=...`) och `notion-ai` (`?ref=...`). Övriga verktyg har `affiliateUrl` satt till samma URL som `website` tills vidare.
 
 **Innan launch:** ersätt placeholder-URL:erna i `affiliateUrl` med riktiga affiliate-länkar när partnerprogram är på plats, och sätt `hasAffiliateProgram: true/false` korrekt per verktyg.
 
