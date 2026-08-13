@@ -283,7 +283,7 @@
               <a class="btn btn-primary" href="/go/?tool=${r.tool.id}&src=quiz" target="_blank" rel="sponsored noopener">Besök ${r.tool.name}</a>
               <a class="btn btn-ghost" href="/kategori/${r.tool.categories[0]}.html#${r.tool.id}">Läs mer</a>
             </div>
-            <p class="ad-note">Annonslänk – Radar kan få provision om du köper via länken.</p>
+            <p class="ad-note">Annonslänk – vi kan få provision. Påverkar inte priset eller rankingen.</p>
           </article>
         `
           )

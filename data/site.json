@@ -1,0 +1,7 @@
+{
+  "siteUrl": "https://radar.se",
+  "siteName": "Radar",
+  "locale": "sv_SE",
+  "twitterHandle": "",
+  "_comment": "siteUrl är en PLACEHOLDER. Byt till den riktiga produktionsdomänen innan launch – den används av scripts/generate-sitemap.js (sitemap.xml) och bör synkas manuellt in i <link rel=canonical> och OG-taggar i index.html, quiz.html och scripts/template-kategori.html (sök efter 'https://radar.se' i de filerna)."
+}
