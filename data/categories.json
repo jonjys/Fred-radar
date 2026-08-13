@@ -1,0 +1,26 @@
+[
+  {
+    "id": "ai-writing",
+    "name": "AI-skrivverktyg",
+    "shortName": "Skrivverktyg",
+    "icon": "✍️",
+    "description": "AI-verktyg för copywriting, bloggtexter, marknadsföring och innehållsproduktion.",
+    "intro": "Vi jämför de bästa AI-skrivverktygen för svenska och nordiska användare – med fokus på textkvalitet, pris och hur verktygen hanterar GDPR."
+  },
+  {
+    "id": "ai-image",
+    "name": "AI-bildverktyg",
+    "shortName": "Bildverktyg",
+    "icon": "🎨",
+    "description": "AI-verktyg för bildgenerering, design och kreativt innehåll.",
+    "intro": "Här hittar du en ärlig jämförelse av AI-verktyg för bilder och design, med vikt lagd på kvalitet, användarvänlighet och nordiska förutsättningar."
+  },
+  {
+    "id": "produktivitet",
+    "name": "Produktivitet",
+    "shortName": "Produktivitet",
+    "icon": "⚡",
+    "description": "AI-drivna verktyg för planering, projektledning och att få mer gjort.",
+    "intro": "AI-drivna produktivitetsverktyg som hjälper dig planera, prioritera och hålla koll – rankade utifrån verklig nytta, inte marknadsföring."
+  }
+]

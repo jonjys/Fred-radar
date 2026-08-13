@@ -1,0 +1,14 @@
+{
+  "name": "radar",
+  "version": "0.3.0",
+  "private": true,
+  "description": "Radar – smarta rekommendationer och jämförelser av AI- och produktivitetsverktyg för svenska och nordiska användare.",
+  "scripts": {
+    "build:kategori": "node scripts/generate-kategori.js",
+    "build": "npm run build:kategori",
+    "serve": "npx --yes serve . -l 3000"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}

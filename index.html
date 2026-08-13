@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="sv">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Radar – Smarta jämförelser av AI-verktyg för svenska användare</title>
+  <meta name="description" content="Radar hjälper dig hitta rätt AI- och produktivitetsverktyg med ärliga rankingar anpassade för svenska och nordiska förhållanden, inklusive GDPR." />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📡</text></svg>" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/assets/css/style.css" />
+</head>
+<body>
+  <div id="site-header"></div>
+
+  <main>
+    <section class="hero">
+      <div class="wrap">
+        <span class="eyebrow">🇸🇪 Byggt för svenska &amp; nordiska förhållanden</span>
+        <h1>Hitta rätt AI-verktyg – utan att gissa</h1>
+        <p class="lead">
+          Radar jämför AI- och produktivitetsverktyg med ärliga rankingar, vägda efter pris,
+          kvalitet och GDPR – inte efter vem som betalar mest för placeringen.
+        </p>
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="/quiz.html">Ta 1-minutsquizet →</a>
+          <a class="btn btn-ghost" href="#kategorier">Bläddra i kategorier</a>
+        </div>
+      </div>
+    </section>
+
+    <section id="kategorier">
+      <div class="wrap">
+        <div class="section-head">
+          <span class="kicker">Kategorier</span>
+          <h2>Utforska verktyg efter behov</h2>
+          <p>Varje kategori rankas utifrån kvalitet, pris och hur väl verktyget passar svenska/nordiska krav på datahantering.</p>
+        </div>
+        <div class="category-grid" id="categoryGrid"></div>
+      </div>
+    </section>
+
+    <section>
+      <div class="wrap">
+        <div class="section-head">
+          <span class="kicker">Redaktionens val</span>
+          <h2>Utvalda verktyg just nu</h2>
+          <p>Ett litet urval av verktyg vi bedömer ger mest värde för svenska användare just nu.</p>
+        </div>
+        <div class="tool-grid" id="featuredGrid"></div>
+      </div>
+    </section>
+
+    <section>
+      <div class="wrap">
+        <div class="section-head" style="text-align:center; margin: 0 auto 32px;">
+          <span class="kicker">Så funkar det</span>
+          <h2>Rätt verktyg på tre steg</h2>
+        </div>
+        <div class="category-grid">
+          <div class="category-card" style="cursor:default;">
+            <div class="icon">1️⃣</div>
+            <h3>Svara på 6 snabba frågor</h3>
+            <p>Om syfte, budget, teknisk nivå och hur viktigt GDPR är för dig.</p>
+          </div>
+          <div class="category-card" style="cursor:default;">
+            <div class="icon">2️⃣</div>
+            <h3>Få en viktad ranking</h3>
+            <p>Radar räknar fram vilka verktyg som faktiskt passar dina svar bäst – inte bara en generisk topplista.</p>
+          </div>
+          <div class="category-card" style="cursor:default;">
+            <div class="icon">3️⃣</div>
+            <h3>Se varför vi rekommenderar det</h3>
+            <p>Varje förslag förklaras i klartext, så du förstår resonemanget innan du väljer.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="om">
+      <div class="wrap">
+        <div class="section-head">
+          <span class="kicker">Om Radar</span>
+          <h2>Ärlig ranking, inte "bäst i test"</h2>
+          <p>
+            Radar är byggt för att göra det enklare för svenska och nordiska användare att välja AI- och
+            produktivitetsverktyg. Vi väger in pris, kvalitet, användarvänlighet och GDPR/dataresidens i
+            varje ranking – och är transparenta med att vissa länkar på sajten är annonslänkar. Det påverkar
+            aldrig själva rankingen.
+          </p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <div id="site-footer"></div>
+
+  <script src="/assets/js/tool-card-template.js"></script>
+  <script src="/assets/js/tools-data.js"></script>
+  <script src="/assets/js/partials.js"></script>
+  <script>
+    (async function () {
+      const { tools, categories } = await window.RadarData.load();
+
+      const categoryGrid = document.getElementById("categoryGrid");
+      categoryGrid.innerHTML = categories
+        .map((c) => {
+          const count = tools.filter((t) => t.categories.includes(c.id)).length;
+          return `
+            <a class="category-card" href="/kategori/${c.id}.html">
+              <div class="icon">${c.icon}</div>
+              <h3>${c.name}</h3>
+              <p>${c.description}</p>
+              <span class="count">${count} verktyg jämförda →</span>
+            </a>
+          `;
+        })
+        .join("");
+
+      const featuredGrid = document.getElementById("featuredGrid");
+      const featured = tools.filter((t) => t.featured).sort((a, b) => b.score - a.score).slice(0, 6);
+      featuredGrid.innerHTML = featured.map((t) => window.RadarData.toolCardHTML(t, { showFeaturedBadge: true })).join("");
+    })();
+  </script>
+</body>
+</html>
