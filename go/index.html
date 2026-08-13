@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="sv">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Vidarebefordrar … | Radar</title>
+  <meta name="robots" content="noindex, nofollow" />
+  <link rel="stylesheet" href="/assets/css/style.css" />
+</head>
+<body>
+  <!--
+    Central utgångspunkt för ALLA utgående klick från Radar (/go/?tool=<id>&src=<var>).
+
+    Varför: varenda utåtgående länk på sajten (index, kategorisidor, quiz –
+    både primära "Besök"-knappar OCH sekundära "Webbplats"-länkar) pekar hit
+    i stället för direkt till leverantören. Det gör det möjligt att:
+      1. Byta affiliate-URL för ett verktyg på EN plats (data/tools.json →
+         fältet "affiliateUrl") utan att leta igenom varje HTML-sida.
+      2. Garantera att UTM-parametrar (se nedan) alltid följer med, oavsett
+         om leverantörens affiliate-URL redan innehåller egna spårnings-
+         parametrar (t.ex. ?fpr=, ?sdid=) eller inte.
+      3. Lägga till riktig klickloggning senare (se markerad plats nedan)
+         utan att röra en enda länk på index/quiz/kategorisidorna.
+      4. Visa en tydlig annonsdisclosure innan användaren lämnar sajten.
+
+    Om ?tool=<id> saknas eller inte finns i tools.json skickas besökaren
+    till startsidan istället för att fastna på en trasig sida.
+  -->
+  <main class="empty-state" style="padding-top:120px;">
+    <p style="font-size:2rem;">📡</p>
+    <p id="msg">Skickar dig vidare …</p>
+    <p class="quiz-note">Öppnas inte sidan automatiskt? <a id="fallbackLink" href="/" style="color:var(--accent);">Klicka här</a>.</p>
+  </main>
+  <script>
+    (async function () {
+      const params = new URLSearchParams(window.location.search);
+      const toolId = params.get("tool");
+      const src = params.get("src") || "direkt"; // varifrån klicket kom: index | kategori | quiz | ...*-website
+      const msg = document.getElementById("msg");
+      const fallback = document.getElementById("fallbackLink");
+
+      if (!toolId) {
+        window.location.replace("/");
+        return;
+      }
+
+      try {
+        const tools = await fetch("/data/tools.json").then((r) => r.json());
+        const tool = tools.find((t) => t.id === toolId);
+
+        if (!tool) {
+          msg.textContent = "Vi hittade inte det verktyget.";
+          fallback.href = "/";
+          return;
+        }
+
+        const dest = new URL(tool.affiliateUrl || tool.website);
+
+        // Sätt alltid våra egna UTM-parametrar, oavsett om leverantörens
+        // affiliate-URL redan har egna spårningsparametrar (fpr/sdid/ref/...)
+        // – .set() skriver över ev. tidigare "utm_*" utan att röra andra
+        // query-parametrar, så det här är säkert att köra om.
+        dest.searchParams.set("utm_source", "radar");
+        dest.searchParams.set("utm_medium", tool.hasAffiliateProgram ? "affiliate" : "referral");
+        dest.searchParams.set("utm_campaign", tool.categories[0] || "radar");
+        dest.searchParams.set("utm_content", tool.id);
+        dest.searchParams.set("utm_term", src);
+
+        // Plats för framtida klickloggning, t.ex.:
+        //   navigator.sendBeacon("/api/click", JSON.stringify({ tool: tool.id, src, ts: Date.now() }));
+        // Görs som en separat, icke-blockerande anropspunkt här – kräver
+        // bara en riktig endpoint, inga ändringar i länkarna på sajten.
+
+        msg.textContent = "Skickar dig vidare till " + tool.name + " …";
+        fallback.textContent = "Klicka här om du inte skickas vidare automatiskt";
+        fallback.href = dest.toString();
+        setTimeout(() => window.location.replace(dest.toString()), 400);
+      } catch (e) {
+        window.location.replace("/");
+      }
+    })();
+  </script>
+</body>
+</html>
