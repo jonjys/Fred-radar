@@ -116,15 +116,46 @@ Se `assets/js/quiz.js` → `scoreTool()`. Kort sammanfattning:
 
 Resultatet visar de tre högst rankade verktygen med en kort, konkret motivering ("Varför vi rekommenderar det") som pekar på vilka av ovanstående faktorer som slog igenom.
 
-## Affiliate-länkar
+## Affiliate-länkar, tracking &amp; disclosure
 
-Alla "Besök"-knappar pekar på `/go/?tool=<id>` istället för direkt till leverantören. `go/index.html` slår upp `affiliateUrl` (eller `website` som fallback) i `data/tools.json` och skickar besökaren vidare. Det gör att:
+**Alla utgående länkar går via `/go/`** – både primära "Besök X"-knappar och sekundära "Webbplats"-länkar, på index, kategorisidor och quizresultat. Ingen HTML-fil länkar direkt till en leverantörs domän. `go/index.html`:
 
-- affiliate-URL:er för ett verktyg bara behöver uppdateras på **ett** ställe,
-- klickspårning/analytics kan läggas till senare utan att röra länkar på index/quiz/kategorisidor,
-- vi kan visa tydlig annonsdisclosure (footer på varje sida) enligt marknadsföringslagens krav på att sponsrade länkar ska vara tydligt markerade.
+1. Slår upp verktyget i `data/tools.json` och väljer `affiliateUrl` (eller `website` som fallback om verktyget saknar affiliatelänk).
+2. Sätter alltid egna UTM-parametrar (`utm_source=radar`, `utm_medium=affiliate|referral` beroende på `hasAffiliateProgram`, `utm_campaign=<kategori>`, `utm_content=<tool-id>`, `utm_term=<src>`) **ovanpå** eventuella leverantörsspecifika spårningsparametrar (`?fpr=`, `?sdid=`, `?ref=` …) – de skriver inte över varandra.
+3. Vidarebefordrar besökaren, med en kort synlig "Skickar dig vidare …"-mellansida.
 
-**Testa flödet:** tre verktyg har redan realistiska (men falska) affiliate-spårningslänkar för att `/go/` ska gå att testa end-to-end – `jasper` (`?fpr=...`), `adobe-firefly` (`?sdid=...`) och `notion-ai` (`?ref=...`). Övriga verktyg har `affiliateUrl` satt till samma URL som `website` tills vidare.
+Varje länk skickar med en `src`-parameter (`index`, `kategori`, `kategori-website`, `quiz`) som hamnar i `utm_term`, så det går att se i efterhand *var på sajten* ett klick kom ifrån – inte bara vilket verktyg.
+
+**Disclosure – två lager, enligt marknadsföringslagens krav på tydlig märkning av reklam:**
+- En kort rad direkt under varje verktygskort: *"Annonslänk – Radar kan få provision om du köper via länken."* (`.ad-note` i `assets/css/style.css`) – tydlig i direkt anslutning till länken, men diskret till formatet.
+- En utförligare disclosure i footern på varje sida (`assets/js/partials.js`).
+
+**Framtida klickloggning:** eftersom alla klick redan går via `/go/`, är det den enda platsen som behöver ändras för att lägga till riktig loggning – t.ex. ett `navigator.sendBeacon("/api/click", …)`-anrop. Platsen är kommenterad direkt i `go/index.html`. Inget i `index.html`, `quiz.js` eller kategorisidorna behöver röras.
+
+**Testa flödet:** tre verktyg har redan realistiska (men falska) affiliate-spårningskoder för att `/go/` ska gå att testa end-to-end – `jasper` (`?fpr=...`), `adobe-firefly` (`?sdid=...`) och `notion-ai` (`?ref=...`). Övriga verktyg har `affiliateUrl` satt till samma URL som `website` tills vidare (de får ändå `utm_medium=referral` istället för `affiliate` automatiskt, baserat på `hasAffiliateProgram`).
+
+### Bäst placerade att skaffa riktiga affiliate-avtal för först
+
+Baserat på en snabb research (augusti 2026, se källor nedan) av vilka verktyg som har högst uppgiven provision **och** löpande (recurring) intäkt – exakta villkor varierar mellan tredjepartskataloger och kan skilja sig från vad som gäller när man faktiskt blir godkänd, så bekräfta alltid siffrorna direkt hos leverantören innan ni räknar på intäkter:
+
+| # | Verktyg | Kategori | Uppgiven provision | Recurring? | `affiliateUrl` i tools.json |
+|---|---|---|---|---|---|
+| 1 | Copy.ai | ai-writing | ~45% | Ja (12 mån–livstid, källor går isär) | ❌ **Saknas** – pekar fortfarande på `website` |
+| 2 | ClickUp AI | produktivitet | Upp till 30% (nivåbaserat) | Ja | ❌ **Saknas** |
+| 3 | Rytr | ai-writing | 30% | Ja (senaste källor: 12 mån) | ❌ **Saknas** |
+| 4 | Writesonic | ai-writing | 20% officiellt (tredje part uppger 30–40%) | Ja, 12 mån | ❌ **Saknas** |
+| 5 | Jasper | ai-writing | 25% (upp till 30% för toppaffiliates) | Ja, 12 mån | ✅ Klart (placeholder-spårkod satt) |
+| 6 | Adobe Firefly | ai-image | 85% av första månaden, lägre vid förnyelse | Delvis | ✅ Klart (placeholder-spårkod satt) |
+
+**Prioritetsordning för att fylla i riktiga länkar:** Copy.ai, ClickUp AI och Rytr saknar helt affiliate-koppling idag och har de högsta uppgivna provisionerna – störst sannolik avkastning för minsta insats. Writesonic är fjärde eftersom den officiella siffran (20%) är lägre än vad tredjepartskataloger uppger.
+
+Sources:
+- [Copy.ai Affiliate Program Breakdown: 45% Lifetime Recurring Commission](https://tommyhauer.nl/copy-ai-affiliate-program-breakdown-45-lifetime-recurring-commission/)
+- [Writesonic Affiliate Program – officiell sida](https://writesonic.com/affiliate)
+- [Rytr Affiliates – officiell sida](https://rytr.me/affiliates)
+- [Jasper Affiliate Program: Complete 2026 Guide](https://blog.contentgorilla.co/jasper-affiliate-program-complete-2026-guide-commissions/)
+- [ClickUp Affiliate Program – officiell sida](https://clickup.com/partners/affiliates)
+- [Adobe Affiliate Marketing – officiell sida](https://www.adobe.com/affiliates.html)
 
 **Innan launch:** ersätt placeholder-URL:erna i `affiliateUrl` med riktiga affiliate-länkar när partnerprogram är på plats, och sätt `hasAffiliateProgram: true/false` korrekt per verktyg.
 
@@ -143,16 +174,40 @@ Sajten använder absoluta sökvägar (`/assets/...`, `/data/...`) så den måste
 
 ## Deploy (Vercel)
 
-Repot är förberett för deploy utan extra konfiguration:
+Repot kräver ingen extra konfiguration – `vercel.json` + `package.json` gör hela jobbet. Verifierat lokalt: `npm run build` körs felfritt från en ren clone och `kategori/*.html` regenereras byte-för-byte identiskt med det som redan är committat, så byggsteget är säkert att lita på i produktion.
 
-1. Importera repot i Vercel.
-2. Vercel läser `vercel.json` och kör `npm run build` (genererar kategorisidorna) innan sajten publiceras som statiska filer.
-3. Klart – ingen serverdel, inga miljövariabler krävs för grundfunktionaliteten.
+**Från noll till live-URL:**
+
+1. **Importera repot i Vercel** (Dashboard → Add New → Project → välj `jonjys/Fred-radar`). Vercel identifierar det som ett statiskt projekt – ingen framework-preset behövs.
+2. Vercel läser `vercel.json` automatiskt: `buildCommand: npm run build` (regenererar kategorisidorna) och `outputDirectory: .`. Inga miljövariabler krävs.
+3. Klicka **Deploy**. Klart – du får en live-URL på ~30 sekunder.
+
+**Om projektet redan är importerat** (som ni redan gjort): kontrollera bara två saker i Vercel-projektets inställningar under **Settings → Git**:
+
+- **Production Branch** – sätt den till den branch ni vill ska vara "live" (t.ex. `main`). Pushar till andra branches (som denna: `claude/radar-quiz-ranking-rhhmf8`) skapar automatiskt en **Preview-deploy** med egen URL under fliken **Deployments** i Vercel – bra för att testa innan ni pekar produktions-URL:en dit.
+- Så fort ni är nöjda: merga branchen till er produktionsbranch, eller ändra Production Branch i Vercel-inställningarna – nästa push bygger och publicerar automatiskt.
+
+Ingen serverdel, ingen databas, inga API-nycklar – statisk hosting räcker för hela sajten som den ser ut idag.
+
+## Status inför launch – vad saknas innan vi kör trafik
+
+Kort sammanfattning, se respektive avsnitt ovan för detaljer:
+
+| Klart ✅ | Saknas innan riktig trafik ⚠️ |
+|---|---|
+| Quiz + viktad ranking | Riktiga affiliate-avtal (bara 2 av 12 möjliga verktyg har riktiga koder – se tabellen ovan, resten är fortfarande `website`-fallback) |
+| Alla utgående länkar via `/go/`, inkl. sekundärlänkar | Riktig klickloggning (extension point finns i `go/index.html`, men inget lagras ännu) |
+| UTM-spårning per klick/kanal | Nyhetsbrev – e-postopt-in i quizet sparas bara i `localStorage`, går ingenstans |
+| Annonsdisclosure (kort + footer) | Juridisk genomgång av GDPR-bedömningarna i `tools.json` (redaktionella, inte verifierade av jurist – se brasklappen ovan) |
+| Deploy-konfiguration (Vercel, `npm run build`) | SEO: ingen sitemap.xml, ingen strukturerad data (JSON-LD), header/footer renderas klientsidan (dåligt för indexering utan JS) |
+| Mobilanpassat, mörkt tema | Analytics överhuvudtaget (t.ex. Vercel Analytics eller Plausible) för att se trafik, inte bara klick |
+
+**Kortaste vägen till en "riktig men liten" launch:** fyll i affiliate-länkarna för Copy.ai, ClickUp AI och Rytr (högst prioritet enligt tabellen ovan), sätt Production Branch i Vercel, och kör en första trafikkälla (t.ex. en Reddit-tråd eller ett LinkedIn-inlägg) – resten (klickloggning, nyhetsbrev, SEO) går att lägga till löpande utan att blockera launch.
 
 ## Nästa steg (inte byggt än)
 
-- **Riktiga affiliate-partnerskap**: koppla på faktiska affiliate-ID:n i `affiliateUrl`.
-- **Klickspårning**: logga klick i `go/index.html` (t.ex. till ett enkelt analytics-verktyg) för att se vilka verktyg som konverterar.
+- **Riktiga affiliate-partnerskap**: koppla på faktiska affiliate-ID:n i `affiliateUrl` (se prioritetsordning ovan).
+- **Klickspårning**: koppla en riktig endpoint till kommentaren i `go/index.html` (t.ex. en Vercel-funktion eller ett tredjepartsverktyg).
 - **Nyhetsbrev**: quizets e-postopt-in sparas idag bara i `localStorage` som platshållare – koppla på en riktig leverantör (t.ex. Resend) för faktiska utskick.
 - **Fler kategorier/verktyg**: strukturen är byggd för att skala – lägg till i `data/tools.json` och `data/categories.json` enligt ovan.
 - **SEO-förbättringar**: strukturerad data (JSON-LD), sitemap.xml, och server-renderad header/footer istället för klient-injicerad (för bättre indexering utan JS).

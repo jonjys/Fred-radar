@@ -39,6 +39,7 @@
   function toolCardHTML(tool, opts) {
     opts = opts || {};
     const gdpr = tool.gdpr || { score: 0 };
+    const src = opts.context || "kategori";
     return `
       <article class="tool-card" id="${tool.id}" data-id="${tool.id}" data-price="${tool.pricing.fromPriceSEK}" data-score="${tool.score}" data-gdpr="${gdpr.score}" data-difficulty="${tool.difficulty}">
         ${tool.featured && opts.showFeaturedBadge ? '<span class="badge-featured">Redaktionens val</span>' : ""}
@@ -62,9 +63,10 @@
         <div class="tool-bestfor"><strong>Bäst för:</strong> ${tool.bestFor.slice(0, 3).join(", ")}</div>
         ${opts.showProsCons && (tool.pros || tool.cons) ? prosConsHTML(tool) : ""}
         <div class="tool-actions">
-          <a class="btn btn-primary" href="/go/?tool=${tool.id}" target="_blank" rel="sponsored noopener">Besök ${tool.name}</a>
-          <a class="btn btn-ghost" href="${tool.website}" target="_blank" rel="noopener">Webbplats</a>
+          <a class="btn btn-primary" href="/go/?tool=${tool.id}&src=${src}" target="_blank" rel="sponsored noopener">Besök ${tool.name}</a>
+          <a class="btn btn-ghost" href="/go/?tool=${tool.id}&src=${src}-website" target="_blank" rel="sponsored noopener">Webbplats</a>
         </div>
+        <p class="ad-note">Annonslänk – Radar kan få provision om du köper via länken.</p>
       </article>
     `;
   }

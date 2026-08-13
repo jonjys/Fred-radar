@@ -139,7 +139,7 @@
 
       const featuredGrid = document.getElementById("featuredGrid");
       const featured = tools.filter((t) => t.featured).sort((a, b) => b.score - a.score).slice(0, 6);
-      featuredGrid.innerHTML = featured.map((t) => window.RadarData.toolCardHTML(t, { showFeaturedBadge: true })).join("");
+      featuredGrid.innerHTML = featured.map((t) => window.RadarData.toolCardHTML(t, { showFeaturedBadge: true, context: "index" })).join("");
     })();
   </script>
 </body>

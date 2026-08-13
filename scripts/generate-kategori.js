@@ -30,7 +30,7 @@ for (const category of categories) {
     .sort((a, b) => b.score - a.score);
 
   const cardsHTML = matchingTools
-    .map((t) => toolCardHTML(t, { showFeaturedBadge: true, showProsCons: true }))
+    .map((t) => toolCardHTML(t, { showFeaturedBadge: true, showProsCons: true, context: "kategori" }))
     .join("\n");
 
   const html = template

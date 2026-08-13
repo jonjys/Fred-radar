@@ -9,15 +9,19 @@
 </head>
 <body>
   <!--
-    Central utgångspunkt för ALLA klick ut från Radar (/go/?tool=<id>).
+    Central utgångspunkt för ALLA utgående klick från Radar (/go/?tool=<id>&src=<var>).
 
-    Varför: alla utgående länkar på sajten pekar hit i stället för direkt till
-    leverantören. Det gör det möjligt att:
+    Varför: varenda utåtgående länk på sajten (index, kategorisidor, quiz –
+    både primära "Besök"-knappar OCH sekundära "Webbplats"-länkar) pekar hit
+    i stället för direkt till leverantören. Det gör det möjligt att:
       1. Byta affiliate-URL för ett verktyg på EN plats (data/tools.json →
          fältet "affiliateUrl") utan att leta igenom varje HTML-sida.
-      2. Lägga till klickspårning/analytics senare utan att röra länkarna
-         på index/quiz/kategorisidorna.
-      3. Visa en tydlig annonsdisclosure innan användaren lämnar sajten.
+      2. Garantera att UTM-parametrar (se nedan) alltid följer med, oavsett
+         om leverantörens affiliate-URL redan innehåller egna spårnings-
+         parametrar (t.ex. ?fpr=, ?sdid=) eller inte.
+      3. Lägga till riktig klickloggning senare (se markerad plats nedan)
+         utan att röra en enda länk på index/quiz/kategorisidorna.
+      4. Visa en tydlig annonsdisclosure innan användaren lämnar sajten.
 
     Om ?tool=<id> saknas eller inte finns i tools.json skickas besökaren
     till startsidan istället för att fastna på en trasig sida.
@@ -31,6 +35,7 @@
     (async function () {
       const params = new URLSearchParams(window.location.search);
       const toolId = params.get("tool");
+      const src = params.get("src") || "direkt"; // varifrån klicket kom: index | kategori | quiz | ...*-website
       const msg = document.getElementById("msg");
       const fallback = document.getElementById("fallbackLink");
 
@@ -49,11 +54,27 @@
           return;
         }
 
-        const dest = tool.affiliateUrl || tool.website;
+        const dest = new URL(tool.affiliateUrl || tool.website);
+
+        // Sätt alltid våra egna UTM-parametrar, oavsett om leverantörens
+        // affiliate-URL redan har egna spårningsparametrar (fpr/sdid/ref/...)
+        // – .set() skriver över ev. tidigare "utm_*" utan att röra andra
+        // query-parametrar, så det här är säkert att köra om.
+        dest.searchParams.set("utm_source", "radar");
+        dest.searchParams.set("utm_medium", tool.hasAffiliateProgram ? "affiliate" : "referral");
+        dest.searchParams.set("utm_campaign", tool.categories[0] || "radar");
+        dest.searchParams.set("utm_content", tool.id);
+        dest.searchParams.set("utm_term", src);
+
+        // Plats för framtida klickloggning, t.ex.:
+        //   navigator.sendBeacon("/api/click", JSON.stringify({ tool: tool.id, src, ts: Date.now() }));
+        // Görs som en separat, icke-blockerande anropspunkt här – kräver
+        // bara en riktig endpoint, inga ändringar i länkarna på sajten.
+
         msg.textContent = "Skickar dig vidare till " + tool.name + " …";
         fallback.textContent = "Klicka här om du inte skickas vidare automatiskt";
-        fallback.href = dest;
-        setTimeout(() => window.location.replace(dest), 400);
+        fallback.href = dest.toString();
+        setTimeout(() => window.location.replace(dest.toString()), 400);
       } catch (e) {
         window.location.replace("/");
       }

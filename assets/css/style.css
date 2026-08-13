@@ -456,6 +456,13 @@ section {
   justify-content: center;
 }
 
+.ad-note {
+  margin: 0;
+  font-size: 0.7rem;
+  color: var(--text-faint);
+  text-align: center;
+}
+
 /* ---------- Why-recommended card (quiz results) ---------- */
 
 .result-card {
