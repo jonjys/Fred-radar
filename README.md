@@ -9,21 +9,33 @@ Radar är en statisk sajt (HTML/CSS/vanilla JS, ingen backend) som:
 - samlar alla utgående affiliate-länkar på ett ställe, med UTM-spårning och disclosure inbyggt, och
 - är förberedd för deploy på Vercel med noll konfiguration.
 
+## Gör detta nu (människa)
+
+Repot är tekniskt klart. Det som återstår kräver ett konto, ett beslut eller en ansökan som bara du kan göra – jag kan inte automatisera något av detta:
+
+1. **Sätt Production Branch i Vercel** (Settings → Git → Production Branch).
+2. **Ansök om och fyll i riktiga affiliate-koder** för de 11 verktyg som väntar (prioritetsordning nedan).
+3. **Skapa ett analyticskonto** (Plausible eller Fathom) och aktivera det i config.
+4. **Skapa ett nyhetsbrevskonto** (Buttondown/ConvertKit/Loops) och koppla det i config.
+5. **Peka er riktiga domän** och kör ett kommando för att byta den överallt.
+
+Detaljerad, länkad version av samma fem steg (plus den sista "gå live"-åtgärden) finns i **Launch checklist** direkt nedan – den är den enda sanningen för ordning och detaljer i den här filen. Om något annat avsnitt i README verkar säga något annat, är det den här listan och Launch checklist som gäller.
+
 ## Launch checklist
 
 Gör i exakt den här ordningen. Varje steg länkar till avsnittet med detaljer.
 
 1. **[ ] Sätt Production Branch i Vercel** till er faktiska produktionsbranch. Vercel Dashboard → projektet → **Settings → Git → Production Branch**. Se [Deploy](#deploy-vercel) för hela flödet.
-2. **[ ] Byt ut de 11 `?ref=radar-pending`-länkarna** mot riktiga, godkända affiliate-koder – en rad per verktyg i `data/tools.json` (`affiliateUrl`), följt av `npm run build`. Prioritetsordning + direktlänkar till varje programs ansökningssida finns under [Affiliate-länkar](#affiliate-länkar-tracking--disclosure). Börja med Copy.ai, Make och ClickUp AI (högst uppgiven provision).
+2. **[ ] Byt ut de 11 `?ref=radar-pending`-länkarna** mot riktiga, godkända affiliate-koder – en rad per verktyg i `data/tools.json` (`affiliateUrl`), följt av `npm run build`. Prioritetsordning (efter godkännande-svårighet, nordisk relevans och recurring-potential – inte bara högst provision) + direktlänkar till varje programs ansökningssida finns under [Affiliate-länkar](#affiliate-länkar-tracking--disclosure). Börja med Make (lättast godkänt + högst nordisk relevans + recurring).
 3. **[ ] Koppla ett analyticskonto** (Plausible eller Fathom) – skapa kontot, sätt sedan `data/site.json` → `analytics.domain` + `analytics.enabled: true`. Se [Analytics](#analytics).
 4. **[ ] Koppla nyhetsbrevet** till en riktig leverantör – `data/site.json` → `newsletter.endpoint`. Buttondown/ConvertKit/Loops kräver ingen egen backend. Se [Nyhetsbrev](#nyhetsbrev).
-5. **[x] OG-bild** – klar, `assets/og-image.png` (1200×630) är genererad och kopplad på alla sidor. Valfritt: byt ut mot en egen designad version (se [OG-bild](#og-bild) för hur).
+5. **[x] OG-bild** – klar, `assets/og-image.png` (1200×630) är genererad och kopplad på alla sidor. Inget kvar att göra här. Valfritt: byt ut mot en egen designad version (se [OG-bild](#og-bild) för hur) – detta är en framtida förbättring, inte ett launch-krav.
 6. **[ ] Byt domän i config** – kör `npm run set-site-url -- https://din-riktiga-domän.se` från repo-roten (ETT kommando, uppdaterar allt automatiskt). Se [Byta produktionsdomän](#byta-produktionsdomän).
-7. **[ ] Första trafikkälla** – ett färdigt utkast till en Reddit-post finns i [Första trafikkälla](#första-trafikkälla), redo att kopieras och postas.
+7. **[ ] Första trafikkälla** – posta Reddit-utkastet **efter** steg 1 och 6 är klara (branchen är live och länken pekar på rätt domän). Se [Första trafikkälla](#första-trafikkälla) för det färdiga utkastet och exakt timing.
 
 **Innan ni kör steg 1–7:** låt någon GDPR-kunnig stämma av `gdpr`-fälten i `tools.json` om ni tänker marknadsföra GDPR-vänlighet aktivt (se [GDPR-bedömningar](#gdpr-bedömningar--viktig-brasklapp)) – inte blockerande för launch, men bör göras innan ni skalar upp marknadsföringen.
 
-Efter steg 1–7: kör `npm run build` en sista gång, kontrollera att `git status` är rent efteråt (byggsteget ska vara deterministiskt), committa, pusha. Allt annat (fler verktyg, riktig klickloggning till en backend, SEO-finslipning) kan läggas till löpande efter launch utan att blockera den.
+Efter steg 1–7: kör `npm run build` en sista gång, kontrollera att `git status` är rent efteråt (byggsteget ska vara deterministiskt), committa, pusha. Allt annat (fler verktyg, riktig klickloggning till en backend, SEO-finslipning) kan läggas till löpande efter launch utan att blockera den – se [Nästa steg](#nästa-steg-efter-launch-inte-blockerande) längst ner.
 
 ## Struktur
 
@@ -165,28 +177,25 @@ Varje länk skickar med en `src`-parameter (`index`, `kategori`, `kategori-websi
 - **`"placeholder"`** (14 verktyg) – programmet finns bekräftat, men länken innehåller ännu ingen riktig, godkänd spårkod. Tre av dem (`jasper`, `adobe-firefly`, `notion-ai`) har leverantörsspecifika parameterformat ifyllda (`?fpr=`, `?sdid=`, `?ref=`) som bara behöver bytas mot er egen kod. Övriga elva har `?ref=radar-pending` som en tydlig markör att koden saknas.
 - **`"no-public-program"`** (6 verktyg) – ChatGPT Plus, Claude Pro, Midjourney, Leonardo.Ai (programmet stängdes april 2026, se nedan), Microsoft Designer, Sana. Ingen känd affiliate-möjlighet hittad vid research – dessa länkar går till `website` med bara UTM-spårning (`utm_medium=referral`), aldrig `affiliate`.
 
-### Prioritetsordning för att fylla i riktiga länkar
+### Prioritetsordning för de 11 väntande länkarna
 
-Baserat på research (augusti 2026, se källor nedan) av vilka verktyg som har högst uppgiven provision **och** löpande (recurring) intäkt. Exakta villkor varierar mellan tredjepartskataloger och kan skilja sig från vad som gäller när man faktiskt blir godkänd – bekräfta alltid siffrorna direkt hos leverantören innan ni räknar på intäkter:
+Rankad efter tre kriterier, i den ordningen: **(1) hur enkelt/snabbt ni sannolikt blir godkända**, **(2) hur relevant verktyget är för en svensk/nordisk publik**, **(3) intäktspotential (recurring väger tydligt högre än engångsersättning, oavsett hur hög procentsatsen är)**. Det här är alltså **inte** samma ordning som "högst provision" – ett par verktyg med lägre uppgiven procentsats ligger ändå högre upp för att de är lättare att komma igång med eller passar målgruppen bättre. Exakta villkor varierar mellan tredjepartskataloger och kan skilja sig från vad som faktiskt gäller vid godkännande – bekräfta alltid siffrorna direkt hos leverantören.
 
-| # | Verktyg | Kategori | Uppgiven provision | Recurring? | Ansök här |
+| # | Verktyg | Godkännande | Nordisk relevans | Potential | Varför den här platsen |
 |---|---|---|---|---|---|
-| 1 | Copy.ai | ai-writing | ~45% | Ja (12 mån–livstid, källor går isär) | Ingen officiell ansökningssida hittad – kontakta Copy.ai direkt eller sök via en affiliatekatalog |
-| 2 | Make | produktivitet | 35% i 12 månader | Ja | [make.com/en/affiliate](https://www.make.com/en/affiliate) |
-| 3 | ClickUp AI | produktivitet | Upp till 30% (nivåbaserat) | Ja | [clickup.com/partners/affiliates](https://clickup.com/partners/affiliates) |
-| 4 | Rytr | ai-writing | 30% | Ja (senaste källor: 12 mån) | [rytr.me/affiliates](https://rytr.me/affiliates) |
-| 5 | Reclaim.ai | produktivitet | 40% i 12 mån + $1/signup | Ja | [reclaim.ai/affiliate-program](https://reclaim.ai/affiliate-program) |
-| 6 | Writesonic | ai-writing | 20% officiellt (tredje part uppger 30–40%) | Ja, 12 mån | [writesonic.com/affiliate](https://writesonic.com/affiliate) |
-| 7 | Jasper | ai-writing | 25% (upp till 30%) | Ja, 12 mån | ✅ Placeholder-kod redan satt, byt till er riktiga |
-| 8 | Adobe Firefly | ai-image | 85% av första månaden | Delvis | ✅ Placeholder-kod redan satt, byt till er riktiga |
-| 9 | Akiflow | produktivitet | 14% recurring, upp till $50/referral | Ja | [akiflowpartners.tapfiliate.com](https://akiflowpartners.tapfiliate.com/) |
-| 10 | Motion | produktivitet | $75/kund eller ~25% första betalning | Nej/delvis | [affiliate.usemotion.com](https://affiliate.usemotion.com/) |
-| 11 | Canva Magic Media | ai-image/produktivitet | 80% första 2 månaderna (månadsplan) | Delvis | Ansök via [Impact](https://impact.com) – sök efter Canva |
-| 12 | Ideogram | ai-image | Ej publikt – "Creators Club", ansökningsbaserat | Okänt | [ideogram.ai/features/creators-club](https://ideogram.ai/features/creators-club/) |
-| 13 | Zapier | produktivitet | 15–25% (varierar, partnerprogram) | Ja | [zapier.com/partners](https://zapier.com/partners) – ansökningsbaserat, ej självservice |
-| 14 | Notion AI | produktivitet | Ej offentligt specificerad | Okänt | ✅ Placeholder-kod redan satt, byt till er riktiga |
+| 1 | **Make** | 🟢 Lätt – självservice-ansökan, [make.com/en/affiliate](https://www.make.com/en/affiliate) | 🟢 Hög – EU-rötter (f.d. tjeckiska Integromat), populärt bland tekniska nordiska team | 🟢 35% recurring i 12 mån | Bäst på alla tre axlar samtidigt – börja här |
+| 2 | **ClickUp AI** | 🟢 Lätt – självservice, [clickup.com/partners/affiliates](https://clickup.com/partners/affiliates) | 🟡 Medel – globalt populärt, inte specifikt nordiskt | 🟢 Upp till 30% recurring | Näst enklast att komma igång med, stark recurring |
+| 3 | **Reclaim.ai** | 🟢 Lätt – självservice, [reclaim.ai/affiliate-program](https://reclaim.ai/affiliate-program) | 🟡 Medel – kalender/schemaläggning, bred målgrupp | 🟢 40% i 12 mån + bonus/signup | Högst uppgiven procentsats av alla 11, enkel ansökan |
+| 4 | **Rytr** | 🟢 Lätt – självservice, [rytr.me/affiliates](https://rytr.me/affiliates) | 🟡 Medel – budgetverktyg, bred men ytlig relevans | 🟢 30% recurring | Enkelt och snabbt, men lägre snittintäkt per kund (billig produkt) |
+| 5 | **Copy.ai** | 🟡 Medel – ingen officiell ansökningssida hittad, kräver research/kontakt | 🟡 Medel – generellt AI-skrivverktyg | 🟢 ~45% recurring (högst i listan) | Högst provision totalt, men osäkert exakt hur ni ansöker – räkna med extra tid |
+| 6 | **Canva Magic Media** | 🟡 Medel – kräver godkännande via Impact-nätverket, ej direkt självservice | 🟢 Hög – förmodligen det mest använda verktyget i hela listan bland svenska småföretagare | 🟡 80% första 2 månaderna, men **inte** långsiktigt recurring | Enorm varumärkeskännedom väger upp den lite krångligare ansökan – värt besväret |
+| 7 | **Akiflow** | 🟡 Medel – Tapfiliate-ansökan, [akiflowpartners.tapfiliate.com](https://akiflowpartners.tapfiliate.com/) | 🟢 Hög – EU-bolag (Italien), bra GDPR-story att kombinera med er egen vinkel | 🟡 14% recurring + upp till $50/referral | EU-vinkeln är värdefull för er positionering, men lägre procentsats och mindre känt varumärke |
+| 8 | **Writesonic** | 🟢 Lätt – självservice, [writesonic.com/affiliate](https://writesonic.com/affiliate) | 🟡 Medel – SEO/innehållsverktyg | 🟡 20% officiellt (lägre än de flesta andra) | Enkel ansökan men klart lägre intäktspotential än 1–7 |
+| 9 | **Zapier** | 🔴 Svårare – ansökningsbaserat "Solution Partner"-program, inte ren självservice, [zapier.com/partners](https://zapier.com/partners) | 🟢 Hög – mycket välkänt, relevant för nordiska automation-intresserade företag | 🟡 15–25% recurring (varierar) | Stort varumärke men krångligare/långsammare godkännandeprocess |
+| 10 | **Motion** | 🟡 Medel – ansökan via [affiliate.usemotion.com](https://affiliate.usemotion.com/), inte tydligt självservice | 🔴 Låg – mest känt i USA, mindre etablerat i Norden | 🔴 ~$75/kund eller ~25% första betalningen – **inte** tydligt recurring | Svagast på både relevans och långsiktig intäkt av de 11 |
+| 11 | **Ideogram** | 🔴 Svårast – "Creators Club" riktar sig till innehållsskapare (YouTube/Instagram/TikTok), en jämförelsesajt passar troligen inte profilen lika bra, [ideogram.ai/features/creators-club](https://ideogram.ai/features/creators-club/) | 🟡 Medel – nischat AI-bildverktyg | 🔴 Okänd/ej offentlig provision | Osäkert på alla tre axlar – lägst prioritet |
 
-**Kortaste vägen till mest intäkt snabbast:** Copy.ai, Make och ClickUp AI har högst uppgiven provision och saknar helt riktig koppling idag – störst sannolik avkastning för minsta insats.
+**Rekommendation:** ansök till **Make, ClickUp AI och Reclaim.ai** först (radgruppen längst upp) – ni kan sannolikt bli godkända för alla tre samma dag, och de täcker både bäst potential och bäst nordisk passform. Jasper, Adobe Firefly och Notion AI (se "Status just nu" ovan) behöver *också* riktiga koder trots att de redan har ett ifyllt länkformat – ansök till dem parallellt, gärna i samma svep som steg 2–3.
 
 Sources:
 - [Copy.ai Affiliate Program Breakdown: 45% Lifetime Recurring Commission](https://tommyhauer.nl/copy-ai-affiliate-program-breakdown-45-lifetime-recurring-commission/)
@@ -342,7 +351,7 @@ Ett färdigt utkast, redo att kopieras. Föreslagen kanal: **r/foretagande** (sv
 | Klart ✅ | Saknas innan riktig trafik ⚠️ |
 |---|---|
 | Quiz + viktad ranking (20 verktyg, testad stabil efter varje datauppdatering) | Production Branch måste sättas i Vercel-dashboarden manuellt (checklista steg 1) |
-| Alla utgående länkar via `/go/`, inkl. sekundärlänkar, med UTM-spårning – verifierat noll direkta externa länkar kvar | Riktiga affiliate-koder för 11 av 14 möjliga verktyg (checklista steg 2) |
+| Alla utgående länkar via `/go/`, inkl. sekundärlänkar, med UTM-spårning – verifierat noll direkta externa länkar kvar | Riktiga, godkända affiliate-koder – **alla 14** verktyg med `affiliateStatus: "placeholder"` behöver en (11 har ingen kod alls ännu, 3 har rätt parameterformat men platshållarvärden) (checklista steg 2) |
 | Klickloggning (console + localStorage, redo att uppgraderas med en rad) | Klickloggning kopplad till en riktig backend/endpoint |
 | Analytics-loader (kod klar, av som standard) | Ett faktiskt analyticskonto (checklista steg 3) |
 | Nyhetsbrevs-POST (kod klar, väntar på en riktig leverantörs-endpoint) | Ett faktiskt nyhetsbrevskonto (checklista steg 4) |
@@ -352,12 +361,10 @@ Ett färdigt utkast, redo att kopieras. Föreslagen kanal: **r/foretagande** (sv
 | Deploy-konfiguration (Vercel, `npm run build`), verifierat deterministisk | – |
 | Mobilanpassat, mörkt tema, verifierat ingen horisontal overflow på 375px | – |
 
-## Nästa steg (inte byggt än)
+## Nästa steg (efter launch, inte blockerande)
 
-- **Fler riktiga affiliate-partnerskap**: koppla på faktiska affiliate-ID:n i `affiliateUrl` (se prioritetsordning ovan).
-- **Klickspårning till en riktig backend**: en Vercel-funktion eller tredjepartsverktyg som tar emot `navigator.sendBeacon`-anropet.
-- **Riktigt nyhetsbrevskonto**: koppla `data/site.json` → `newsletter.endpoint` till Buttondown/ConvertKit/Loops (eller en Vercel-funktion för Resend).
-- **Riktigt analyticskonto**: fyll i `data/site.json` → `analytics.domain` + `enabled: true`.
-- **OG-bild**: designa en 1200×630 px-bild och lägg till `og:image`-taggar.
-- **Fler kategorier/verktyg**: strukturen är byggd för att skala – lägg till i `data/tools.json` och `data/categories.json` enligt ovan.
+Allt som krävs *för* launch finns i **Gör detta nu (människa)** / **Launch checklist** högst upp i den här filen – den listan är den enda sanningen för vad som återstår innan ni kör trafik. Det som listas här är sådant som medvetet **inte** är byggt, och som inte behöver vara klart för en första, liten launch:
+
+- **Klickspårning till en riktig backend**: en Vercel-funktion eller tredjepartsverktyg som tar emot `navigator.sendBeacon`-anropet (extension point finns redan i `go/index.html`, se [Affiliate-länkar](#affiliate-länkar-tracking--disclosure)).
+- **Fler kategorier/verktyg**: strukturen är byggd för att skala – lägg till i `data/tools.json` och `data/categories.json` enligt [Hur man lägger till ett nytt verktyg](#hur-man-lägger-till-ett-nytt-verktyg--steg-för-steg).
 - **Server-renderad header/footer**: header/footer injiceras via JS idag (`partials.js`), vilket är svagare för sökmotorer utan JS-rendering än server-side HTML. Fungerar för Google idag men är en framtida förbättring.
