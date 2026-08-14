@@ -11,17 +11,19 @@ Radar är en statisk sajt (HTML/CSS/vanilla JS, ingen backend) som:
 
 ## Launch checklist
 
-Snabb överblick – se respektive avsnitt nedan för detaljer. Bocka av i den här ordningen:
+Gör i exakt den här ordningen. Varje steg länkar till avsnittet med detaljer.
 
-- [ ] **Sätt riktig produktionsdomän** i `data/site.json` → `siteUrl` (idag placeholder `https://radar.se`), kör `npm run build`, committa. Uppdatera även `<link rel="canonical">`/OG-URL:er i `index.html` och `quiz.html` till samma domän (kategorisidorna görs automatiskt av generatorn).
-- [ ] **Fyll i minst 2–3 till affiliate-länkar** på riktigt (se prioritetstabellen under [Affiliate-länkar](#affiliate-länkar-tracking--disclosure)) – Copy.ai, ClickUp AI och Rytr är högst prioriterade.
-- [ ] **Sätt Production Branch i Vercel** till er faktiska produktionsbranch (se [Deploy](#deploy-vercel)).
-- [ ] **(Valfritt men rekommenderat) Slå på analytics** – `data/site.json` → `analytics.enabled: true` + `domain` när ni har ett Plausible/Fathom-konto.
-- [ ] **(Valfritt) Koppla nyhetsbrevet** till en riktig leverantör – `data/site.json` → `newsletter.endpoint` (se [Nyhetsbrev](#nyhetsbrev)).
-- [ ] **Låt någon GDPR-kunnig stämma av** `gdpr`-fälten i `tools.json` innan ni marknadsför GDPR-vänlighet aggressivt (se [GDPR-bedömningar](#gdpr-bedömningar--viktig-brasklapp)).
-- [ ] Kör `npm run build` en sista gång, kontrollera att `git status` är rent efteråt (byggsteget ska vara deterministiskt), committa, pusha.
+1. **[ ] Sätt Production Branch i Vercel** till er faktiska produktionsbranch. Vercel Dashboard → projektet → **Settings → Git → Production Branch**. Se [Deploy](#deploy-vercel) för hela flödet.
+2. **[ ] Byt ut de 11 `?ref=radar-pending`-länkarna** mot riktiga, godkända affiliate-koder – en rad per verktyg i `data/tools.json` (`affiliateUrl`), följt av `npm run build`. Prioritetsordning + direktlänkar till varje programs ansökningssida finns under [Affiliate-länkar](#affiliate-länkar-tracking--disclosure). Börja med Copy.ai, Make och ClickUp AI (högst uppgiven provision).
+3. **[ ] Koppla ett analyticskonto** (Plausible eller Fathom) – skapa kontot, sätt sedan `data/site.json` → `analytics.domain` + `analytics.enabled: true`. Se [Analytics](#analytics).
+4. **[ ] Koppla nyhetsbrevet** till en riktig leverantör – `data/site.json` → `newsletter.endpoint`. Buttondown/ConvertKit/Loops kräver ingen egen backend. Se [Nyhetsbrev](#nyhetsbrev).
+5. **[x] OG-bild** – klar, `assets/og-image.png` (1200×630) är genererad och kopplad på alla sidor. Valfritt: byt ut mot en egen designad version (se [OG-bild](#og-bild) för hur).
+6. **[ ] Byt domän i config** – kör `npm run set-site-url -- https://din-riktiga-domän.se` från repo-roten (ETT kommando, uppdaterar allt automatiskt). Se [Byta produktionsdomän](#byta-produktionsdomän).
+7. **[ ] Första trafikkälla** – ett färdigt utkast till en Reddit-post finns i [Första trafikkälla](#första-trafikkälla), redo att kopieras och postas.
 
-Allt annat (fler verktyg, riktig klickloggning, SEO-finslipning) kan läggas till löpande efter launch utan att blockera den.
+**Innan ni kör steg 1–7:** låt någon GDPR-kunnig stämma av `gdpr`-fälten i `tools.json` om ni tänker marknadsföra GDPR-vänlighet aktivt (se [GDPR-bedömningar](#gdpr-bedömningar--viktig-brasklapp)) – inte blockerande för launch, men bör göras innan ni skalar upp marknadsföringen.
+
+Efter steg 1–7: kör `npm run build` en sista gång, kontrollera att `git status` är rent efteråt (byggsteget ska vara deterministiskt), committa, pusha. Allt annat (fler verktyg, riktig klickloggning till en backend, SEO-finslipning) kan läggas till löpande efter launch utan att blockera den.
 
 ## Struktur
 
@@ -218,8 +220,45 @@ Fälten `gdpr.score` och `gdpr.notes` i `tools.json` är redaktionella, generell
 
 - **`sitemap.xml` och `robots.txt`** genereras av `scripts/generate-sitemap.js` från `data/site.json` (`siteUrl`) + `data/categories.json`, körs som en del av `npm run build`. `robots.txt` blockerar `/go/` (ren redirect-nytta, inget att indexera) och pekar på sitemapen.
 - **JSON-LD:** `WebSite`-schema med en `SearchAction` mot quizet på `index.html`; `CollectionPage` + `ItemList` av `SoftwareApplication` på varje kategorisida, genererat från samma `tools.json`-data som korten. Medvetet **ingen** `AggregateRating`/`Review`-schema – vi har inga riktiga användarrecensioner, och att fabricera betyg strider mot Googles riktlinjer för strukturerad data.
-- **Open Graph + Twitter Card:** title/description/type/url/locale på alla sidor, unika per sida (inte kopierade från startsidan).
-- **Saknas fortfarande:** en riktig OG-bild (1200×630 px) – just nu finns ingen `og:image`-tagg, vilket ger en sämre förhandsvisning vid delning i sociala medier. Lägg till en bild i `/assets/og-image.png` och en `og:image`-tagg när ni har en designad bild.
+- **Open Graph + Twitter Card:** title/description/type/url/locale/image på alla sidor, unika per sida (inte kopierade från startsidan). `twitter:card` är `summary_large_image` för en stor förhandsvisningsbild.
+
+## OG-bild
+
+`assets/og-image.png` (1200×630 px, ~210 KB) är klar och kopplad via `og:image`/`twitter:image` på alla sidor – index, quiz och samtliga kategorisidor (kategorisidorna delar samma bild via `{{OG_IMAGE_URL}}` i generatorn, byggt från `data/site.json` → `siteUrl`).
+
+**Vill ni ha en egen, mer polerad bild?** Två sätt:
+
+1. **Redigera källan och rendera om** – `assets/og-image-source.html` är en fristående, självförsörjande HTML-fil (inline CSS, ingen extern font/nätverksberoende) med exakt samma text som hero-sektionen på startsidan. Ändra texten/färgerna där, rendera sedan om till PNG med valfritt verktyg, t.ex. med Chrome/Chromium installerat lokalt:
+
+   ```bash
+   google-chrome --headless --disable-gpu --window-size=1200,630 \
+     --screenshot=assets/og-image.png assets/og-image-source.html
+   ```
+
+   (På Mac: byt `google-chrome` mot sökvägen till Chrome.app, eller använd Playwright/Puppeteer om ni redan har det installerat – rendera med viewport exakt 1200×630 och `deviceScaleFactor: 1`.)
+
+2. **Designa från scratch i Canva eller Figma:**
+   - Skapa en ny design med **exakt 1200×630 px**.
+   - Håll er till Radars färgpalett: bakgrund `#0b0d12` (nästan svart), accentfärg `#7c9eff` (ljusblå), text `#f2f4f8` (nästan vit), dämpad text `#a2a9ba`.
+   - Inkludera logotypen (📡-emoji eller en enkel prick + "Radar"-ordmärke) och en kort rubrik, t.ex. "Hitta rätt AI-verktyg på 60 sekunder".
+   - Exportera som PNG, döp filen till `og-image.png`, och lägg den i `/assets/og-image.png` i repot (skriv över den befintliga filen).
+   - Inga kodändringar krävs – alla `og:image`-taggar pekar redan på den filen.
+
+## Byta produktionsdomän
+
+Rör inte `data/site.json` → `siteUrl` för hand. Kör istället, från repo-roten:
+
+```bash
+npm run set-site-url -- https://din-riktiga-domän.se
+```
+
+Det här ETT kommandot (`scripts/set-site-url.js`):
+
+1. Uppdaterar `siteUrl` i `data/site.json`.
+2. Ersätter domänen i `index.html` och `quiz.html` – de **enda** handskrivna filerna där domänen är hårdkodad (i `<link rel="canonical">`, OG-taggar, JSON-LD).
+3. Kör `npm run build` automatiskt, vilket regenererar `kategori/*.html`, `sitemap.xml` och `robots.txt` – de läser redan `siteUrl` dynamiskt från `data/site.json` och behöver aldrig redigeras för hand.
+
+Verifierat med ett fullständigt rundtursstest (bytt till en testdomän och tillbaka) – korrekt URL-normalisering (inklusive punycode för icke-ASCII-domäner) och `git diff` helt ren efteråt. Kör `git diff` efter kommandot för att se exakt vad som ändrades, committa, pusha.
 
 ## Nyhetsbrev
 
@@ -273,19 +312,45 @@ Repot kräver ingen extra konfiguration – `vercel.json` + `package.json` gör 
 
 Ingen serverdel, ingen databas, inga API-nycklar krävs – statisk hosting räcker för hela sajten som den ser ut idag.
 
+## Första trafikkälla
+
+Ett färdigt utkast, redo att kopieras. Föreslagen kanal: **r/foretagande** (svensk subreddit för företagare/soloentreprenörer – naturlig målgrupp för AI-verktygstips) eller motsvarande nordisk Facebook-grupp/LinkedIn. Kolla subredditens regler för självpromotion innan ni postar (de flesta kräver att man är transparent med att man är skaparen, vilket utkastet nedan redan är).
+
+**Rubrik:**
+
+> Byggde ett quiz som rankar AI-verktyg efter GDPR, pris och vad du faktiskt ska göra – inte efter vem som betalar mest
+
+**Brödtext:**
+
+> Hej! Jag har byggt Radar – en liten sajt som jämför AI- och produktivitetsverktyg för svenska/nordiska förhållanden.
+>
+> Bakgrunden: jag var trött på "bäst i test"-listor som känns sponsrade och som sällan tar upp GDPR eller var datan faktiskt lagras.
+>
+> Så jag gjorde ett 60-sekunders quiz som viktar rekommendationer efter budget, hur viktigt GDPR är för dig, teknisk nivå och vad du prioriterar mest – och visar *varför* just de verktygen föreslås, inte bara en generisk topplista.
+>
+> 👉 **[LÄNK TILL /quiz.html – byt ut innan ni postar]**
+>
+> Sajten är oberoende – vissa länkar är annonslänkar (tydligt märkta), men de påverkar aldrig rankingen. Skulle uppskatta feedback, särskilt om något verktyg saknas eller om någon GDPR-bedömning känns fel!
+
+**Innan ni postar:**
+- Byt `[LÄNK TILL /quiz.html]` mot er riktiga URL (Vercel-preview funkar för en första mjuk-launch, men helst er riktiga domän om steg 6 i checklistan är klart).
+- Läs igenom subredditens regler – de flesta (inkl. r/foretagande) tillåter transparent "jag byggde det här"-inlägg men inte ren reklam.
+- Svara på kommentarer samma dag – tidig respons är det som avgör om ett sånt här inlägg lyfter eller dör tyst.
+
 ## Status inför launch – vad saknas innan vi kör trafik
 
 | Klart ✅ | Saknas innan riktig trafik ⚠️ |
 |---|---|
-| Quiz + viktad ranking (20 verktyg, testad stabil efter varje datauppdatering) | Riktig produktionsdomän i `data/site.json` (idag placeholder) |
-| Alla utgående länkar via `/go/`, inkl. sekundärlänkar, med UTM-spårning | Riktiga affiliate-koder för fler än 3 av 14 möjliga verktyg (se prioritetstabell) |
+| Quiz + viktad ranking (20 verktyg, testad stabil efter varje datauppdatering) | Production Branch måste sättas i Vercel-dashboarden manuellt (checklista steg 1) |
+| Alla utgående länkar via `/go/`, inkl. sekundärlänkar, med UTM-spårning – verifierat noll direkta externa länkar kvar | Riktiga affiliate-koder för 11 av 14 möjliga verktyg (checklista steg 2) |
 | Klickloggning (console + localStorage, redo att uppgraderas med en rad) | Klickloggning kopplad till en riktig backend/endpoint |
-| Nyhetsbrevs-POST (kod klar, väntar på en riktig leverantörs-endpoint) | Ett faktiskt nyhetsbrevskonto (Buttondown/ConvertKit/Loops/Resend) |
-| Analytics-loader (kod klar, av som standard) | Ett faktiskt analytics-konto (Plausible/Fathom/Vercel Analytics) |
-| Disclosure i tre lager (kort, kategorisida, footer) | Juridisk genomgång av GDPR-bedömningarna i `tools.json` |
-| sitemap.xml, robots.txt, JSON-LD, OG-taggar, unika title/description | En riktig OG-bild (1200×630) för sociala delningar |
-| Deploy-konfiguration (Vercel, `npm run build`), verifierat deterministisk | Production Branch måste sättas i Vercel-dashboarden manuellt |
-| Mobilanpassat, mörkt tema | – |
+| Analytics-loader (kod klar, av som standard) | Ett faktiskt analyticskonto (checklista steg 3) |
+| Nyhetsbrevs-POST (kod klar, väntar på en riktig leverantörs-endpoint) | Ett faktiskt nyhetsbrevskonto (checklista steg 4) |
+| **OG-bild (1200×630)** – klar, genererad och kopplad överallt | Juridisk genomgång av GDPR-bedömningarna i `tools.json` |
+| **Ett-kommandos domänbyte** (`npm run set-site-url`), testat rundtur | Riktig produktionsdomän ännu inte satt (checklista steg 6 – kommandot finns, bara att köra det) |
+| sitemap.xml, robots.txt, JSON-LD, OG-taggar, unika title/description | Färdigt utkast till första Reddit-post finns – bara att posta (checklista steg 7) |
+| Deploy-konfiguration (Vercel, `npm run build`), verifierat deterministisk | – |
+| Mobilanpassat, mörkt tema, verifierat ingen horisontal overflow på 375px | – |
 
 ## Nästa steg (inte byggt än)
 
