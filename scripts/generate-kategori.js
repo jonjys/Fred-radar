@@ -36,6 +36,7 @@ for (const category of categories) {
 
   const title = `${category.name} – bästa AI-verktygen 2026 | Radar`;
   const canonicalUrl = `${site.siteUrl}/kategori/${category.id}.html`;
+  const ogImageUrl = `${site.siteUrl}/assets/og-image.png`;
 
   // Ingen AggregateRating/Review-schema här medvetet – vi har inga riktiga
   // användarrecensioner, och att fabricera betyg strider mot Googles
@@ -76,6 +77,7 @@ for (const category of categories) {
     .replaceAll("{{CATEGORY_INTRO}}", category.intro)
     .replaceAll("{{TOOL_COUNT}}", String(matchingTools.length))
     .replaceAll("{{CANONICAL_URL}}", canonicalUrl)
+    .replaceAll("{{OG_IMAGE_URL}}", ogImageUrl)
     .replaceAll("{{JSON_LD}}", JSON.stringify(jsonLd, null, 2))
     .replaceAll("{{TOOL_CARDS}}", cardsHTML || "<p class=\"empty-state\">Inga verktyg i den här kategorin ännu.</p>");
 
