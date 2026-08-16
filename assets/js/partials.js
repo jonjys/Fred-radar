@@ -93,8 +93,18 @@
     `;
   }
 
+  function loadScript(src) {
+    if (document.querySelector('script[src="' + src + '"]')) return;
+    const s = document.createElement("script");
+    s.src = src;
+    s.defer = true;
+    document.body.appendChild(s);
+  }
+
   document.addEventListener("DOMContentLoaded", () => {
     renderHeader();
     renderFooter();
+    loadScript("/assets/js/homepage-stats.js");
+    loadScript("/assets/js/recently-viewed.js");
   });
 })();
