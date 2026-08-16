@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0b0d12"/>
+      <stop offset="100%" style="stop-color:#12151c"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="630" fill="url(#bg)"/>
+  <circle cx="1050" cy="120" r="180" fill="#7c9eff" opacity="0.08"/>
+  <circle cx="150" cy="520" r="140" fill="#7c9eff" opacity="0.06"/>
+  <text x="80" y="220" font-family="Inter, system-ui, sans-serif" font-size="72" font-weight="800" fill="#f2f4f8">Radar</text>
+  <text x="80" y="300" font-family="Inter, system-ui, sans-serif" font-size="36" font-weight="500" fill="#a2a9ba">Hitta rätt AI-verktyg på 60 sekunder</text>
+  <text x="80" y="380" font-family="Inter, system-ui, sans-serif" font-size="24" fill="#7c9eff">Personliga rekommendationer · GDPR · Nordiskt fokus</text>
+  <rect x="80" y="450" width="220" height="48" rx="10" fill="#7c9eff"/>
+  <text x="190" y="482" font-family="Inter, system-ui, sans-serif" font-size="20" font-weight="600" fill="#0b0d12" text-anchor="middle">Ta quizet →</text>
+</svg>
