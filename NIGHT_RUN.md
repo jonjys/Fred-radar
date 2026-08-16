@@ -1,27 +1,26 @@
-# Night run 2026-08-16
+# Night run 2026-08-17
 
-## Shipped while you slept
+## Shipped while you slept (round 2)
 
-1. **Dynamic tool count** on homepage (was hard-coded 18, now 21)
-2. **OG image** (`assets/og-image.svg`) + wired on index + quiz
-3. **Share results** button on quiz (Web Share API + clipboard fallback)
-4. **Keyboard shortcuts** in quiz: 1–5 select, Enter next, Backspace/Esc back
-5. **`npm run set-site-url -- https://din-domän.se`** script
-6. **Perplexity Pro** added as tool #21 (research with sources)
-7. Categories regenerated
+1. **index.html** – OG-bild, dynamiskt verktygsantal, homepage-stats wired
+2. **Perplexity Pro** + **Gamma** tillagda (22 verktyg totalt)
+3. **Senast tittat på** – lokal historik av verktyg du klickat vidare till
+4. **Quiz** – dela resultat + tangentbord (redan live)
+5. **prefers-reduced-motion** – tillgänglighet
+6. **set-site-url** – `npm run set-site-url -- https://din-domän.se`
+7. Kategorisidor regenererade
 
 ## Still needs you (human)
 
-- Set Production Branch in Vercel
-- Real affiliate codes (start with Make, ClickUp, Copy.ai)
-- Domain via `npm run set-site-url -- https://...`
-- Analytics + newsletter accounts
-- Legal GDPR review before aggressive marketing
+1. Vercel → Settings → Git → **Production Branch** = `main`
+2. Riktiga affiliate-koder (Make, ClickUp, Copy.ai först)
+3. `npm run set-site-url -- https://...` när DNS är klart
+4. Analytics + nyhetsbrev-konton
+5. Juridisk GDPR-koll innan aggressiv marknadsföring
 
-## How to verify
+## Verify
 
 ```bash
-npm run build
-npm run serve
-# open http://localhost:3000
+git pull
+npm run build && npm run serve
 ```
