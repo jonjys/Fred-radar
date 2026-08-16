@@ -105,6 +105,12 @@
     renderHeader();
     renderFooter();
     loadScript("/assets/js/homepage-stats.js");
+    if (!document.querySelector('link[href="/assets/css/a11y.css"]')) {
+      const l = document.createElement("link");
+      l.rel = "stylesheet";
+      l.href = "/assets/css/a11y.css";
+      document.head.appendChild(l);
+    }
     loadScript("/assets/js/recently-viewed.js");
   });
 })();
