@@ -2,4 +2,4 @@ User-agent: *
 Allow: /
 Disallow: /go/
 
-Sitemap: https://radar.se/sitemap.xml
+Sitemap: https://fred-radar.vercel.app/sitemap.xml
