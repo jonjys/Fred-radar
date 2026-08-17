@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="sv">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Alternativ till Meta AI | FRED-Radar</title>
+  <meta name="description" content="Hitta alternativ till Meta AI – gratis AI för chatt, kod och bilder." />
+  <link rel="canonical" href="https://fred-radar.vercel.app/alternativ/meta-ai.html" />
+  <meta property="og:site_name" content="FRED-Radar" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/assets/css/style.css" />
+</head>
+<body>
+  <div id="site-header"></div>
+  <main>
+    <section class="hero" style="padding-top:48px">
+      <div class="wrap">
+        <span class="eyebrow">Alternativ</span>
+        <h1>Alternativ till ∞ Meta AI</h1>
+        <p class="lead">Gratis allround-AI – jämför med ChatGPT Free, Claude Free, Gemini och fler.</p>
+        <a class="btn btn-primary" href="/go/?tool=meta-ai&src=alternativ-static" target="_blank" rel="sponsored noopener">Besök Meta AI</a>
+        <a class="btn btn-ghost" href="/alternativ.html?tool=meta-ai">Byt verktyg</a>
+      </div>
+    </section>
+    <section><div class="wrap" id="alts"><p>Laddar alternativ…</p></div></section>
+  </main>
+  <div id="site-footer"></div>
+  <script src="/assets/js/tool-card-template.js"></script>
+  <script src="/assets/js/tools-data.js"></script>
+  <script src="/assets/js/partials.js"></script>
+  <script>
+    (async function () {
+      const { tools } = await window.RadarData.load();
+      const source = tools.find((t) => t.id === "meta-ai");
+      const cats = new Set((source && source.categories) || []);
+      const alts = tools.filter((t) => t.id !== "meta-ai" && (t.categories || []).some((c) => cats.has(c))).sort((a, b) => b.score - a.score).slice(0, 6);
+      document.getElementById("alts").innerHTML = '<div class="tool-grid">' + alts.map(function (t, i) {
+        return '<article class="tool-card"><span class="result-rank">' + (i + 1) + '</span><div class="tool-card-top"><div class="tool-logo">' + (t.logo || '') + '</div><div class="tool-heading"><h3>' + t.name + '</h3><p class="tagline">' + (t.tagline || '') + '</p></div></div><div class="tool-actions"><a class="btn btn-primary" href="/go/?tool=' + t.id + '&src=alt" target="_blank" rel="sponsored noopener">Besök</a></div></article>';
+      }).join('') + '</div>';
+    })();
+  </script>
+</body>
+</html>

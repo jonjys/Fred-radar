@@ -3,19 +3,15 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Fred-Radar – Hitta rätt AI-verktyg på 60 sekunder</title>
-  <meta name="description" content="Ta Fred-Radars 60-sekundersquiz och få en personlig, viktad ranking av AI-verktyg baserat på budget, GDPR och teknisk nivå – anpassat för svenska och nordiska användare." />
+  <title>FRED-Radar – Hitta rätt AI-verktyg på 60 sekunder</title>
+  <meta name="description" content="Ta FRED-Radars quiz och få en personlig ranking av AI-verktyg – budget, GDPR och svensk support." />
   <link rel="canonical" href="https://fred-radar.vercel.app/" />
-  <meta property="og:type" content="website" />
-  <meta property="og:site_name" content="Fred-Radar" />
-  <meta property="og:url" content="https://fred-radar.vercel.app/" />
-  <meta property="og:title" content="Fred-Radar – Hitta rätt AI-verktyg på 60 sekunder" />
-  <meta property="og:description" content="Ta Fred-Radars 60-sekundersquiz och få en personlig, viktad ranking av AI-verktyg." />
+  <link rel="alternate" hreflang="sv" href="https://fred-radar.vercel.app/" />
+  <link rel="alternate" hreflang="en" href="https://fred-radar.vercel.app/" />
+  <meta property="og:site_name" content="FRED-Radar" />
+  <meta property="og:title" content="FRED-Radar – Hitta rätt AI-verktyg på 60 sekunder" />
   <meta property="og:locale" content="sv_SE" />
-  <meta property="og:image" content="https://fred-radar.vercel.app/assets/og-image.svg" />
-  <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="Fred-Radar – Hitta rätt AI-verktyg på 60 sekunder" />
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📡</text></svg>" />
+  <meta property="og:url" content="https://fred-radar.vercel.app/" />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="/assets/css/style.css" />
 </head>
@@ -24,47 +20,26 @@
   <main>
     <section class="hero">
       <div class="wrap">
-        <span class="eyebrow">🇸🇪 Byggt för svenska & nordiska förhållanden</span>
+        <span class="eyebrow">🇸🇪 Byggt för svenska &amp; nordiska förhållanden</span>
         <h1>Sluta gissa. Hitta ditt AI-verktyg på 60 sekunder.</h1>
-        <p class="lead">Fred-Radar väger pris, kvalitet och GDPR för varje verktyg – och visar exakt <em>varför</em> ett verktyg passar dig.</p>
+        <p class="lead">FRED-Radar väger pris, kvalitet och GDPR – och visar varför ett verktyg passar dig.</p>
         <div class="hero-actions">
           <a class="btn btn-primary" href="/quiz.html">Ta 60-sekundersquizet →</a>
           <a class="btn btn-ghost" href="#kategorier">Bläddra i kategorier</a>
         </div>
         <div class="hero-stats">
           <div class="stat"><span class="num" id="toolCount">–</span><span class="lbl">verktyg jämförda</span></div>
-          <div class="stat"><span class="num">3</span><span class="lbl">kategorier</span></div>
-          <div class="stat"><span class="num">0 kr</span><span class="lbl">att använda Fred-Radar</span></div>
+          <div class="stat"><span class="num">6</span><span class="lbl">kategorier</span></div>
+          <div class="stat"><span class="num">0 kr</span><span class="lbl">att använda FRED-Radar</span></div>
           <div class="stat"><span class="num">100%</span><span class="lbl">oberoende ranking</span></div>
         </div>
+        <p style="margin-top:12px;font-size:0.85rem;color:var(--text-muted)">Senast tillagda: <strong>Meta AI 2026-08-15</strong></p>
       </div>
     </section>
-    <section id="kategorier">
-      <div class="wrap">
-        <h2>Kategorier</h2>
-        <div class="category-grid" id="categoryGrid"></div>
-      </div>
-    </section>
-    <section>
-      <div class="wrap">
-        <h2>Utvalda verktyg</h2>
-        <div class="tool-grid" id="featuredGrid"></div>
-      </div>
-    </section>
-    <section id="om">
-      <div class="wrap">
-        <span class="kicker">Om Fred-Radar</span>
-        <h2>Oberoende ranking</h2>
-        <p class="lead">Fred-Radar är byggt för svenska och nordiska användare. Pris, kvalitet, GDPR – ranking påverkas inte av affiliate.</p>
-      </div>
-    </section>
-    <section>
-      <div class="wrap" style="text-align:center;">
-        <a class="btn btn-primary" href="/quiz.html">Ta quizet nu →</a>
-        <a class="btn btn-ghost" href="/basta.html">Bästa listor</a>
-        <a class="btn btn-ghost" href="/alternativ.html">Alternativ</a>
-      </div>
-    </section>
+    <section id="kategorier"><div class="wrap"><h2>Kategorier</h2><div class="category-grid" id="categoryGrid"></div></div></section>
+    <section><div class="wrap"><h2>Utvalda verktyg</h2><div class="tool-grid" id="featuredGrid"></div></div></section>
+    <section id="om"><div class="wrap"><span class="kicker">Om FRED-Radar</span><h2>Oberoende ranking</h2><p class="lead">Pris, kvalitet, GDPR – ranking påverkas inte av affiliate.</p></div></section>
+    <section><div class="wrap" style="text-align:center"><a class="btn btn-primary" href="/quiz.html">Ta quizet nu →</a> <a class="btn btn-ghost" href="/basta.html">Bästa listor</a> <a class="btn btn-ghost" href="/alternativ.html">Alternativ</a></div></section>
   </main>
   <div id="site-footer"></div>
   <script src="/assets/js/tool-card-template.js"></script>
@@ -78,7 +53,7 @@
       if (categoryGrid) {
         categoryGrid.innerHTML = categories.map((c) => {
           const count = tools.filter((t) => t.categories.includes(c.id)).length;
-          return `<a class="category-card" href="/kategori/${c.id}.html"><div class="icon">${c.icon}</div><h3>${c.name}</h3><p>${c.description}</p><span class="count">${count} verktyg →</span></a>`;
+          return '<a class="category-card" href="/kategori/' + c.id + '.html"><div class="icon">' + c.icon + '</div><h3>' + c.name + '</h3><p>' + c.description + '</p><span class="count">' + count + ' verktyg →</span></a>';
         }).join("");
       }
       const featuredGrid = document.getElementById("featuredGrid");
