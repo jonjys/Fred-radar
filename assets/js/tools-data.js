@@ -1,30 +1,37 @@
 /**
- * Hämtar tools.json + tools-extra*.json och categories.
+ * Hämtar tools.json (+ valfria tools-extra*.json) i klienten.
  */
 window.RadarData = (function () {
   let cache = null;
 
+  async function loadJson(path) {
+    try {
+      const r = await fetch(path);
+      if (!r.ok) return null;
+      return await r.json();
+    } catch (e) {
+      return null;
+    }
+  }
+
   async function load() {
     if (cache) return cache;
-    const [tools, categories, extra, extra2] = await Promise.all([
-      fetch("/data/tools.json").then((r) => r.json()),
-      fetch("/data/categories.json").then((r) => r.json()),
-      fetch("/data/tools-extra.json").then((r) => (r.ok ? r.json() : [])).catch(() => []),
-      fetch("/data/tools-extra-2.json").then((r) => (r.ok ? r.json() : [])).catch(() => []),
+    const [toolsMain, categories, extra] = await Promise.all([
+      loadJson("/data/tools.json"),
+      loadJson("/data/categories.json"),
+      loadJson("/data/tools-extra-free.json"),
     ]);
-    const ids = new Set(tools.map((t) => t.id));
-    for (const t of [].concat(extra || [], extra2 || [])) {
-      if (t && t.id && !ids.has(t.id)) {
-        tools.push(t);
-        ids.add(t.id);
-      }
+    let tools = Array.isArray(toolsMain) ? toolsMain.slice() : [];
+    if (Array.isArray(extra)) {
+      const byId = new Map(tools.map((t) => [t.id, t]));
+      for (const t of extra) byId.set(t.id, t);
+      tools = Array.from(byId.values());
     }
-    cache = { tools, categories };
+    cache = { tools, categories: categories || [] };
     return cache;
   }
 
-  const T = window.ToolCardTemplate;
-
+  const T = window.ToolCardTemplate || {};
   return {
     load,
     toolCardHTML: T.toolCardHTML,
