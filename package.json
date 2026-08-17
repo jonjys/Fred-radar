@@ -1,12 +1,13 @@
 {
-  "name": "radar",
-  "version": "0.4.0",
+  "name": "fred-radar",
+  "version": "0.5.0",
   "private": true,
-  "description": "Radar – smarta rekommendationer och jämförelser av AI- och produktivitetsverktyg för svenska och nordiska användare.",
+  "description": "Fred-Radar – smarta rekommendationer och jämförelser av AI- och produktivitetsverktyg för svenska och nordiska användare.",
   "scripts": {
     "build:kategori": "node scripts/generate-kategori.js",
+    "build:alternativ": "node scripts/generate-alternativ.js",
     "build:sitemap": "node scripts/generate-sitemap.js",
-    "build": "npm run build:kategori && npm run build:sitemap",
+    "build": "npm run build:kategori && npm run build:alternativ && npm run build:sitemap",
     "serve": "npx --yes serve . -l 3000",
     "set-site-url": "node scripts/set-site-url.js"
   },
