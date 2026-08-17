@@ -22,5 +22,21 @@
     "icon": "⚡",
     "description": "AI-drivna verktyg för planering, projektledning och att få mer gjort.",
     "intro": "AI-drivna produktivitetsverktyg som hjälper dig planera, prioritera och hålla koll – rankade utifrån verklig nytta, inte marknadsföring."
+  },
+  {
+    "id": "ai-code",
+    "name": "AI-kodverktyg",
+    "shortName": "Kod",
+    "icon": "⌨️",
+    "description": "AI-assistenter för kod, refaktorering och att bygga mjukvara snabbare.",
+    "intro": "Jämförelse av AI-kodverktyg för utvecklare – från autocomplete till fulla agent-workflows."
+  },
+  {
+    "id": "ai-voice",
+    "name": "AI-röst & video",
+    "shortName": "Röst/Video",
+    "icon": "🎙️",
+    "description": "Text-till-tal, AI-avatarer, podcast- och videoverktyg.",
+    "intro": "Verktyg för AI-genererad röst och video – rankade efter kvalitet, pris och användarvänlighet."
   }
 ]

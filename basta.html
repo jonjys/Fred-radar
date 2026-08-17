@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="sv">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Bäst just nu – Radar</title>
+  <meta name="description" content="Korta topplistor: bästa AI-verktygen för text, bild, kod, röst och produktivitet – rankade för nordiska användare." />
+  <link rel="canonical" href="https://radar.se/basta.html" />
+  <meta property="og:title" content="Bäst just nu – Radar" />
+  <meta property="og:image" content="https://radar.se/assets/og-image.svg" />
+  <link rel="stylesheet" href="/assets/css/style.css" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📡</text></svg>" />
+</head>
+<body>
+  <div id="site-header"></div>
+  <main>
+    <section class="hero" style="padding:48px 0 24px;">
+      <div class="wrap">
+        <span class="eyebrow">Topplistor</span>
+        <h1>Bäst just nu</h1>
+        <p class="lead">Korta listor per kategori. Vill du ha personlig ranking? <a href="/quiz.html" style="color:var(--accent);">Ta quizet</a>.</p>
+      </div>
+    </section>
+    <section>
+      <div class="wrap">
+        <div id="lists"></div>
+      </div>
+    </section>
+  </main>
+  <div id="site-footer"></div>
+  <script src="/assets/js/tool-card-template.js"></script>
+  <script src="/assets/js/tools-data.js"></script>
+  <script src="/assets/js/i18n.js"></script>
+  <script src="/assets/js/partials.js"></script>
+  <script>
+    (async function () {
+      const { tools, categories } = await window.RadarData.load();
+      const host = document.getElementById("lists");
+      host.innerHTML = categories.map((c) => {
+        const top = tools.filter((t) => t.categories.includes(c.id)).sort((a,b) => b.score - a.score).slice(0, 3);
+        if (!top.length) return "";
+        return `
+          <div style="margin-bottom:40px;">
+            <div class="section-head">
+              <span class="kicker">${c.icon} ${c.name}</span>
+              <h2>Topp 3</h2>
+              <p><a href="/kategori/${c.id}.html" style="color:var(--accent);">Se alla i kategorin →</a></p>
+            </div>
+            <div class="tool-grid">
+              ${top.map((t,i) => window.RadarData.toolCardHTML(t, { showFeaturedBadge: i===0, context: "index" })).join("")}
+            </div>
+          </div>`;
+      }).join("");
+    })();
+  </script>
+</body>
+</html>

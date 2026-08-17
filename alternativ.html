@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="sv">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Alternativ till populära AI-verktyg – Radar</title>
+  <meta name="description" content="Hitta alternativ till ChatGPT, Midjourney, Notion AI och fler – filtrerat efter kategori." />
+  <link rel="canonical" href="https://radar.se/alternativ.html" />
+  <link rel="stylesheet" href="/assets/css/style.css" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📡</text></svg>" />
+</head>
+<body>
+  <div id="site-header"></div>
+  <main>
+    <section class="hero" style="padding:48px 0 24px;">
+      <div class="wrap">
+        <span class="eyebrow">Alternativ</span>
+        <h1>Trött på standardvalet?</h1>
+        <p class="lead">Välj ett verktyg du redan känner till – se starka alternativ i samma kategori.</p>
+        <div style="max-width:400px;margin:24px auto 0;">
+          <select id="toolSelect" style="width:100%;padding:12px;border-radius:10px;background:var(--bg-card);color:var(--text);border:1px solid var(--border);font-size:1rem;">
+            <option value="">Välj verktyg…</option>
+          </select>
+        </div>
+      </div>
+    </section>
+    <section>
+      <div class="wrap">
+        <div class="tool-grid" id="altGrid"></div>
+        <p id="altEmpty" class="empty-state">Välj ett verktyg ovan.</p>
+      </div>
+    </section>
+  </main>
+  <div id="site-footer"></div>
+  <script src="/assets/js/tool-card-template.js"></script>
+  <script src="/assets/js/tools-data.js"></script>
+  <script src="/assets/js/i18n.js"></script>
+  <script src="/assets/js/partials.js"></script>
+  <script>
+    (async function () {
+      const { tools } = await window.RadarData.load();
+      const sel = document.getElementById("toolSelect");
+      const grid = document.getElementById("altGrid");
+      const empty = document.getElementById("altEmpty");
+      tools.slice().sort((a,b)=>a.name.localeCompare(b.name,"sv")).forEach((t) => {
+        const o = document.createElement("option");
+        o.value = t.id;
+        o.textContent = t.name;
+        sel.appendChild(o);
+      });
+      sel.addEventListener("change", () => {
+        const base = tools.find((t) => t.id === sel.value);
+        if (!base) { grid.innerHTML = ""; empty.style.display = "block"; return; }
+        empty.style.display = "none";
+        const cat = base.categories[0];
+        const alts = tools
+          .filter((t) => t.id !== base.id && t.categories.includes(cat))
+          .sort((a,b) => b.score - a.score)
+          .slice(0, 6);
+        grid.innerHTML = alts.length
+          ? alts.map((t) => window.RadarData.toolCardHTML(t, { context: "index" })).join("")
+          : "<p class='empty-state'>Inga alternativ i samma kategori ännu.</p>";
+      });
+    })();
+  </script>
+</body>
+</html>
