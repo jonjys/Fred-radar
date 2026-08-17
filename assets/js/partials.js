@@ -6,6 +6,8 @@
     { id: "ai-writing", nameKey: "nav.writing", name: "AI-skrivverktyg" },
     { id: "ai-image", nameKey: "nav.image", name: "AI-bildverktyg" },
     { id: "produktivitet", nameKey: "nav.productivity", name: "Produktivitet" },
+    { id: "ai-code", nameKey: "nav.code", name: "AI-kod" },
+    { id: "ai-voice", nameKey: "nav.voice", name: "Röst & video" },
   ];
 
   function currentPath() {
@@ -37,6 +39,7 @@
           <nav class="main-nav" id="mainNav">
             <a href="/" data-i18n="nav.home"${isCurrent("/") ? ' aria-current="page"' : ""}>Hem</a>
             ${categoryLinks}
+            <a href="/basta.html">Topplistor</a>
             <button type="button" class="lang-switch" id="langSwitch" aria-label="Switch language">EN</button>
             <a href="/quiz.html" class="nav-cta" data-i18n="nav.quiz">Ta quizet →</a>
           </nav>
@@ -65,7 +68,7 @@
 
     const year = new Date().getFullYear();
     const categoryLinks = CATEGORIES.map(
-      (c) => `<a href="/kategori/${c.id}.html" data-i18n="${c.nameKey}">${c.name}</a>`
+      (c) => `<a href="/kategori/${c.id}.html">${c.name}</a>`
     ).join("");
 
     el.innerHTML = `
@@ -74,20 +77,24 @@
           <div class="footer-grid">
             <div class="footer-col">
               <a class="brand" href="/"><span class="dot"></span> Radar</a>
-              <p style="max-width:280px;" data-i18n="footer.tagline">Smarta rekommendationer &amp; jämförelser av AI- och produktivitetsverktyg – anpassat för svenska och nordiska användare.</p>
+              <p style="max-width:280px;" data-i18n="footer.tagline">Smarta rekommendationer av AI-verktyg för nordiska användare.</p>
             </div>
             <div class="footer-col">
-              <h4>Radar</h4>
+              <h4>Utforska</h4>
               ${categoryLinks}
-              <a href="/quiz.html" data-i18n="nav.quiz">Ta quizet →</a>
+              <a href="/basta.html">Topplistor</a>
+              <a href="/alternativ.html">Alternativ</a>
+              <a href="/om.html">Om Radar</a>
+            </div>
+            <div class="footer-col">
+              <h4>Quiz</h4>
+              <a href="/quiz.html">Ta quizet →</a>
             </div>
           </div>
           <div class="disclosure">
-            <span data-i18n="footer.disclosure">Radar kan få provision när du klickar dig vidare till eller köper ett verktyg via länkarna på sajten. Det påverkar inte vad du betalar, och det styr inte våra rankingar.</span>
+            <span data-i18n="footer.disclosure">Radar kan få provision via annonslänkar. Det påverkar inte priset eller rankingen.</span>
           </div>
-          <div class="footer-bottom">
-            © ${year} Radar
-          </div>
+          <div class="footer-bottom">© ${year} Radar</div>
         </div>
       </footer>
     `;
