@@ -1,15 +1,8 @@
 {
   "siteUrl": "https://fred-radar.vercel.app",
-  "siteName": "Fred-Radar",
+  "siteName": "FRED-Radar",
   "locale": "sv_SE",
   "twitterHandle": "",
-  "analytics": {
-    "provider": "plausible",
-    "domain": "",
-    "enabled": false
-  },
-  "newsletter": {
-    "provider": "none",
-    "endpoint": ""
-  }
+  "analytics": { "provider": "plausible", "domain": "", "enabled": false },
+  "newsletter": { "provider": "none", "endpoint": "" }
 }

@@ -1,13 +1,13 @@
 /**
- * Delad header/footer för alla sidor. Injiceras i <div id="site-header">
- * och <div id="site-footer"> så navigationen bara behöver underhållas på
- * ett ställe – även på automatiskt genererade kategorisidor.
+ * Delad header/footer – FRED-Radar
  */
 (function () {
   const CATEGORIES = [
     { id: "ai-writing", name: "Skriv", full: "AI-skrivverktyg" },
     { id: "ai-image", name: "Bild", full: "AI-bildverktyg" },
     { id: "produktivitet", name: "Produktivitet", full: "Produktivitet" },
+    { id: "ai-code", name: "Kod", full: "AI för kod" },
+    { id: "ai-voice", name: "Röst", full: "Röst & transkribering" },
   ];
 
   function currentPath() {
@@ -33,7 +33,7 @@
       <header class="site-header">
         <div class="wrap">
           <a class="brand" href="/">
-            <span class="dot"></span> Fred-Radar
+            <span class="dot"></span> FRED-Radar
           </a>
           <button class="nav-toggle" id="navToggle" aria-label="Öppna meny" aria-expanded="false">☰</button>
           <nav class="main-nav" id="mainNav">
@@ -71,7 +71,7 @@
         <div class="wrap">
           <div class="footer-grid">
             <div class="footer-col">
-              <a class="brand" href="/"><span class="dot"></span> Fred-Radar</a>
+              <a class="brand" href="/"><span class="dot"></span> FRED-Radar</a>
               <p style="max-width:280px;">Smarta rekommendationer &amp; jämförelser av AI- och produktivitetsverktyg – anpassat för svenska och nordiska användare.</p>
             </div>
             <div class="footer-col">
@@ -79,18 +79,18 @@
               ${categoryLinks}
             </div>
             <div class="footer-col">
-              <h4>Fred-Radar</h4>
+              <h4>FRED-Radar</h4>
               <a href="/quiz.html">Ta quizet</a>
               <a href="/basta.html">Bästa listor</a>
               <a href="/alternativ.html">Alternativ</a>
-              <a href="/#om">Om Fred-Radar</a>
+              <a href="/#om">Om FRED-Radar</a>
             </div>
           </div>
           <div class="disclosure">
-            <strong>Om annonslänkar:</strong> Fred-Radar kan få provision när du klickar dig vidare till eller köper ett verktyg via länkarna på sajten. Det påverkar inte vad du betalar, och det styr inte våra rankingar – vi rankar utifrån kvalitet, pris och GDPR-anpassning, inte vem som betalar mest.
+            <strong>Om annonslänkar:</strong> FRED-Radar kan få provision när du klickar dig vidare till eller köper ett verktyg via länkarna på sajten. Det påverkar inte vad du betalar, och det styr inte våra rankingar.
           </div>
           <div class="footer-bottom">
-            © ${year} Fred-Radar. Priser och information kan ändras – kontrollera alltid leverantörens webbplats innan köp.
+            © ${year} FRED-Radar. Senast tillagda: Meta AI 2026-08-15. Priser kan ändras.
           </div>
         </div>
       </footer>

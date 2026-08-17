@@ -2,18 +2,18 @@
   {
     "id": "ai-writing",
     "name": "AI-skrivverktyg",
-    "shortName": "Skrivverktyg",
+    "shortName": "Skriv",
     "icon": "✍️",
     "description": "AI-verktyg för copywriting, bloggtexter, marknadsföring och innehållsproduktion.",
-    "intro": "Vi jämför de bästa AI-skrivverktygen för svenska och nordiska användare – med fokus på textkvalitet, pris och hur verktygen hanterar GDPR."
+    "intro": "Vi jämför de bästa AI-skrivverktygen för svenska och nordiska användare."
   },
   {
     "id": "ai-image",
     "name": "AI-bildverktyg",
-    "shortName": "Bildverktyg",
+    "shortName": "Bild",
     "icon": "🎨",
     "description": "AI-verktyg för bildgenerering, design och kreativt innehåll.",
-    "intro": "Här hittar du en ärlig jämförelse av AI-verktyg för bilder och design, med vikt lagd på kvalitet, användarvänlighet och nordiska förutsättningar."
+    "intro": "Ärlig jämförelse av AI-verktyg för bilder och design."
   },
   {
     "id": "produktivitet",
@@ -21,22 +21,30 @@
     "shortName": "Produktivitet",
     "icon": "⚡",
     "description": "AI-drivna verktyg för planering, projektledning och att få mer gjort.",
-    "intro": "AI-drivna produktivitetsverktyg som hjälper dig planera, prioritera och hålla koll – rankade utifrån verklig nytta, inte marknadsföring."
+    "intro": "AI-drivna produktivitetsverktyg rankade utifrån verklig nytta."
   },
   {
     "id": "ai-code",
-    "name": "AI-kodverktyg",
+    "name": "AI för kod",
     "shortName": "Kod",
-    "icon": "⌨️",
-    "description": "AI-assistenter för kod, refaktorering och att bygga mjukvara snabbare.",
-    "intro": "Jämförelse av AI-kodverktyg för utvecklare – från autocomplete till fulla agent-workflows."
+    "icon": "</>",
+    "description": "AI-verktyg för att koda, bygga appar och hemsidor.",
+    "intro": "Verktyg som hjälper dig skriva kod och bygga appar."
+  },
+  {
+    "id": "ai-data",
+    "name": "Data & analys",
+    "shortName": "Data",
+    "icon": "📊",
+    "description": "AI för att analysera data, Excel och rapporter.",
+    "intro": "Verktyg för dataanalys och kalkylblad."
   },
   {
     "id": "ai-voice",
-    "name": "AI-röst & video",
-    "shortName": "Röst/Video",
+    "name": "Röst & transkribering",
+    "shortName": "Röst",
     "icon": "🎙️",
-    "description": "Text-till-tal, AI-avatarer, podcast- och videoverktyg.",
-    "intro": "Verktyg för AI-genererad röst och video – rankade efter kvalitet, pris och användarvänlighet."
+    "description": "AI för mötesanteckningar, transkribering och röst.",
+    "intro": "Verktyg som transkriberar möten och sammanfattar samtal."
   }
 ]
