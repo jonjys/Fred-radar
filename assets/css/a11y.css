@@ -1,4 +1,4 @@
-/* Accessibility extras – loaded after style.css */
+/* Accessibility + lang switch */
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
     animation-duration: 0.01ms !important;
@@ -6,4 +6,20 @@
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
   }
+}
+
+.lang-switch {
+  background: transparent;
+  border: 1px solid var(--border-light, #333a4a);
+  color: var(--text-muted, #a2a9ba);
+  border-radius: 8px;
+  padding: 6px 10px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  cursor: pointer;
+  font-family: inherit;
+}
+.lang-switch:hover {
+  border-color: var(--accent, #7c9eff);
+  color: var(--accent, #7c9eff);
 }
