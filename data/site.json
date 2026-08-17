@@ -1,18 +1,18 @@
 {
-  "siteUrl": "https://radar.se",
-  "siteName": "Radar",
+  "siteUrl": "https://fred-radar.vercel.app",
+  "siteName": "Fred-Radar",
   "locale": "sv_SE",
   "twitterHandle": "",
   "analytics": {
     "provider": "plausible",
     "domain": "",
     "enabled": false,
-    "_comment": "Privacy-vänlig analytics, av som standard. För att aktivera: sätt domain till er produktionsdomän (t.ex. \"radar.se\", samma sträng som Plausible-kontot är registrerat på) och enabled till true, committa och deploya om. assets/js/analytics.js läser detta fält i klienten och injicerar Plausibles script-tagg bara när enabled=true. Inget konto krävs för att koden ska fungera – bara att slå på det när ett konto finns. Byt \"provider\" till t.ex. \"fathom\" och utöka assets/js/analytics.js om ni hellre vill använda en annan leverantör."
+    "_comment": "Privacy-vänlig analytics, av som standard. Sätt domain + enabled:true när konto finns."
   },
   "newsletter": {
     "provider": "none",
     "endpoint": "",
-    "_comment": "E-postopt-in i quizet sparas ALLTID lokalt i localStorage (nyckel radar_email_signups) som fallback. Om \"endpoint\" är satt till en URL postar assets/js/quiz.js dessutom {email, ts, source} dit som JSON – helt utan att någon annan kod behöver ändras. Tre sätt att fylla i endpoint utan att bygga en egen backend: (1) Buttondown – endpoint: \"https://buttondown.com/api/emails/embed-subscribe/<ditt-username>\", fungerar direkt från klienten, ingen API-nyckel exponeras. (2) ConvertKit – endpoint: \"https://api.convertkit.com/v3/forms/<FORM_ID>/subscribe\", kräver att \"api_key\" (den publika, INTE den hemliga nyckeln) skickas med i body – lägg till det i submitToNewsletterProvider() i quiz.js. (3) Loops.so – endpoint: \"https://app.loops.so/api/newsletter-form/<FORM_ID>\", fungerar direkt från klienten. Resend har INGEN publik klient-endpoint (kräver hemlig API-nyckel) – för Resend behövs en liten Vercel-funktion (api/subscribe.js) som proxy med RESEND_API_KEY som miljövariabel; sätt då endpoint till \"/api/subscribe\" istället för en extern URL."
+    "_comment": "E-postopt-in sparas lokalt i localStorage. Sätt endpoint när nyhetsbrev är kopplat."
   },
-  "_comment": "siteUrl är en PLACEHOLDER. Byt till den riktiga produktionsdomänen innan launch – den används av scripts/generate-sitemap.js (sitemap.xml) och bör synkas manuellt in i <link rel=canonical> och OG-taggar i index.html, quiz.html och scripts/template-kategori.html (sök efter 'https://radar.se' i de filerna)."
+  "_comment": "siteUrl används av generate-sitemap.js och bör matcha canonical/OG. Kör npm run set-site-url -- https://din-domän.se när egen domän är klar."
 }
