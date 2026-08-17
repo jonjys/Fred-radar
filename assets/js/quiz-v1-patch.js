@@ -1,0 +1,258 @@
+/**
+ * FRED-Radar v1.0 quiz patch – Grok tiers + Meta AI priority + honest limits.
+ */
+(function () {
+  const QUESTIONS = [
+    {
+      id: "purpose",
+      title: "Vad vill du främst använda AI till?",
+      options: [
+        { value: "ai-writing", label: "Skriva texter (copy, mejl, artiklar)", emoji: "✍️" },
+        { value: "ai-image", label: "Skapa bilder eller design", emoji: "🎨" },
+        { value: "produktivitet", label: "Planera och få mer gjort", emoji: "⚡" },
+        { value: "ai-code", label: "Koda / Bygga appar & hemsidor", emoji: "</>" },
+        { value: "ai-data", label: "Analysera data / Excel", emoji: "📊" },
+        { value: "ai-voice", label: "Transkribera möten", emoji: "🎙️" },
+        { value: "any", label: "Allmän AI-chatt & research", emoji: "💬" },
+        { value: "other", label: "Annat: skriv in vad du söker…", emoji: "✏️" },
+      ],
+    },
+    {
+      id: "budget",
+      title: "Vad är din budget per månad?",
+      options: [
+        { value: "free", label: "Vill helst hålla mig gratis", emoji: "🆓" },
+        { value: "low", label: "Upp till 150 kr/mån (ca 399:- / 3 mån)", emoji: "💳" },
+        { value: "medium", label: "Upp till ca 400 kr/mån", emoji: "💰" },
+        { value: "high", label: "Pris är inte det viktigaste", emoji: "🏦" },
+      ],
+    },
+    {
+      id: "gdpr",
+      title: "Hur viktigt är det att verktyget hanterar data enligt GDPR / helst inom EU?",
+      options: [
+        { value: "low", label: "Inte så viktigt just nu", emoji: "🔓" },
+        { value: "medium", label: "Ganska viktigt", emoji: "🔐" },
+        { value: "high", label: "Mycket viktigt – avgörande för mig", emoji: "🔒" },
+      ],
+    },
+    {
+      id: "level",
+      title: "Hur van är du vid att testa nya digitala verktyg?",
+      options: [
+        { value: "beginner", label: "Nybörjare – vill ha något enkelt", emoji: "🌱" },
+        { value: "intermediate", label: "Van användare", emoji: "🧭" },
+        { value: "advanced", label: "Avancerad / utvecklare", emoji: "🚀" },
+      ],
+    },
+    {
+      id: "priority",
+      title: "Vad är viktigast för dig när du väljer verktyg?",
+      options: [
+        { value: "price", label: "Lägsta pris", emoji: "🏷️" },
+        { value: "quality", label: "Bästa kvalitet/resultat", emoji: "⭐" },
+        { value: "easeOfUse", label: "Enkelhet – snabbt igång", emoji: "🧩" },
+        { value: "gdpr", label: "GDPR och datasäkerhet", emoji: "🛡️" },
+        { value: "support", label: "Bra support, gärna på svenska", emoji: "💬" },
+        { value: "swedish", label: "Funkar bra på svenska", emoji: "🇸🇪" },
+      ],
+    },
+    {
+      id: "updates",
+      title: "Vill du få uppdateringar om nya verktyg och erbjudanden via mejl?",
+      options: [
+        { value: "yes", label: "Ja, gärna", emoji: "📬" },
+        { value: "no", label: "Nej tack, bara resultatet nu", emoji: "🚫" },
+      ],
+    },
+  ];
+
+  const state = { step: 0, answers: {}, email: "" };
+  const root = document.getElementById("quizRoot");
+  const progressBar = document.getElementById("progressBar");
+  if (!root) return;
+
+  const LEVELS = ["beginner", "intermediate", "advanced"];
+  const BUDGET_MAX = { free: 0, low: 150, medium: 400, high: Infinity };
+  const GDPR_WEIGHT = { low: 0.4, medium: 1, high: 2.2 };
+
+  function updateProgress() {
+    progressBar.style.width = Math.round((state.step / QUESTIONS.length) * 100) + "%";
+  }
+
+  function scoreTool(tool, answers) {
+    const purpose = answers.purpose;
+    if (purpose && purpose !== "any" && purpose !== "other" && !(tool.categories || []).includes(purpose)) return null;
+    const reasons = [];
+    let score = tool.score * 10;
+    const price = tool.pricing?.fromPriceSEK ?? 9999;
+    const budgetMax = BUDGET_MAX[answers.budget];
+    const hardLimits = !!tool.hardUsageLimits;
+
+    if (answers.budget === "free" && price > 0) return null;
+
+    if (price <= budgetMax) {
+      score += 14;
+      if (answers.budget === "free" && price === 0) {
+        if (hardLimits) {
+          score += 4;
+          reasons.push("Gratis men med hårda användningsgränser");
+        } else {
+          score += 18;
+          reasons.push("Helt gratis – matchar din budget");
+        }
+      } else if (answers.budget !== "high") {
+        reasons.push("Ryms inom din budget (" + (window.RadarData?.priceLabel?.(tool) || price + " kr") + ")");
+      }
+    } else {
+      score += Math.max(-22, 14 - (price - budgetMax) / 15);
+    }
+
+    if (hardLimits && (answers.budget === "free" || answers.priority === "price")) {
+      score -= 18;
+      if (!reasons.some((r) => r.includes("gräns"))) reasons.push("⚠️ Hårda veckogränsar – kan låsa dig");
+    }
+
+    const gdprScore = tool.gdpr?.score || 0;
+    score += gdprScore * 4 * (GDPR_WEIGHT[answers.gdpr] || 1);
+    if (answers.gdpr === "high" && gdprScore >= 4) reasons.push("Stark GDPR-anpassning");
+    const diff = Math.abs(LEVELS.indexOf(tool.difficulty) - LEVELS.indexOf(answers.level));
+    score += diff === 0 ? 10 : diff === 1 ? 2 : -10;
+    if (diff === 0) reasons.push("Matchar din tekniska nivå");
+    const subscoreMap = {
+      price: tool.scores?.valueForMoney || 0,
+      quality: tool.scores?.quality || 0,
+      easeOfUse: tool.scores?.easeOfUse || 0,
+      gdpr: gdprScore * 2,
+      support: tool.scores?.support || 0,
+      swedish: tool.swedishSupport ? 10 : 3,
+    };
+    score += (subscoreMap[answers.priority] || 0) * 2.6;
+    if (answers.priority === "swedish" && tool.swedishSupport) {
+      score += 12;
+      reasons.push("Fungerar bra på svenska");
+    }
+
+    if (answers.budget === "free" && answers.level === "beginner" && price === 0 && tool.difficulty === "beginner") {
+      score += 10;
+      if (tool.swedishSupport) score += 6;
+      if (tool.id === "meta-ai") score += 22;
+      if (hardLimits) score -= 12;
+    }
+    if (tool.id === "meta-ai" && answers.budget === "free") {
+      score += 10;
+      reasons.push("Senast tillagt: gratis utan hårda veckogränsar");
+    }
+    if (tool.id === "grok-free" && answers.budget === "free") {
+      score -= 8;
+      reasons.push("Gratis men hårda gränser (∼50–100/dag)");
+    }
+    if (!reasons.length) reasons.push("Bra allroundval baserat på dina svar");
+    return { tool, score, reasons: reasons.slice(0, 3) };
+  }
+
+  function renderEmailRow() {
+    return '<div class="quiz-email-row"><label for="emailInput" class="sr-only">E-postadress</label><input type="email" id="emailInput" name="email" placeholder="din@mejladress.se" autocomplete="email" /></div>';
+  }
+
+  function renderQuestion() {
+    updateProgress();
+    const q = QUESTIONS[state.step];
+    const selected = state.answers[q.id];
+    root.innerHTML = `
+      <div class="quiz-step-label">Fråga ${state.step + 1} av ${QUESTIONS.length}</div>
+      <div class="quiz-question">
+        <h2>${q.title}</h2>
+        <div class="quiz-options" role="radiogroup">
+          ${q.options.map((opt) => `
+            <button type="button" class="quiz-option${selected === opt.value ? " selected" : ""}" data-value="${opt.value}">
+              <span class="opt-emoji">${opt.emoji}</span> ${opt.label}
+            </button>`).join("")}
+        </div>
+        ${q.id === "purpose" && selected === "other" ? `<div style="margin-top:14px"><input type="text" id="purposeOther" placeholder="Skriv vad du söker…" style="width:100%;max-width:420px;padding:12px;border-radius:8px;border:1px solid var(--border);background:var(--bg-elevated);color:var(--text)" /></div>` : ""}
+        ${q.id === "updates" && selected === "yes" ? renderEmailRow() : ""}
+        <div class="quiz-nav">
+          <button class="btn btn-ghost" id="backBtn" ${state.step === 0 ? 'style="visibility:hidden"' : ""}>← Tillbaka</button>
+          <button class="btn btn-primary" id="nextBtn" ${selected ? "" : "disabled"}>
+            ${state.step === QUESTIONS.length - 1 ? "Visa mina rekommendationer →" : "Nästa →"}
+          </button>
+        </div>
+      </div>`;
+    root.querySelectorAll(".quiz-option").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        state.answers[q.id] = btn.dataset.value;
+        renderQuestion();
+      });
+    });
+    const back = document.getElementById("backBtn");
+    if (back) back.addEventListener("click", () => {
+      state.step = Math.max(0, state.step - 1);
+      renderQuestion();
+    });
+    const next = document.getElementById("nextBtn");
+    if (next) next.addEventListener("click", () => {
+      const other = document.getElementById("purposeOther");
+      if (other) state.answers.purposeOther = other.value;
+      if (state.step === QUESTIONS.length - 1) renderResults();
+      else {
+        state.step += 1;
+        renderQuestion();
+      }
+    });
+  }
+
+  async function renderResults() {
+    root.innerHTML = '<div class="empty-state">Räknar fram dina rekommendationer …</div>';
+    progressBar.style.width = "100%";
+    const { tools } = await window.RadarData.load();
+    const ranked = tools
+      .map((t) => scoreTool(t, state.answers))
+      .filter(Boolean)
+      .sort((a, b) => b.score - a.score)
+      .slice(0, 3);
+    if (!ranked.length) {
+      root.innerHTML = '<div class="empty-state">Inga matchningar – prova andra svar.</div>';
+      return;
+    }
+    root.innerHTML = `
+      <div class="quiz-step-label">Ditt resultat</div>
+      <div class="quiz-question"><h2>Här är våra tre bästa förslag åt dig</h2></div>
+      <div class="tool-grid" style="margin-top:20px;">
+        ${ranked
+          .map(
+            (r, i) => `
+          <article class="tool-card result-card">
+            <span class="result-rank">${i + 1}</span>
+            <div class="tool-card-top">
+              <div class="tool-logo">${r.tool.logo || "🛠️"}</div>
+              <div class="tool-heading"><h3>${r.tool.name}</h3><p class="tagline">${r.tool.tagline || ""}</p></div>
+              <div class="tool-score"><span class="num">${Number(r.tool.score).toFixed(1)}</span><span class="lbl">poäng</span></div>
+            </div>
+            <div class="why-box"><strong>Varför:</strong><ul style="margin:8px 0 0;padding-left:18px;">${r.reasons.map((x) => `<li>${x}</li>`).join("")}</ul></div>
+            <div class="tool-meta">
+              <span class="pill">${window.RadarData.priceLabel ? window.RadarData.priceLabel(r.tool) : ""}</span>
+              ${r.tool.pricing && r.tool.pricing.limitsNote ? `<span class="pill" style="border-color:#f59e0b;color:#fbbf24;">${r.tool.pricing.limitsNote}</span>` : ""}
+            </div>
+            <div class="tool-actions">
+              <a class="btn btn-primary" href="/go/?tool=${r.tool.id}&src=quiz" target="_blank" rel="sponsored noopener">Besök ${r.tool.name}</a>
+              <a class="btn btn-ghost" href="/alternativ.html?tool=${r.tool.id}">Se alternativ</a>
+            </div>
+          </article>`
+          )
+          .join("")}
+      </div>
+      <p style="text-align:center;margin-top:18px;font-size:0.85rem;color:var(--text-muted);">Senast tillagda: <strong>Meta AI 2026-08-15</strong></p>
+      <div style="text-align:center;margin-top:12px;display:flex;flex-wrap:wrap;gap:10px;justify-content:center;">
+        <a class="btn btn-primary" href="/alternativ.html">Fler alternativ →</a>
+        <a class="btn btn-ghost" href="/basta.html">Bästa listor</a>
+        <button class="btn btn-ghost" id="restartBtn">↺ Ta om quizet</button>
+      </div>`;
+    document.getElementById("restartBtn")?.addEventListener("click", () => {
+      state.step = 0;
+      state.answers = {};
+      renderQuestion();
+    });
+  }
+
+  renderQuestion();
+})();
