@@ -13,9 +13,11 @@
   <meta property="og:title" content="Radar – Hitta rätt AI-verktyg på 60 sekunder" />
   <meta property="og:description" content="Ta Radars 60-sekundersquiz och få en personlig, viktad ranking av AI-verktyg baserat på budget, GDPR och teknisk nivå – anpassat för svenska och nordiska användare." />
   <meta property="og:locale" content="sv_SE" />
-  <meta name="twitter:card" content="summary" />
+  <meta property="og:image" content="https://radar.se/assets/og-image.svg" />
+  <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="Radar – Hitta rätt AI-verktyg på 60 sekunder" />
   <meta name="twitter:description" content="Ta Radars 60-sekundersquiz och få en personlig, viktad ranking av AI-verktyg – anpassat för svenska och nordiska användare." />
+  <meta name="twitter:image" content="https://radar.se/assets/og-image.svg" />
 
   <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📡</text></svg>" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -45,21 +47,20 @@
   <main>
     <section class="hero">
       <div class="wrap">
-        <span class="eyebrow">🇸🇪 Byggt för svenska &amp; nordiska förhållanden</span>
-        <h1>Sluta gissa. Hitta ditt AI-verktyg på 60 sekunder.</h1>
+        <span class="eyebrow" data-i18n="hero.eyebrow">🇸🇪 Byggt för svenska & nordiska förhållanden</span>
+        <h1 data-i18n="hero.title">Sluta gissa. Hitta ditt AI-verktyg på 60 sekunder.</h1>
         <p class="lead">
-          Radar väger pris, kvalitet och GDPR för varje verktyg – och visar exakt <em>varför</em> ett
-          verktyg passar dig, istället för ännu en generisk "bäst i test"-lista sponsrad av leverantören.
+          <span data-i18n="hero.lead">Radar väger pris, kvalitet och GDPR för varje verktyg – och visar exakt varför ett verktyg passar dig.</span>
         </p>
         <div class="hero-actions">
-          <a class="btn btn-primary" href="/quiz.html">Ta 60-sekundersquizet →</a>
-          <a class="btn btn-ghost" href="#kategorier">Bläddra i kategorier</a>
+          <a class="btn btn-primary" href="/quiz.html" data-i18n="hero.cta">Ta 60-sekundersquizet →</a>
+          <a class="btn btn-ghost" href="#kategorier" data-i18n="hero.browse">Bläddra i kategorier</a>
         </div>
         <div class="hero-stats">
-          <div class="stat"><span class="num">18</span><span class="lbl">verktyg jämförda</span></div>
-          <div class="stat"><span class="num">3</span><span class="lbl">kategorier</span></div>
-          <div class="stat"><span class="num">0 kr</span><span class="lbl">att använda Radar</span></div>
-          <div class="stat"><span class="num">100%</span><span class="lbl">oberoende ranking</span></div>
+          <div class="stat"><span class="num" id="toolCount">–</span><span class="lbl" data-i18n="stat.tools">verktyg jämförda</span></div>
+          <div class="stat"><span class="num">3</span><span class="lbl" data-i18n="stat.categories">kategorier</span></div>
+          <div class="stat"><span class="num">0 kr</span><span class="lbl" data-i18n="stat.free">att använda Radar</span></div>
+          <div class="stat"><span class="num">100%</span><span class="lbl" data-i18n="stat.independent">oberoende ranking</span></div>
         </div>
       </div>
     </section>
@@ -67,8 +68,8 @@
     <section id="kategorier">
       <div class="wrap">
         <div class="section-head">
-          <span class="kicker">Kategorier</span>
-          <h2>Utforska verktyg efter behov</h2>
+          <span class="kicker" data-i18n="sec.categories">Kategorier</span>
+          <h2 data-i18n="sec.explore">Utforska verktyg efter behov</h2>
           <p>Varje kategori rankas utifrån kvalitet, pris och hur väl verktyget passar svenska/nordiska krav på datahantering.</p>
         </div>
         <div class="category-grid" id="categoryGrid"></div>
@@ -78,8 +79,8 @@
     <section>
       <div class="wrap">
         <div class="section-head">
-          <span class="kicker">Redaktionens val</span>
-          <h2>Utvalda verktyg just nu</h2>
+          <span class="kicker" data-i18n="sec.featured">Redaktionens val</span>
+          <h2 data-i18n="sec.featuredTitle">Utvalda verktyg just nu</h2>
           <p>Ett litet urval av verktyg vi bedömer ger mest värde för svenska användare just nu.</p>
         </div>
         <div class="tool-grid" id="featuredGrid"></div>
@@ -89,8 +90,8 @@
     <section>
       <div class="wrap">
         <div class="section-head" style="text-align:center; margin: 0 auto 32px;">
-          <span class="kicker">Så funkar det</span>
-          <h2>Rätt verktyg på tre steg</h2>
+          <span class="kicker" data-i18n="sec.how">Så funkar det</span>
+          <h2 data-i18n="sec.howTitle">Rätt verktyg på tre steg</h2>
         </div>
         <div class="category-grid">
           <div class="category-card" style="cursor:default;">
@@ -115,8 +116,8 @@
     <section id="om">
       <div class="wrap">
         <div class="section-head">
-          <span class="kicker">Om Radar</span>
-          <h2>Ärlig ranking, inte "bäst i test"</h2>
+          <span class="kicker" data-i18n="sec.about">Om Radar</span>
+          <h2 data-i18n="sec.aboutTitle">Ärlig ranking, inte "bäst i test"</h2>
           <p>
             Radar är byggt för att göra det enklare för svenska och nordiska användare att välja AI- och
             produktivitetsverktyg. Vi väger in pris, kvalitet, användarvänlighet och GDPR/dataresidens i
@@ -130,11 +131,11 @@
     <section>
       <div class="wrap">
         <div class="hero" style="padding:48px 0; background:var(--bg-elevated); border:1px solid var(--border); border-radius:var(--radius-lg);">
-          <span class="eyebrow">Redo?</span>
-          <h2 style="font-size:clamp(1.5rem,3vw,2.1rem); margin:0 0 14px;">Hitta ditt verktyg innan kaffet blir kallt</h2>
-          <p class="lead" style="margin-bottom:26px;">Sex frågor. En viktad ranking. Ingen bindningstid.</p>
+          <span class="eyebrow" data-i18n="cta.ready">Redo?</span>
+          <h2 style="font-size:clamp(1.5rem,3vw,2.1rem); margin:0 0 14px;" data-i18n="cta.title">Hitta ditt verktyg innan kaffet blir kallt</h2>
+          <p class="lead" style="margin-bottom:26px;" data-i18n="cta.sub">Sex frågor. En viktad ranking. Ingen bindningstid.</p>
           <div class="hero-actions">
-            <a class="btn btn-primary" href="/quiz.html">Ta quizet nu →</a>
+            <a class="btn btn-primary" href="/quiz.html" data-i18n="cta.btn">Ta quizet nu →</a>
           </div>
         </div>
       </div>
@@ -145,6 +146,7 @@
 
   <script src="/assets/js/tool-card-template.js"></script>
   <script src="/assets/js/tools-data.js"></script>
+  <script src="/assets/js/i18n.js"></script>
   <script src="/assets/js/partials.js"></script>
   <script src="/assets/js/analytics.js"></script>
   <script>
@@ -160,7 +162,7 @@
               <div class="icon">${c.icon}</div>
               <h3>${c.name}</h3>
               <p>${c.description}</p>
-              <span class="count">${count} verktyg jämförda →</span>
+              <span class="count">${count} verktyg →</span>
             </a>
           `;
         })
@@ -169,6 +171,9 @@
       const featuredGrid = document.getElementById("featuredGrid");
       const featured = tools.filter((t) => t.featured).sort((a, b) => b.score - a.score).slice(0, 6);
       featuredGrid.innerHTML = featured.map((t) => window.RadarData.toolCardHTML(t, { showFeaturedBadge: true, context: "index" })).join("");
+
+      const tc = document.getElementById("toolCount");
+      if (tc) tc.textContent = tools.length;
     })();
   </script>
 </body>
