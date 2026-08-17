@@ -24,7 +24,12 @@
   function priceLabel(tool) {
     const p = tool.pricing;
     if (!p) return "";
-    if (p.fromPriceSEK === 0) return "Gratis";
+    if (p.fromPriceSEK === 0) {
+      if (tool.hardUsageLimits || (p.limitsNote && p.limitsNote.indexOf("⚠️") !== -1)) {
+        return "Gratis med veckogräns";
+      }
+      return "Gratis";
+    }
     const base = `Från ${p.fromPriceSEK} kr/mån`;
     return p.model === "freemium" ? `${base} (gratisnivå finns)` : base;
   }
@@ -59,12 +64,14 @@
           <span class="pill">${priceLabel(tool)}</span>
           <span class="pill gdpr-${gdpr.score}">🔒 ${gdprLabel(gdpr.score)}</span>
           <span class="pill">${difficultyLabel(tool.difficulty)}</span>
+          ${tool.pricing && tool.pricing.limitsNote ? `<span class="pill" style="border-color:#f59e0b;color:#fbbf24;">${tool.pricing.limitsNote}</span>` : ""}
         </div>
         <div class="tool-bestfor"><strong>Bäst för:</strong> ${tool.bestFor.slice(0, 3).join(", ")}</div>
         ${opts.showProsCons && (tool.pros || tool.cons) ? prosConsHTML(tool) : ""}
         <div class="tool-actions">
           <a class="btn btn-primary" href="/go/?tool=${tool.id}&src=${src}" target="_blank" rel="sponsored noopener">Besök ${tool.name}</a>
           <a class="btn btn-ghost" href="/go/?tool=${tool.id}&src=${src}-website" target="_blank" rel="sponsored noopener">Webbplats</a>
+          <a class="btn btn-ghost" href="/alternativ/${tool.id}.html">Alternativ</a>
         </div>
         <p class="ad-note">Annonslänk – vi kan få provision. Påverkar inte priset eller rankingen.</p>
       </article>
@@ -79,7 +86,7 @@
           .map((p) => `<span class="pill" style="justify-content:flex-start;">✅ ${p}</span>`)
           .join("")}
         ${(tool.cons || [])
-          .slice(0, 1)
+          .slice(0, 2)
           .map((c) => `<span class="pill" style="justify-content:flex-start;">⚠️ ${c}</span>`)
           .join("")}
       </div>
