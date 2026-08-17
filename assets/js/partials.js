@@ -1,13 +1,13 @@
 /**
- * Shared header/footer + lang switcher + enhancement loaders.
+ * Delad header/footer för alla sidor. Injiceras i <div id="site-header">
+ * och <div id="site-footer"> så navigationen bara behöver underhållas på
+ * ett ställe – även på automatiskt genererade kategorisidor.
  */
 (function () {
   const CATEGORIES = [
-    { id: "ai-writing", nameKey: "nav.writing", name: "AI-skrivverktyg" },
-    { id: "ai-image", nameKey: "nav.image", name: "AI-bildverktyg" },
-    { id: "produktivitet", nameKey: "nav.productivity", name: "Produktivitet" },
-    { id: "ai-code", nameKey: "nav.code", name: "AI-kod" },
-    { id: "ai-voice", nameKey: "nav.voice", name: "Röst & video" },
+    { id: "ai-writing", name: "Skriv", full: "AI-skrivverktyg" },
+    { id: "ai-image", name: "Bild", full: "AI-bildverktyg" },
+    { id: "produktivitet", name: "Produktivitet", full: "Produktivitet" },
   ];
 
   function currentPath() {
@@ -26,22 +26,22 @@
 
     const categoryLinks = CATEGORIES.map(
       (c) =>
-        `<a href="/kategori/${c.id}.html" data-i18n="${c.nameKey}"${isCurrent(`/kategori/${c.id}.html`) ? ' aria-current="page"' : ""}>${c.name}</a>`
+        `<a href="/kategori/${c.id}.html"${isCurrent(`/kategori/${c.id}.html`) ? ' aria-current="page"' : ""} title="${c.full}">${c.name}</a>`
     ).join("");
 
     el.innerHTML = `
       <header class="site-header">
         <div class="wrap">
           <a class="brand" href="/">
-            <span class="dot"></span> Radar
+            <span class="dot"></span> Fred-Radar
           </a>
-          <button class="nav-toggle" id="navToggle" aria-label="Menu" aria-expanded="false">☰</button>
+          <button class="nav-toggle" id="navToggle" aria-label="Öppna meny" aria-expanded="false">☰</button>
           <nav class="main-nav" id="mainNav">
-            <a href="/" data-i18n="nav.home"${isCurrent("/") ? ' aria-current="page"' : ""}>Hem</a>
+            <a href="/"${isCurrent("/") ? ' aria-current="page"' : ""}>Hem</a>
             ${categoryLinks}
-            <a href="/basta.html">Topplistor</a>
-            <button type="button" class="lang-switch" id="langSwitch" aria-label="Switch language">EN</button>
-            <a href="/quiz.html" class="nav-cta" data-i18n="nav.quiz">Ta quizet →</a>
+            <a href="/basta.html"${isCurrent("/basta.html") ? ' aria-current="page"' : ""}>Bästa</a>
+            <a href="/alternativ.html"${isCurrent("/alternativ.html") ? ' aria-current="page"' : ""}>Alternativ</a>
+            <a href="/quiz.html" class="nav-cta">Quiz →</a>
           </nav>
         </div>
       </header>
@@ -55,11 +55,6 @@
         toggle.setAttribute("aria-expanded", String(open));
       });
     }
-
-    const langBtn = document.getElementById("langSwitch");
-    if (langBtn && window.RadarI18n) {
-      langBtn.addEventListener("click", () => window.RadarI18n.toggle());
-    }
   }
 
   function renderFooter() {
@@ -68,7 +63,7 @@
 
     const year = new Date().getFullYear();
     const categoryLinks = CATEGORIES.map(
-      (c) => `<a href="/kategori/${c.id}.html">${c.name}</a>`
+      (c) => `<a href="/kategori/${c.id}.html">${c.full}</a>`
     ).join("");
 
     el.innerHTML = `
@@ -76,57 +71,34 @@
         <div class="wrap">
           <div class="footer-grid">
             <div class="footer-col">
-              <a class="brand" href="/"><span class="dot"></span> Radar</a>
-              <p style="max-width:280px;" data-i18n="footer.tagline">Smarta rekommendationer av AI-verktyg för nordiska användare.</p>
+              <a class="brand" href="/"><span class="dot"></span> Fred-Radar</a>
+              <p style="max-width:280px;">Smarta rekommendationer &amp; jämförelser av AI- och produktivitetsverktyg – anpassat för svenska och nordiska användare.</p>
             </div>
             <div class="footer-col">
-              <h4>Utforska</h4>
+              <h4>Kategorier</h4>
               ${categoryLinks}
-              <a href="/basta.html">Topplistor</a>
-              <a href="/alternativ.html">Alternativ</a>
-              <a href="/om.html">Om Radar</a>
             </div>
             <div class="footer-col">
-              <h4>Quiz</h4>
-              <a href="/quiz.html">Ta quizet →</a>
+              <h4>Fred-Radar</h4>
+              <a href="/quiz.html">Ta quizet</a>
+              <a href="/basta.html">Bästa listor</a>
+              <a href="/alternativ.html">Alternativ</a>
+              <a href="/#om">Om Fred-Radar</a>
             </div>
           </div>
           <div class="disclosure">
-            <span data-i18n="footer.disclosure">Radar kan få provision via annonslänkar. Det påverkar inte priset eller rankingen.</span>
+            <strong>Om annonslänkar:</strong> Fred-Radar kan få provision när du klickar dig vidare till eller köper ett verktyg via länkarna på sajten. Det påverkar inte vad du betalar, och det styr inte våra rankingar – vi rankar utifrån kvalitet, pris och GDPR-anpassning, inte vem som betalar mest.
           </div>
-          <div class="footer-bottom">© ${year} Radar</div>
+          <div class="footer-bottom">
+            © ${year} Fred-Radar. Priser och information kan ändras – kontrollera alltid leverantörens webbplats innan köp.
+          </div>
         </div>
       </footer>
     `;
   }
 
-  function loadScript(src) {
-    if (document.querySelector('script[src="' + src + '"]')) return;
-    const s = document.createElement("script");
-    s.src = src;
-    s.defer = true;
-    document.body.appendChild(s);
-  }
-
-  function loadCSS(href) {
-    if (document.querySelector('link[href="' + href + '"]')) return;
-    const l = document.createElement("link");
-    l.rel = "stylesheet";
-    l.href = href;
-    document.head.appendChild(l);
-  }
-
   document.addEventListener("DOMContentLoaded", () => {
-    loadCSS("/assets/css/a11y.css");
-    loadCSS("/assets/css/mobile-dense.css");
     renderHeader();
     renderFooter();
-    if (window.RadarI18n) {
-      window.RadarI18n.apply();
-      const langBtn = document.getElementById("langSwitch");
-      if (langBtn) langBtn.addEventListener("click", () => window.RadarI18n.toggle());
-    }
-    loadScript("/assets/js/homepage-stats.js");
-    loadScript("/assets/js/recently-viewed.js");
   });
 })();
