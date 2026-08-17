@@ -7,7 +7,6 @@
   <meta name="description" content="Jämför alternativ till AI-verktyg – samma kategori, rankat efter poäng, pris och GDPR." />
   <link rel="canonical" href="https://fred-radar.vercel.app/alternativ.html" />
   <meta property="og:site_name" content="Fred-Radar" />
-  <meta property="og:title" content="Alternativ till AI-verktyg | Fred-Radar" />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="/assets/css/style.css" />
 </head>
@@ -30,6 +29,28 @@
   <script src="/assets/js/tools-data.js"></script>
   <script src="/assets/js/partials.js"></script>
   <script src="/assets/js/analytics.js"></script>
-  <script src="/assets/js/alternativ.js"></script>
+  <script>
+  (async function () {
+    const data = await window.RadarData.load();
+    const sel = document.getElementById("toolSelect");
+    const root = document.getElementById("altRoot");
+    const tools = data.tools.slice().sort((a,b)=>a.name.localeCompare(b.name,"sv"));
+    const q = new URLSearchParams(location.search).get("tool");
+    sel.innerHTML = tools.map(t => `<option value="${t.id}">${t.logo||""} ${t.name}</option>`).join("");
+    if (q && tools.some(t=>t.id===q)) sel.value = q;
+    function render() {
+      const source = tools.find(t=>t.id===sel.value);
+      if (!source) { root.innerHTML = ""; return; }
+      const catSet = new Set(source.categories||[]);
+      const alts = tools.filter(t => t.id!==source.id && (t.categories||[]).some(c=>catSet.has(c)))
+        .sort((a,b)=>b.score-a.score).slice(0,6);
+      root.innerHTML = `<p style="margin-bottom:16px">Alternativ till <strong>${source.name}</strong> (${alts.length} st)</p><div class="tool-grid">` +
+        alts.map((t,i) => `<article class="tool-card"><span class="result-rank">${i+1}</span><div class="tool-card-top"><div class="tool-logo">${t.logo||"🛠️"}</div><div class="tool-heading"><h3>${t.name}</h3><p class="tagline">${t.tagline||""}</p></div><div class="tool-score"><span class="num">${Number(t.score).toFixed(1)}</span><span class="lbl">poäng</span></div></div><div class="tool-actions"><a class="btn btn-primary" href="/go/?tool=${t.id}&src=alternativ" target="_blank" rel="sponsored noopener">Besök</a><a class="btn btn-ghost" href="/kategori/${(t.categories||[])[0]||"ai-writing"}.html#${t.id}">Läs mer</a></div></article>`).join("") + "</div>";
+      const url = new URL(location.href); url.searchParams.set("tool", source.id); history.replaceState({}, "", url);
+    }
+    sel.addEventListener("change", render);
+    render();
+  })();
+  </script>
 </body>
 </html>
