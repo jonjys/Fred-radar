@@ -4,6 +4,7 @@
   "trailingSlash": false,
   "cleanUrls": true,
   "rewrites": [
+    { "source": "/api/health", "destination": "/health.json" },
     { "source": "/sv", "destination": "/sv.html" },
     { "source": "/sv/", "destination": "/sv.html" },
     { "source": "/best", "destination": "/basta.html" },
@@ -21,6 +22,34 @@
     { "source": "/sv/:path*", "destination": "/:path*" }
   ],
   "headers": [
+    {
+      "source": "/(.*)",
+      "headers": [
+        {
+          "key": "Content-Security-Policy",
+          "value": "frame-ancestors 'self' https://fred-platform.vercel.app https://*.vercel.app"
+        },
+        {
+          "key": "X-Frame-Options",
+          "value": "ALLOWALL"
+        }
+      ]
+    },
+    {
+      "source": "/api/(.*)",
+      "headers": [
+        { "key": "Access-Control-Allow-Origin", "value": "*" },
+        { "key": "Cache-Control", "value": "no-store" }
+      ]
+    },
+    {
+      "source": "/health.json",
+      "headers": [
+        { "key": "Access-Control-Allow-Origin", "value": "*" },
+        { "key": "Cache-Control", "value": "no-store" },
+        { "key": "Content-Type", "value": "application/json; charset=utf-8" }
+      ]
+    },
     {
       "source": "/assets/(.*)",
       "headers": [{ "key": "Cache-Control", "value": "public, max-age=60, must-revalidate" }]
