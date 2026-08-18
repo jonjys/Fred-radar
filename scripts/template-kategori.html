@@ -1,19 +1,22 @@
 <!doctype html>
-<html lang="sv">
+<html lang="en">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>{{TITLE}}</title>
   <meta name="description" content="{{DESCRIPTION}}" />
   <link rel="canonical" href="{{CANONICAL_URL}}" />
+  <link rel="alternate" hreflang="en" href="{{CANONICAL_URL}}" />
+  <link rel="alternate" hreflang="sv" href="{{CANONICAL_URL_SV}}" />
+  <link rel="alternate" hreflang="x-default" href="{{CANONICAL_URL}}" />
 
   <meta property="og:type" content="website" />
-  <meta property="og:site_name" content="Radar" />
+  <meta property="og:site_name" content="FRED-Radar" />
   <meta property="og:url" content="{{CANONICAL_URL}}" />
   <meta property="og:title" content="{{TITLE}}" />
   <meta property="og:description" content="{{DESCRIPTION}}" />
-  <meta property="og:locale" content="sv_SE" />
-  <meta name="twitter:card" content="summary" />
+  <meta property="og:locale" content="en_US" />
+  <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="{{TITLE}}" />
   <meta name="twitter:description" content="{{DESCRIPTION}}" />
 
@@ -39,45 +42,19 @@
 
     <section style="padding-top:0;">
       <div class="wrap">
-        <div class="filter-bar">
-          <label for="sortSelect">Sortera:</label>
-          <select id="sortSelect">
-            <option value="recommended">Rekommenderat</option>
-            <option value="price">Lägst pris</option>
-            <option value="gdpr">Bäst GDPR-anpassning</option>
-          </select>
-          <label for="budgetSelect">Budget:</label>
-          <select id="budgetSelect">
-            <option value="all">Alla</option>
-            <option value="free">Gratis</option>
-            <option value="low">Upp till 150 kr/mån</option>
-            <option value="medium">Upp till 400 kr/mån</option>
-          </select>
-          <span style="margin-left:auto; color:var(--text-faint); font-size:0.85rem;">{{TOOL_COUNT}} verktyg jämförda</span>
-        </div>
-
-        <div class="tool-grid" id="toolGrid">
-          {{TOOL_CARDS}}
-        </div>
-        <div class="empty-state" id="emptyState" style="display:none;">Inga verktyg matchar det filtret just nu.</div>
-      </div>
-    </section>
-
-    <section>
-      <div class="wrap">
-        <div class="disclosure">
-          Rankingen ovan baseras på en samlad bedömning av kvalitet, pris, användarvänlighet och GDPR-anpassning.
-          Vissa länkar är annonslänkar och Radar kan få provision – det påverkar inte rankingen.
-          Osäker på vilket som passar just dig? <a href="/quiz.html" style="color:var(--accent);">Ta vårt 1-minutsquiz</a> för en personlig rekommendation.
+        <p class="quiz-note" style="margin-bottom:18px;">{{TOOL_COUNT}} tools compared</p>
+        <div class="tool-grid">
+{{TOOL_CARDS}}
         </div>
       </div>
     </section>
   </main>
 
   <div id="site-footer"></div>
-
+  <script src="/assets/js/i18n.js"></script>
+  <script src="/assets/js/tool-card-template.js"></script>
+  <script src="/assets/js/tools-data.js"></script>
   <script src="/assets/js/partials.js"></script>
   <script src="/assets/js/analytics.js"></script>
-  <script src="/assets/js/kategori.js"></script>
 </body>
 </html>

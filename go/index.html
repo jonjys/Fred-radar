@@ -45,7 +45,11 @@
       }
 
       try {
-        const tools = await fetch("/data/tools.json").then((r) => r.json());
+        const [main, extra] = await Promise.all([
+          fetch("/data/tools.json").then((r) => r.json()),
+          fetch("/data/tools-extra-free.json").then((r) => r.ok ? r.json() : []).catch(() => [])
+        ]);
+        const tools = [].concat(main || [], extra || []);
         const tool = tools.find((t) => t.id === toolId);
 
         if (!tool) {

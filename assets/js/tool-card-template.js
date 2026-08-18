@@ -1,5 +1,5 @@
 /**
- * Enda källan för hur ett "tool-card" ser ut.
+ * Shared tool-card HTML. Works in the browser and in Node generators.
  */
 (function (root, factory) {
   const api = factory();
@@ -9,85 +9,105 @@
     root.ToolCardTemplate = api;
   }
 })(typeof window !== "undefined" ? window : globalThis, function () {
+  function I() {
+    return typeof window !== "undefined" ? window.FredI18n : null;
+  }
+  function tt(key, fallback, vars) {
+    const i = I();
+    if (i && i.t) {
+      const v = i.t(key, vars);
+      if (v && v !== key) return v;
+    }
+    if (vars && typeof fallback === "string") {
+      return Object.keys(vars).reduce((s, k) => s.replace("{{" + k + "}}", vars[k]), fallback);
+    }
+    return fallback;
+  }
+
   function gdprLabel(score) {
-    if (score >= 5) return "Utmärkt GDPR-anpassning";
-    if (score >= 4) return "Stark GDPR-anpassning";
-    if (score >= 3) return "Godkänd GDPR-anpassning";
-    if (score >= 2) return "Begränsad GDPR-info";
-    return "Svag GDPR-info";
+    if (score >= 5) return tt("card.gdpr5", "Excellent GDPR");
+    if (score >= 4) return tt("card.gdpr4", "Strong GDPR");
+    if (score >= 3) return tt("card.gdpr3", "Acceptable GDPR");
+    if (score >= 2) return tt("card.gdpr2", "Limited GDPR info");
+    return tt("card.gdpr1", "Weak GDPR info");
   }
 
   function priceLabel(tool) {
     const p = tool.pricing;
     if (!p) return "";
     if (p.fromPriceSEK === 0) {
-      if (tool.hardUsageLimits || (p.limitsNote && p.limitsNote.indexOf("⚠️") !== -1)) {
-        return "Gratis med veckogräns";
+      if (tool.hardUsageLimits || (p.limitsNote && String(p.limitsNote).indexOf("⚠️") !== -1)) {
+        return tt("card.freeLimit", "Free with weekly cap");
       }
-      return "Gratis";
+      return tt("card.free", "Free");
     }
-    const base = "Från " + p.fromPriceSEK + " kr/mån";
-    return p.model === "freemium" ? base + " (gratisnivå finns)" : base;
+    if (p.model === "freemium") return tt("card.freemium", "From {{n}} SEK/mo (free tier)", { n: p.fromPriceSEK });
+    return tt("card.from", "From {{n}} SEK/mo", { n: p.fromPriceSEK });
   }
 
   function difficultyLabel(d) {
     return (
-      { beginner: "Nybörjarvänligt", intermediate: "Viss erfarenhet krävs", advanced: "För avancerade användare" }[d] ||
-      d
+      {
+        beginner: tt("card.beg", "Beginner-friendly"),
+        intermediate: tt("card.int", "Some experience needed"),
+        advanced: tt("card.adv", "For advanced users"),
+      }[d] || d
     );
   }
 
   function toolCardHTML(tool, opts) {
     opts = opts || {};
-    const gdpr = tool.gdpr || { score: 0 };
+    const i = I();
+    const loc = i && i.localizeTool ? i.localizeTool(tool) : tool;
+    const gdpr = loc.gdpr || { score: 0 };
     const src = opts.context || "kategori";
-    const limitsPill = tool.pricing && tool.pricing.limitsNote
-      ? '<span class="pill" style="border-color:#f59e0b;color:#fbbf24">' + tool.pricing.limitsNote + '</span>'
+    const href = (path) => (i && i.withLang ? i.withLang(path, i.lang) : path);
+    const honest = loc.honestPill || (loc.pricing && loc.pricing.limitsNote) || "";
+    const featured = loc.featured && opts.showFeaturedBadge
+      ? '<span class="badge-featured">' + tt("card.featured", "Editors' pick") + "</span>"
       : "";
-    return (
-      '<article class="tool-card" id="' + tool.id + '" data-id="' + tool.id + '" data-price="' + tool.pricing.fromPriceSEK + '" data-score="' + tool.score + '" data-gdpr="' + gdpr.score + '" data-difficulty="' + tool.difficulty + '">' +
-        (tool.featured && opts.showFeaturedBadge ? '<span class="badge-featured">Redaktionens val</span>' : '') +
-        '<div class="tool-card-top">' +
-          '<div class="tool-logo" aria-hidden="true">' + (tool.logo || '🛠️') + '</div>' +
-          '<div class="tool-heading">' +
-            '<h3>' + tool.name + '</h3>' +
-            '<p class="tagline">' + tool.tagline + '</p>' +
-          '</div>' +
-          '<div class="tool-score">' +
-            '<span class="num">' + tool.score.toFixed(1) + '</span>' +
-            '<span class="lbl">poäng</span>' +
-          '</div>' +
-        '</div>' +
-        '<p class="tool-desc">' + tool.description + '</p>' +
-        '<div class="tool-meta">' +
-          '<span class="pill">' + priceLabel(tool) + '</span>' +
-          '<span class="pill gdpr-' + gdpr.score + '">🔒 ' + gdprLabel(gdpr.score) + '</span>' +
-          '<span class="pill">' + difficultyLabel(tool.difficulty) + '</span>' +
-          limitsPill +
-        '</div>' +
-        '<div class="tool-bestfor"><strong>Bäst för:</strong> ' + tool.bestFor.slice(0, 3).join(', ') + '</div>' +
-        (opts.showProsCons && (tool.pros || tool.cons) ? prosConsHTML(tool) : '') +
-        '<div class="tool-actions">' +
-          '<a class="btn btn-primary" href="/go/?tool=' + tool.id + '&src=' + src + '" target="_blank" rel="sponsored noopener">Besök ' + tool.name + '</a>' +
-          '<a class="btn btn-ghost" href="/go/?tool=' + tool.id + '&src=' + src + '-website" target="_blank" rel="sponsored noopener">Webbplats</a>' +
-          '<a class="btn btn-ghost" href="/alternativ/' + tool.id + '.html">Alternativ</a>' +
-        '</div>' +
-        '<p class="ad-note">Annonslänk – vi kan få provision. Påverkar inte priset eller rankingen.</p>' +
-      '</article>'
-    );
+    const recent = loc.id === "meta-ai" ? '<span class="badge-recent">Recently added: Meta AI</span>' : "";
+    return `
+      <article class="tool-card" id="${loc.id}" data-id="${loc.id}" data-price="${loc.pricing.fromPriceSEK}" data-score="${loc.score}" data-gdpr="${gdpr.score}" data-difficulty="${loc.difficulty}">
+        ${featured}${recent}
+        <div class="tool-card-top">
+          <div class="tool-logo" aria-hidden="true">${loc.logo || "🛠️"}</div>
+          <div class="tool-heading">
+            <h3>${loc.name}</h3>
+            <p class="tagline">${loc.tagline}</p>
+          </div>
+          <div class="tool-score">
+            <span class="num">${Number(loc.score).toFixed(1)}</span>
+            <span class="lbl">${i && i.lang === "sv" ? "poäng" : "score"}</span>
+          </div>
+        </div>
+        <p class="tool-desc">${loc.description}</p>
+        <div class="tool-meta">
+          <span class="pill">${priceLabel(loc)}</span>
+          <span class="pill gdpr-${gdpr.score}">🔒 ${gdprLabel(gdpr.score)}</span>
+          <span class="pill">${difficultyLabel(loc.difficulty)}</span>
+          ${honest ? `<span class="pill" style="border-color:#f59e0b;color:#fbbf24;">${honest}</span>` : ""}
+        </div>
+        <div class="tool-bestfor"><strong>${tt("card.bestFor", "Best for:")}</strong> ${(loc.bestFor || []).slice(0, 3).join(", ")}</div>
+        ${opts.showProsCons && (loc.pros || loc.cons) ? prosConsHTML(loc) : ""}
+        <div class="tool-actions">
+          <a class="btn btn-primary" href="/go/?tool=${loc.id}&src=${src}" target="_blank" rel="sponsored noopener">${tt("card.visit", "Visit")} ${loc.name}</a>
+          <a class="btn btn-ghost" href="/go/?tool=${loc.id}&src=${src}-website" target="_blank" rel="sponsored noopener">${tt("card.site", "Website")}</a>
+          <a class="btn btn-ghost" href="${href("/alternativ/" + loc.id + ".html")}">${tt("card.alts", "Alternatives")}</a>
+        </div>
+        <p class="ad-note">${tt("card.ad", "Affiliate link — we may earn a commission. It does not change price or ranking.")}</p>
+      </article>
+    `;
   }
 
   function prosConsHTML(tool) {
-    var html = '<div class="tool-meta" style="flex-direction:column; align-items:stretch; gap:4px;">';
-    (tool.pros || []).slice(0, 2).forEach(function (p) {
-      html += '<span class="pill" style="justify-content:flex-start;">✅ ' + p + '</span>';
-    });
-    (tool.cons || []).slice(0, 1).forEach(function (c) {
-      html += '<span class="pill" style="justify-content:flex-start;">⚠️ ' + c + '</span>';
-    });
-    html += '</div>';
-    return html;
+    return `
+      <div class="tool-meta" style="flex-direction:column; align-items:stretch; gap:4px;">
+        ${(tool.pros || []).slice(0, 2).map((p) => `<span class="pill" style="justify-content:flex-start;">✅ ${p}</span>`).join("")}
+        ${(tool.cons || []).slice(0, 1).map((c) => `<span class="pill" style="justify-content:flex-start;">⚠️ ${c}</span>`).join("")}
+      </div>
+    `;
   }
 
-  return { gdprLabel: gdprLabel, priceLabel: priceLabel, difficultyLabel: difficultyLabel, toolCardHTML: toolCardHTML };
+  return { gdprLabel, priceLabel, difficultyLabel, toolCardHTML };
 });

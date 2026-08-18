@@ -1,5 +1,5 @@
 /**
- * Hämtar tools.json (+ valfria tools-extra*.json) i klienten.
+ * Loads tools.json + extras and normalizes fields.
  */
 window.RadarData = (function () {
   let cache = null;
@@ -14,19 +14,32 @@ window.RadarData = (function () {
     }
   }
 
+  function normalize(t) {
+    const p = t.pricing || {};
+    t.beginnerFriendly = t.beginnerFriendly != null ? t.beginnerFriendly : t.difficulty === "beginner";
+    t.swedish = t.swedish != null ? t.swedish : !!t.swedishSupport;
+    t.limits = t.limits || p.limitsNote || p.billingNote || "";
+    t.honestPill = t.honestPill || p.limitsNote || "";
+    t.url = t.url || t.website;
+    if (t.hardUsageLimits == null) t.hardUsageLimits = false;
+    return t;
+  }
+
   async function load() {
     if (cache) return cache;
-    const [toolsMain, categories, extra] = await Promise.all([
+    const [toolsMain, categories, extra, extra2] = await Promise.all([
       loadJson("/data/tools.json"),
       loadJson("/data/categories.json"),
       loadJson("/data/tools-extra-free.json"),
+      loadJson("/data/tools-extra-2.json"),
     ]);
     let tools = Array.isArray(toolsMain) ? toolsMain.slice() : [];
-    if (Array.isArray(extra)) {
-      const byId = new Map(tools.map((t) => [t.id, t]));
-      for (const t of extra) byId.set(t.id, t);
-      tools = Array.from(byId.values());
+    const byId = new Map(tools.map((t) => [t.id, t]));
+    for (const pack of [extra, extra2]) {
+      if (!Array.isArray(pack)) continue;
+      for (const t of pack) byId.set(t.id, Object.assign({}, byId.get(t.id) || {}, t));
     }
+    tools = Array.from(byId.values()).map(normalize);
     cache = { tools, categories: categories || [] };
     return cache;
   }
@@ -34,7 +47,10 @@ window.RadarData = (function () {
   const T = window.ToolCardTemplate || {};
   return {
     load,
-    toolCardHTML: T.toolCardHTML,
+    toolCardHTML: function (tool, opts) {
+      const loc = window.FredI18n && window.FredI18n.localizeTool ? window.FredI18n.localizeTool(tool) : tool;
+      return (T.toolCardHTML || function () { return ""; })(loc, opts);
+    },
     gdprLabel: T.gdprLabel,
     priceLabel: T.priceLabel,
     difficultyLabel: T.difficultyLabel,

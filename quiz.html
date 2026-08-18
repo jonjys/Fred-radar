@@ -1,26 +1,42 @@
 <!doctype html>
-<html lang="sv">
+<html lang="en">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Quiz – Hitta ditt AI-verktyg | FRED-Radar</title>
-  <meta name="description" content="Svara på 6 snabba frågor och få en personlig ranking av AI-verktyg." />
+  <title data-i18n="quiz.pageTitle">Quiz – Find your AI tool | FRED-Radar</title>
+  <meta name="description" data-i18n="quiz.pageDesc" content="Answer 6 short questions and get a personal, weighted ranking of which AI tools fit you." />
   <link rel="canonical" href="https://fred-radar.vercel.app/quiz.html" />
-  <link rel="alternate" hreflang="sv" href="https://fred-radar.vercel.app/quiz.html" />
   <link rel="alternate" hreflang="en" href="https://fred-radar.vercel.app/quiz.html" />
+  <link rel="alternate" hreflang="sv" href="https://fred-radar.vercel.app/sv/quiz.html" />
+  <link rel="alternate" hreflang="x-default" href="https://fred-radar.vercel.app/quiz.html" />
+
+  <meta property="og:type" content="website" />
   <meta property="og:site_name" content="FRED-Radar" />
-  <meta property="og:title" content="Quiz | FRED-Radar" />
-  <meta property="og:locale" content="sv_SE" />
+  <meta property="og:url" content="https://fred-radar.vercel.app/quiz.html" />
+  <meta property="og:title" content="Quiz – Find your AI tool | FRED-Radar" />
+  <meta property="og:description" content="Answer 6 short questions and get a personal, weighted ranking of which AI tools fit you." />
+  <meta property="og:locale" content="en_US" />
+  <meta property="og:image" content="https://fred-radar.vercel.app/assets/og-image.svg" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Quiz – Find your AI tool | FRED-Radar" />
+  <meta name="twitter:description" content="Answer 6 short questions and get a personal, weighted ranking of which AI tools fit you." />
+
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📡</text></svg>" />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="/assets/css/style.css" />
 </head>
 <body>
   <div id="site-header"></div>
+
   <main class="quiz-shell">
+    <h1 class="sr-only" data-i18n="quiz.srH1">Find the right AI tool - 60 sec quiz</h1>
     <div class="quiz-progress"><div class="quiz-progress-bar" id="progressBar"></div></div>
     <div id="quizRoot"></div>
   </main>
+
   <div id="site-footer"></div>
+
+  <script src="/assets/js/i18n.js"></script>
   <script src="/assets/js/tool-card-template.js"></script>
   <script src="/assets/js/tools-data.js"></script>
   <script src="/assets/js/partials.js"></script>

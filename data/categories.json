@@ -1,50 +1,74 @@
 [
   {
     "id": "ai-writing",
-    "name": "AI-skrivverktyg",
-    "shortName": "Skriv",
+    "name": "AI writing tools",
+    "nameSv": "AI-skrivverktyg",
+    "shortName": "Write",
+    "shortNameSv": "Skriv",
     "icon": "✍️",
-    "description": "AI-verktyg för copywriting, bloggtexter, marknadsföring och innehållsproduktion.",
-    "intro": "Vi jämför de bästa AI-skrivverktygen för svenska och nordiska användare."
+    "description": "AI tools for copywriting, blog posts, marketing and content.",
+    "descriptionSv": "AI-verktyg för copywriting, bloggtexter, marknadsföring och innehållsproduktion.",
+    "intro": "We compare the best AI writing tools with a focus on quality, price, limits and GDPR.",
+    "introSv": "Vi jämför de bästa AI-skrivverktygen med fokus på textkvalitet, pris, gränser och GDPR."
   },
   {
     "id": "ai-image",
-    "name": "AI-bildverktyg",
-    "shortName": "Bild",
+    "name": "AI image tools",
+    "nameSv": "AI-bildverktyg",
+    "shortName": "Image",
+    "shortNameSv": "Bild",
     "icon": "🎨",
-    "description": "AI-verktyg för bildgenerering, design och kreativt innehåll.",
-    "intro": "Ärlig jämförelse av AI-verktyg för bilder och design."
+    "description": "AI tools for image generation, design and creative work.",
+    "descriptionSv": "AI-verktyg för bildgenerering, design och kreativt innehåll.",
+    "intro": "An honest comparison of image and design AI — quality, ease of use and commercial safety.",
+    "introSv": "En ärlig jämförelse av AI för bilder och design, med vikt på kvalitet, enkelhet och kommersiell säkerhet."
   },
   {
     "id": "produktivitet",
-    "name": "Produktivitet",
-    "shortName": "Produktivitet",
+    "name": "Productivity",
+    "nameSv": "Produktivitet",
+    "shortName": "Productivity",
+    "shortNameSv": "Produktivitet",
     "icon": "⚡",
-    "description": "AI-drivna verktyg för planering, projektledning och att få mer gjort.",
-    "intro": "AI-drivna produktivitetsverktyg rankade utifrån verklig nytta."
+    "description": "AI tools for planning, project management and getting more done.",
+    "descriptionSv": "AI-drivna verktyg för planering, projektledning och att få mer gjort.",
+    "intro": "AI productivity tools ranked on real usefulness, not marketing.",
+    "introSv": "AI-drivna produktivitetsverktyg rankade efter verklig nytta, inte marknadsföring."
   },
   {
     "id": "ai-code",
-    "name": "AI för kod",
-    "shortName": "Kod",
+    "name": "AI for code",
+    "nameSv": "AI för kod",
+    "shortName": "Code",
+    "shortNameSv": "Kod",
     "icon": "</>",
-    "description": "AI-verktyg för att koda, bygga appar och hemsidor.",
-    "intro": "Verktyg som hjälper dig skriva kod och bygga appar."
+    "description": "AI tools to code, build apps and websites.",
+    "descriptionSv": "AI-verktyg för att koda, bygga appar och hemsidor.",
+    "intro": "Tools that help you write code and go from idea to a working product faster.",
+    "introSv": "Verktyg som hjälper dig skriva kod och komma från idé till fungerande produkt."
   },
   {
     "id": "ai-data",
-    "name": "Data & analys",
+    "name": "Data & analysis",
+    "nameSv": "Data & analys",
     "shortName": "Data",
+    "shortNameSv": "Data",
     "icon": "📊",
-    "description": "AI för att analysera data, Excel och rapporter.",
-    "intro": "Verktyg för dataanalys och kalkylblad."
+    "description": "AI for analyzing data, Excel and reports.",
+    "descriptionSv": "AI för att analysera data, Excel och rapporter.",
+    "intro": "Tools for spreadsheets and insights without being a data scientist.",
+    "introSv": "Verktyg för kalkylblad och insikter utan att vara data scientist."
   },
   {
     "id": "ai-voice",
-    "name": "Röst & transkribering",
-    "shortName": "Röst",
+    "name": "Voice & transcription",
+    "nameSv": "Röst & transkribering",
+    "shortName": "Voice",
+    "shortNameSv": "Röst",
     "icon": "🎙️",
-    "description": "AI för mötesanteckningar, transkribering och röst.",
-    "intro": "Verktyg som transkriberar möten och sammanfattar samtal."
+    "description": "AI for meeting notes, transcription and voice.",
+    "descriptionSv": "AI för mötesanteckningar, transkribering och röst.",
+    "intro": "Tools that transcribe meetings, summarize calls and save time after every meeting.",
+    "introSv": "Verktyg som transkriberar möten, sammanfattar samtal och sparar tid efter varje call."
   }
 ]

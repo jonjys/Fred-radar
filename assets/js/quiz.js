@@ -19,7 +19,11 @@
         { value: "ai-writing", label: "Skriva texter (copy, mejl, artiklar)", emoji: "✍️" },
         { value: "ai-image", label: "Skapa bilder eller design", emoji: "🎨" },
         { value: "produktivitet", label: "Planera och få mer gjort", emoji: "⚡" },
-        { value: "any", label: "Lite av allt / vet inte riktigt än", emoji: "🤔" },
+        { value: "ai-code", label: "Koda / Bygga appar & hemsidor", emoji: "</>" },
+        { value: "ai-data", label: "Analysera data / Excel", emoji: "📊" },
+        { value: "ai-voice", label: "Transkribera möten", emoji: "🎙️" },
+        { value: "any", label: "Allmän AI-chatt & research", emoji: "💬" },
+        { value: "other", label: "Annat: skriv in vad du söker…", emoji: "✏️", freeText: true },
       ],
     },
     {
@@ -59,6 +63,7 @@
         { value: "easeOfUse", label: "Enkelhet – snabbt igång", emoji: "🧩" },
         { value: "gdpr", label: "GDPR och datasäkerhet", emoji: "🛡️" },
         { value: "support", label: "Bra support, gärna på svenska", emoji: "💬" },
+        { value: "swedish", label: "Funkar bra på svenska", emoji: "🇸🇪" },
       ],
     },
     {
@@ -105,6 +110,7 @@
             )
             .join("")}
         </div>
+        ${q.id === "purpose" && selected === "other" ? `<div style="margin-top:14px"><input type="text" id="purposeOther" placeholder="Skriv vad du söker…" value="${state.answers.purposeOther || ""}" style="width:100%;max-width:420px;padding:12px;border-radius:8px;border:1px solid var(--border);background:var(--bg-elevated);color:var(--text)" /></div>` : ""}
         ${q.id === "updates" && selected === "yes" ? renderEmailRow() : ""}
         <div class="quiz-nav">
           <button class="btn btn-ghost" id="backBtn" ${state.step === 0 ? "disabled style=\"visibility:hidden\"" : ""}>← Tillbaka</button>
@@ -148,7 +154,8 @@
   function renderEmailRow() {
     return `
       <div class="quiz-email-row">
-        <input type="email" id="emailInput" placeholder="din@mejladress.se" value="${state.email}" />
+        <label for="emailInput" class="sr-only">E-postadress</label>
+        <input type="email" id="emailInput" name="email" placeholder="din@mejladress.se" value="${state.email}" autocomplete="email" />
       </div>
       <p class="quiz-note">Vi skickar bara relevanta AI-nyheter, ingen spam. Du kan avregistrera dig när som helst.</p>
     `;
@@ -207,57 +214,78 @@
     easeOfUse: "enkelhet",
     gdpr: "GDPR och datasäkerhet",
     support: "bra support",
+    swedish: "fungerar på svenska",
   };
 
   function scoreTool(tool, answers) {
-    if (answers.purpose !== "any" && !tool.categories.includes(answers.purpose)) return null;
+    const purpose = answers.purpose;
+    // any/other = no hard filter; specific categories must match
+    if (purpose && purpose !== "any" && purpose !== "other" && !(tool.categories || []).includes(purpose)) {
+      return null;
+    }
 
     const reasons = [];
-    let score = tool.score * 10; // 0–100 bas
+    let score = tool.score * 10;
 
-    // Budget
+    // Budget – free tools get strong boost when user wants free
     const budgetMax = BUDGET_MAX[answers.budget];
-    const price = tool.pricing.fromPriceSEK;
-    let budgetScore;
+    const price = (tool.pricing && tool.pricing.fromPriceSEK != null) ? tool.pricing.fromPriceSEK : 9999;
     if (price <= budgetMax) {
-      budgetScore = 14;
-      if (answers.budget !== "high") reasons.push(`Ryms inom din budget (${window.RadarData.priceLabel(tool)})`);
+      score += 14;
+      if (answers.budget === "free" && price === 0) {
+        score += 18;
+        reasons.push("Helt gratis – matchar din budget");
+      } else if (answers.budget !== "high") {
+        reasons.push(`Ryms inom din budget (${window.RadarData.priceLabel(tool)})`);
+      }
     } else {
       const over = price - budgetMax;
-      budgetScore = Math.max(-22, 14 - over / 15);
+      score += Math.max(-22, 14 - over / 15);
     }
-    score += budgetScore;
 
     // GDPR
-    const gdprWeight = GDPR_WEIGHT[answers.gdpr];
-    const gdprContribution = tool.gdpr.score * 4 * gdprWeight;
-    score += gdprContribution;
-    if (answers.gdpr === "high" && tool.gdpr.score >= 4) {
-      reasons.push(`Stark GDPR-anpassning (${tool.gdpr.dataResidency})`);
+    const gdprWeight = GDPR_WEIGHT[answers.gdpr] || 1;
+    const gdprScore = (tool.gdpr && tool.gdpr.score) || 0;
+    score += gdprScore * 4 * gdprWeight;
+    if (answers.gdpr === "high" && gdprScore >= 4) {
+      reasons.push(`Stark GDPR-anpassning (${tool.gdpr.dataResidency || "—"})`);
     }
 
-    // Teknisk nivå
+    // Level
     const diff = Math.abs(LEVELS.indexOf(tool.difficulty) - LEVELS.indexOf(answers.level));
-    const difficultyScore = diff === 0 ? 10 : diff === 1 ? 2 : -10;
-    score += difficultyScore;
+    score += diff === 0 ? 10 : diff === 1 ? 2 : -10;
     if (diff === 0) reasons.push(`Matchar din tekniska nivå (${window.RadarData.difficultyLabel(tool.difficulty)})`);
 
-    // Prioritet
+    // Priority
     const subscoreMap = {
-      price: tool.scores.valueForMoney,
-      quality: tool.scores.quality,
-      easeOfUse: tool.scores.easeOfUse,
-      gdpr: tool.gdpr.score * 2,
-      support: tool.scores.support,
+      price: (tool.scores && tool.scores.valueForMoney) || 0,
+      quality: (tool.scores && tool.scores.quality) || 0,
+      easeOfUse: (tool.scores && tool.scores.easeOfUse) || 0,
+      gdpr: gdprScore * 2,
+      support: (tool.scores && tool.scores.support) || 0,
+      swedish: tool.swedishSupport ? 10 : 3,
     };
     const priorityValue = subscoreMap[answers.priority] || 0;
     score += priorityValue * 2.6;
-    if (priorityValue >= 7.5) {
-      reasons.push(`Stark på det du prioriterade högst: ${PRIORITY_LABEL[answers.priority]}`);
+    if (answers.priority === "swedish" && tool.swedishSupport) {
+      score += 12;
+      reasons.push("Fungerar bra på svenska");
+    } else if (priorityValue >= 7.5 && PRIORITY_LABEL[answers.priority]) {
+      reasons.push(`Stark på det du prioriterade: ${PRIORITY_LABEL[answers.priority]}`);
+    }
+
+    // Extra: free + beginner combo boosts Meta AI-class tools
+    if (answers.budget === "free" && answers.level === "beginner" && price === 0 && tool.difficulty === "beginner") {
+      score += 10;
+      if (tool.swedishSupport) score += 6;
+    }
+
+    if (tool.id === "meta-ai" && answers.budget === "free") {
+      score += 8;
+      reasons.push("Senast tillagt gratis-alternativ (Meta AI)");
     }
 
     if (reasons.length === 0) reasons.push("Bra allroundval baserat på dina svar");
-
     return { tool, score, reasons: reasons.slice(0, 3) };
   }
 
@@ -312,6 +340,7 @@
             <div class="tool-actions">
               <a class="btn btn-primary" href="/go/?tool=${r.tool.id}&src=quiz" target="_blank" rel="sponsored noopener">Besök ${r.tool.name}</a>
               <a class="btn btn-ghost" href="/kategori/${r.tool.categories[0]}.html#${r.tool.id}">Läs mer</a>
+              <a class="btn btn-ghost" href="/alternativ/${r.tool.id}.html">Se alternativ</a>
             </div>
             <p class="ad-note">Annonslänk – vi kan få provision. Påverkar inte priset eller rankingen.</p>
           </article>
@@ -319,8 +348,14 @@
           )
           .join("")}
       </div>
-      <div class="quiz-nav" style="justify-content:center; margin-top:34px;">
+      <p style="text-align:center;margin-top:18px;font-size:0.85rem;color:var(--text-muted);">Senast tillagda: <strong>Meta AI 2026-08-15</strong> · listan uppdateras löpande</p>
+      <div style="text-align:center; margin-top:16px; display:flex; flex-wrap:wrap; gap:10px; justify-content:center;">
+        <a class="btn btn-primary" href="/alternativ.html">Fler alternativ →</a>
+        <a class="btn btn-ghost" href="/basta.html">Bästa listor</a>
+      </div>
+      <div class="quiz-nav" style="justify-content:center; margin-top:22px; gap:12px;">
         <button class="btn btn-ghost" id="restartBtn">↺ Ta om quizet</button>
+        <button class="btn btn-primary" id="shareBtn">Dela resultat</button>
       </div>
     `;
 
@@ -329,7 +364,48 @@
       state.answers = {};
       renderQuestion();
     });
+
+    const shareBtn = document.getElementById("shareBtn");
+    if (shareBtn) {
+      shareBtn.addEventListener("click", async () => {
+        const names = ranked.map((r) => r.tool.name).join(", ");
+        const shareData = {
+          title: "Mina AI-rekommendationer från FRED-Radar",
+          text: `FRED-Radar rekommenderade: ${names}. Hitta ditt verktyg på 60 sekunder.`,
+          url: window.location.origin + "/quiz.html",
+        };
+        try {
+          if (navigator.share) {
+            await navigator.share(shareData);
+          } else {
+            await navigator.clipboard.writeText(shareData.text + " " + shareData.url);
+            shareBtn.textContent = "Kopierat ✓";
+            setTimeout(() => (shareBtn.textContent = "Dela resultat"), 2000);
+          }
+        } catch (e) {
+          /* user cancelled or clipboard blocked */
+        }
+      });
+    }
   }
+
+  // Keyboard shortcuts: 1-5 select option, Enter next, Backspace back
+  document.addEventListener("keydown", (e) => {
+    if (e.target.tagName === "INPUT") return;
+    const options = root.querySelectorAll(".quiz-option");
+    if (!options.length) return;
+    const num = parseInt(e.key, 10);
+    if (num >= 1 && num <= options.length) {
+      options[num - 1].click();
+      e.preventDefault();
+    } else if (e.key === "Enter") {
+      const next = document.getElementById("nextBtn");
+      if (next && !next.disabled) next.click();
+    } else if (e.key === "Backspace" || e.key === "Escape") {
+      const back = document.getElementById("backBtn");
+      if (back && back.style.visibility !== "hidden") back.click();
+    }
+  });
 
   renderQuestion();
 })();

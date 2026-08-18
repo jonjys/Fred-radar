@@ -1,68 +1,220 @@
 <!doctype html>
-<html lang="sv">
+<html lang="en">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>FRED-Radar – Hitta rätt AI-verktyg på 60 sekunder</title>
-  <meta name="description" content="Ta FRED-Radars quiz och få en personlig ranking av AI-verktyg – budget, GDPR och svensk support." />
+  <title data-i18n="home.title">FRED-Radar – Find the right AI tool in 60 seconds</title>
+  <meta name="description" data-i18n="home.desc" content="Find the right AI tool in 60 seconds. Personal ranking by budget, GDPR and skill — honest limits, no lock-in surprises." />
   <link rel="canonical" href="https://fred-radar.vercel.app/" />
-  <link rel="alternate" hreflang="sv" href="https://fred-radar.vercel.app/" />
   <link rel="alternate" hreflang="en" href="https://fred-radar.vercel.app/" />
+  <link rel="alternate" hreflang="sv" href="https://fred-radar.vercel.app/sv" />
+  <link rel="alternate" hreflang="x-default" href="https://fred-radar.vercel.app/" />
+
+  <meta property="og:type" content="website" />
   <meta property="og:site_name" content="FRED-Radar" />
-  <meta property="og:title" content="FRED-Radar – Hitta rätt AI-verktyg på 60 sekunder" />
-  <meta property="og:locale" content="sv_SE" />
   <meta property="og:url" content="https://fred-radar.vercel.app/" />
+  <meta property="og:title" content="FRED-Radar – Find the right AI tool in 60 seconds" />
+  <meta property="og:description" content="Find the right AI tool in 60 seconds. Personal ranking by budget, GDPR and skill — honest limits, no lock-in surprises." />
+  <meta property="og:locale" content="en_US" />
+  <meta property="og:locale:alternate" content="sv_SE" />
+  <meta property="og:image" content="https://fred-radar.vercel.app/assets/og-image.svg" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="FRED-Radar – Find the right AI tool in 60 seconds" />
+  <meta name="twitter:description" content="Find the right AI tool in 60 seconds. Personal ranking by budget, GDPR and skill." />
+  <meta name="twitter:image" content="https://fred-radar.vercel.app/assets/og-image.svg" />
+
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📡</text></svg>" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="/assets/css/style.css" />
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": "FRED-Radar",
+    "url": "https://fred-radar.vercel.app/",
+    "description": "Honest AI tool recommendations ranked by budget, GDPR and usage limits.",
+    "inLanguage": ["en", "sv"],
+    "potentialAction": {
+      "@type": "SearchAction",
+      "target": "https://fred-radar.vercel.app/?q={search_term_string}",
+      "query-input": "required name=search_term_string"
+    }
+  }
+  </script>
 </head>
 <body>
   <div id="site-header"></div>
+
   <main>
     <section class="hero">
       <div class="wrap">
-        <span class="eyebrow">🇸🇪 Byggt för svenska &amp; nordiska förhållanden</span>
-        <h1>Sluta gissa. Hitta ditt AI-verktyg på 60 sekunder.</h1>
-        <p class="lead">FRED-Radar väger pris, kvalitet och GDPR – och visar varför ett verktyg passar dig.</p>
+        <span class="eyebrow" data-i18n="home.eyebrow">Built for people who actually have to ship</span>
+        <h1 data-i18n="home.h1">Stop guessing. Find your AI tool in 60 seconds.</h1>
+        <p class="lead" data-i18n="home.lead">
+          FRED-Radar weighs price, quality, GDPR and usage limits — and tells you why a tool fits you, instead of another vendor-sponsored “best of” list.
+        </p>
+        <div class="hero-search">
+          <label for="homeSearch" class="sr-only">Search 30+ tools</label>
+          <input id="homeSearch" type="search" data-i18n-placeholder="home.searchPh" placeholder="Search 30+ tools…" autocomplete="off" />
+          <div id="searchHits" class="search-hits" hidden></div>
+        </div>
         <div class="hero-actions">
-          <a class="btn btn-primary" href="/quiz.html">Ta 60-sekundersquizet →</a>
-          <a class="btn btn-ghost" href="#kategorier">Bläddra i kategorier</a>
+          <a class="btn btn-primary" href="/quiz.html" data-i18n="home.ctaQuiz">Take the 60-second quiz →</a>
+          <a class="btn btn-ghost" href="#kategorier" data-i18n="home.ctaBrowse">Browse categories</a>
         </div>
         <div class="hero-stats">
-          <div class="stat"><span class="num" id="toolCount">–</span><span class="lbl">verktyg jämförda</span></div>
-          <div class="stat"><span class="num">6</span><span class="lbl">kategorier</span></div>
-          <div class="stat"><span class="num">0 kr</span><span class="lbl">att använda FRED-Radar</span></div>
-          <div class="stat"><span class="num">100%</span><span class="lbl">oberoende ranking</span></div>
+          <div class="stat"><span class="num" id="toolCount">–</span><span class="lbl" data-i18n="home.statTools">tools compared</span></div>
+          <div class="stat"><span class="num" id="catCount">6</span><span class="lbl" data-i18n="home.statCats">categories</span></div>
+          <div class="stat"><span class="num">0</span><span class="lbl" data-i18n="home.statPrice">to use FRED-Radar</span></div>
+          <div class="stat"><span class="num">100%</span><span class="lbl" data-i18n="home.statRank">independent ranking</span></div>
         </div>
-        <p style="margin-top:12px;font-size:0.85rem;color:var(--text-muted)">Senast tillagda: <strong>Meta AI 2026-08-15</strong></p>
       </div>
     </section>
-    <section id="kategorier"><div class="wrap"><h2>Kategorier</h2><div class="category-grid" id="categoryGrid"></div></div></section>
-    <section><div class="wrap"><h2>Utvalda verktyg</h2><div class="tool-grid" id="featuredGrid"></div></div></section>
-    <section id="om"><div class="wrap"><span class="kicker">Om FRED-Radar</span><h2>Oberoende ranking</h2><p class="lead">Pris, kvalitet, GDPR – ranking påverkas inte av affiliate.</p></div></section>
-    <section><div class="wrap" style="text-align:center"><a class="btn btn-primary" href="/quiz.html">Ta quizet nu →</a> <a class="btn btn-ghost" href="/basta.html">Bästa listor</a> <a class="btn btn-ghost" href="/alternativ.html">Alternativ</a></div></section>
+
+    <section id="kategorier">
+      <div class="wrap">
+        <div class="section-head">
+          <span class="kicker" data-i18n="home.kickerCats">Categories</span>
+          <h2 data-i18n="home.h2Cats">Explore tools by job</h2>
+          <p data-i18n="home.pCats">Each category is ranked on quality, price, limits and how well the tool handles GDPR.</p>
+        </div>
+        <div class="category-grid" id="categoryGrid"></div>
+      </div>
+    </section>
+
+    <section>
+      <div class="wrap">
+        <div class="section-head">
+          <span class="kicker" data-i18n="home.kickerFeat">Editors' picks</span>
+          <h2 data-i18n="home.h2Feat">Featured tools right now</h2>
+          <p data-i18n="home.pFeat">A short list of tools we think give the most value right now — with honest limit labels.</p>
+        </div>
+        <div class="tool-grid" id="featuredGrid"></div>
+      </div>
+    </section>
+
+    <section>
+      <div class="wrap">
+        <div class="section-head" style="text-align:center; margin: 0 auto 32px;">
+          <span class="kicker" data-i18n="home.kickerHow">How it works</span>
+          <h2 data-i18n="home.h2How">The right tool in three steps</h2>
+        </div>
+        <div class="category-grid">
+          <div class="category-card" style="cursor:default;">
+            <div class="icon">1️⃣</div>
+            <h3 data-i18n="home.step1t">Answer 6 short questions</h3>
+            <p data-i18n="home.step1p">Purpose, budget, skill level and how much GDPR matters to you.</p>
+          </div>
+          <div class="category-card" style="cursor:default;">
+            <div class="icon">2️⃣</div>
+            <h3 data-i18n="home.step2t">Get a weighted ranking</h3>
+            <p data-i18n="home.step2p">We score tools against your answers — not a generic top list.</p>
+          </div>
+          <div class="category-card" style="cursor:default;">
+            <div class="icon">3️⃣</div>
+            <h3 data-i18n="home.step3t">See why we recommend it</h3>
+            <p data-i18n="home.step3p">Every pick is explained in plain language before you choose.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="om">
+      <div class="wrap">
+        <div class="section-head">
+          <span class="kicker" data-i18n="home.kickerAbout">About FRED-Radar</span>
+          <h2 data-i18n="home.h2About">Honest ranking, not “best in test”</h2>
+          <p data-i18n="home.pAbout">
+            FRED-Radar helps you pick AI and productivity tools without getting locked behind a “free” weekly cap the next day. We weigh price, quality, ease of use, GDPR — and hard usage limits.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="wrap">
+        <div class="hero" style="padding:48px 0; background:var(--bg-elevated); border:1px solid var(--border); border-radius:var(--radius-lg);">
+          <span class="eyebrow" data-i18n="home.ready">Ready?</span>
+          <h2 style="font-size:clamp(1.5rem,3vw,2.1rem); margin:0 0 14px;" data-i18n="home.h2Cta">Find your tool before the coffee goes cold</h2>
+          <p class="lead" style="margin-bottom:26px;" data-i18n="home.pCta">Six questions. A weighted ranking. No lock-in.</p>
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="/quiz.html" data-i18n="home.ctaNow">Take the quiz now →</a>
+          </div>
+        </div>
+      </div>
+    </section>
   </main>
+
   <div id="site-footer"></div>
+
+  <script src="/assets/js/i18n.js"></script>
   <script src="/assets/js/tool-card-template.js"></script>
   <script src="/assets/js/tools-data.js"></script>
   <script src="/assets/js/partials.js"></script>
   <script src="/assets/js/analytics.js"></script>
   <script>
     (async function () {
+      const I = window.FredI18n;
+      const wait = () => new Promise((res) => (I && I.whenReady ? I.whenReady(res) : res()));
+      await wait();
       const { tools, categories } = await window.RadarData.load();
+      const lang = I ? I.lang : "en";
+      const href = (p) => (I ? I.withLang(p, lang) : p);
+      const t = (k, v) => (I ? I.t(k, v) : k);
+
+      document.querySelectorAll('a[href="/quiz.html"]').forEach((a) => { a.href = href("/quiz.html"); });
+
+      function catName(c) { return lang === "sv" ? (c.nameSv || c.name) : c.name; }
+      function catDesc(c) { return lang === "sv" ? (c.descriptionSv || c.description) : c.description; }
+
       const categoryGrid = document.getElementById("categoryGrid");
-      if (categoryGrid) {
-        categoryGrid.innerHTML = categories.map((c) => {
-          const count = tools.filter((t) => t.categories.includes(c.id)).length;
-          return '<a class="category-card" href="/kategori/' + c.id + '.html"><div class="icon">' + c.icon + '</div><h3>' + c.name + '</h3><p>' + c.description + '</p><span class="count">' + count + ' verktyg →</span></a>';
+      categoryGrid.innerHTML = categories.map((c) => {
+        const count = tools.filter((x) => (x.categories || []).includes(c.id)).length;
+        return '<a class="category-card" href="' + href("/kategori/" + c.id + ".html") + '">' +
+          '<div class="icon">' + c.icon + "</div><h3>" + catName(c) + "</h3><p>" + catDesc(c) +
+          "</p><span class=\"count\">" + t("home.count", { n: count }) + "</span></a>";
+      }).join("");
+
+      const featuredGrid = document.getElementById("featuredGrid");
+      const featured = tools.filter((x) => x.featured).sort((a, b) => b.score - a.score).slice(0, 6);
+      featuredGrid.innerHTML = featured.map((x) => window.RadarData.toolCardHTML(x, { showFeaturedBadge: true, context: "index" })).join("");
+
+      const toolCountEl = document.getElementById("toolCount");
+      if (toolCountEl) toolCountEl.textContent = tools.length;
+      const catCount = document.getElementById("catCount");
+      if (catCount) catCount.textContent = categories.length;
+
+      const input = document.getElementById("homeSearch");
+      const hits = document.getElementById("searchHits");
+      function runSearch() {
+        const q = (input.value || "").trim().toLowerCase();
+        if (!q) { hits.hidden = true; hits.innerHTML = ""; return; }
+        const loc = (x) => (I && I.localizeTool ? I.localizeTool(x) : x);
+        const match = tools.filter((x) => {
+          const L = loc(x);
+          return (L.name + " " + (L.tagline || "") + " " + (L.bestFor || []).join(" ") + " " + (L.vendor || "")).toLowerCase().indexOf(q) !== -1;
+        }).slice(0, 8);
+        if (!match.length) { hits.hidden = true; return; }
+        hits.hidden = false;
+        hits.innerHTML = match.map((x) => {
+          const L = loc(x);
+          return '<a class="search-hit" href="' + href("/alternativ/" + x.id + ".html") + '"><span class="hit-logo">' +
+            (L.logo || "🛠️") + "</span><span><strong>" + L.name + "</strong><em>" + (L.tagline || "") +
+            "</em></span></a>";
         }).join("");
       }
-      const featuredGrid = document.getElementById("featuredGrid");
-      if (featuredGrid) {
-        const featured = tools.filter((t) => t.featured).sort((a, b) => b.score - a.score).slice(0, 6);
-        featuredGrid.innerHTML = featured.map((t) => window.RadarData.toolCardHTML(t, { showFeaturedBadge: true, context: "index" })).join("");
-      }
-      const tc = document.getElementById("toolCount");
-      if (tc) tc.textContent = tools.length;
+      input.addEventListener("input", runSearch);
+      input.addEventListener("focus", runSearch);
+      document.addEventListener("click", (e) => {
+        if (!e.target.closest(".hero-search")) hits.hidden = true;
+      });
+      const params = new URLSearchParams(location.search);
+      if (params.get("q")) { input.value = params.get("q"); runSearch(); }
     })();
   </script>
 </body>

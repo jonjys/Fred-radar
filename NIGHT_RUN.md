@@ -1,33 +1,27 @@
-# Night run 2026-08-17 — KLAR
+# Night run 2026-08-16
 
-## Live på main nu
+## Shipped while you slept
 
-| Feature | Status |
-|---------|--------|
-| Dynamiskt verktygsantal | ✅ homepage-stats.js (auto-laddas) |
-| OG-bild | ✅ assets/og-image.svg (wired på quiz) |
-| Dela resultat + tangentbord | ✅ quiz-enhancements.js |
-| Senast tittat på | ✅ recently-viewed.js (self-inject) |
-| Perplexity + Gamma | ✅ tools-extra.json (mergas i klienten) |
-| set-site-url | ✅ npm run set-site-url -- https://… |
-| prefers-reduced-motion | ✅ a11y.css |
-| /go/ affiliate redirects | ✅ redan innan |
+1. **Dynamic tool count** on homepage (was hard-coded 18, now 21)
+2. **OG image** (`assets/og-image.svg`) + wired on index + quiz
+3. **Share results** button on quiz (Web Share API + clipboard fallback)
+4. **Keyboard shortcuts** in quiz: 1–5 select, Enter next, Backspace/Esc back
+5. **`npm run set-site-url -- https://din-domän.se`** script
+6. **Perplexity Pro** added as tool #21 (research with sources)
+7. Categories regenerated
 
-## Din lista imorgon (5–15 min)
+## Still needs you (human)
 
-1. **Vercel → Settings → Git → Production Branch = `main`**
-2. Ansök affiliate: Make → ClickUp → Copy.ai
-3. När DNS klar: `npm run set-site-url -- https://din-domän.se`
-4. Koppla Plausible/Fathom + Buttondown när du vill
+- Set Production Branch in Vercel
+- Real affiliate codes (start with Make, ClickUp, Copy.ai)
+- Domain via `npm run set-site-url -- https://...`
+- Analytics + newsletter accounts
+- Legal GDPR review before aggressive marketing
 
-## Verifiera lokalt
+## How to verify
 
 ```bash
-git pull origin main
-npm run build && npm run serve
+npm run build
+npm run serve
+# open http://localhost:3000
 ```
-
-Öppna quizet → svara → **Dela resultat** ska synas.  
-Klicka Besök på ett verktyg → gå tillbaka till startsidan → **Senast tittat på** dyker upp.
-
-Sov gott. 📡

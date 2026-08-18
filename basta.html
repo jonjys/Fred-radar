@@ -1,43 +1,116 @@
 <!doctype html>
-<html lang="sv">
+<html lang="en">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Bästa AI-verktygen 2026 – topplistor | Fred-Radar</title>
-  <meta name="description" content="Topp 3 AI-verktyg per kategori – skriv, bild och produktivitet. Rankade efter kvalitet, pris och GDPR." />
+  <title>Bästa AI-verktygen 2026 – topplistor | FRED-Radar</title>
+  <meta name="description" content="Topp 3 AI-verktyg per kategori – skriv, bild och produktivitet. Rankade efter kvalitet, pris och GDPR för svenska och nordiska användare." />
   <link rel="canonical" href="https://fred-radar.vercel.app/basta.html" />
-  <meta property="og:site_name" content="Fred-Radar" />
-  <meta property="og:title" content="Bästa AI-verktygen 2026 | Fred-Radar" />
+
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="FRED-Radar" />
+  <meta property="og:url" content="https://fred-radar.vercel.app/basta.html" />
+  <meta property="og:title" content="Bästa AI-verktygen 2026 – topplistor | FRED-Radar" />
+  <meta property="og:description" content="Topp 3 AI-verktyg per kategori – rankade efter kvalitet, pris och GDPR." />
   <meta property="og:locale" content="sv_SE" />
+  <meta property="og:image" content="https://fred-radar.vercel.app/assets/og-image.svg" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Bästa AI-verktygen 2026 | FRED-Radar" />
+  <meta name="twitter:description" content="Topp 3 AI-verktyg per kategori." />
+
   <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📡</text></svg>" />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="/assets/css/style.css" />
 </head>
 <body>
   <div id="site-header"></div>
+
   <main>
-    <section class="hero" style="padding-top:48px;padding-bottom:28px;">
-      <div class="wrap">
-        <span class="eyebrow">Topplistor</span>
-        <h1>Bästa AI-verktygen 2026</h1>
-        <p class="lead">Topp 3 per kategori – rankade efter poäng, pris och GDPR för nordiska användare.</p>
+    <div class="wrap" style="padding-top: 28px; padding-bottom: 48px;">
+      <p class="eyebrow" style="margin-bottom: 8px;">Topplistor</p>
+      <h1 style="margin: 0 0 8px;">Bästa AI-verktygen 2026</h1>
+      <p class="lead" style="max-width: 640px; margin-bottom: 28px;">
+        Topp 3 i varje kategori – scannat från alla verktyg i databasen och rankade efter totalpoäng (kvalitet, användarvänlighet, värde och support).
+      </p>
+
+      <div id="bastaRoot">
+        <p style="opacity:0.7;">Laddar topplistor…</p>
       </div>
-    </section>
-    <section><div class="wrap" id="bastaRoot"><p class="empty-state">Laddar…</p></div></section>
+
+      <div style="text-align:center; margin-top:36px; display:flex; flex-wrap:wrap; gap:12px; justify-content:center;">
+        <a class="btn btn-primary" href="/quiz.html">Ta quizet för personlig ranking →</a>
+        <a class="btn btn-ghost" href="/alternativ.html">Se alternativ till ett verktyg</a>
+      </div>
+    </div>
   </main>
+
   <div id="site-footer"></div>
+
+  <script src="/assets/js/i18n.js"></script>
   <script src="/assets/js/tool-card-template.js"></script>
   <script src="/assets/js/tools-data.js"></script>
   <script src="/assets/js/partials.js"></script>
   <script src="/assets/js/analytics.js"></script>
   <script>
     (async function () {
-      const data = await window.RadarData.load();
       const root = document.getElementById("bastaRoot");
-      root.innerHTML = data.categories.map((c) => {
-        const top = data.tools.filter((t) => t.categories.includes(c.id)).sort((a,b)=>b.score-a.score).slice(0,3);
-        return `<div style="margin-bottom:40px"><h2>${c.icon} ${c.name}</h2><div class="tool-grid">${top.map((t,i)=>`<article class="tool-card"><span class="result-rank">${i+1}</span><div class="tool-card-top"><div class="tool-logo">${t.logo||"🛠️"}</div><div class="tool-heading"><h3>${t.name}</h3><p class="tagline">${t.tagline||""}</p></div><div class="tool-score"><span class="num">${Number(t.score).toFixed(1)}</span><span class="lbl">poäng</span></div></div><div class="tool-actions"><a class="btn btn-primary" href="/go/?tool=${t.id}&src=basta" target="_blank" rel="sponsored noopener">Besök</a><a class="btn btn-ghost" href="/alternativ/${t.id}.html">Alternativ</a></div></article>`).join("")}</div></div>`;
-      }).join("");
+      const data = await window.RadarData.load();
+      const tools = data.tools || [];
+      const categories = data.categories || [];
+
+      let html = "";
+      categories.forEach((cat) => {
+        const ranked = tools
+          .filter((t) => (t.categories || []).includes(cat.id))
+          .sort((a, b) => b.score - a.score)
+          .slice(0, 3);
+
+        html += `
+          <section style="margin-bottom:40px;">
+            <h2 style="display:flex; align-items:center; gap:10px; margin-bottom:6px;">
+              <span aria-hidden="true">${cat.icon || ""}</span> ${cat.name}
+            </h2>
+            <p style="opacity:0.75; margin:0 0 16px; max-width:560px;">${cat.description || ""}</p>
+            <div class="tool-grid">
+              ${ranked
+                .map((t, i) => {
+                  return `
+                <article class="tool-card result-card">
+                  <span class="result-rank">${i + 1}</span>
+                  <div class="tool-card-top">
+                    <div class="tool-logo" aria-hidden="true">${t.logo || "🛠️"}</div>
+                    <div class="tool-heading">
+                      <h3>${t.name}</h3>
+                      <p class="tagline">${t.tagline}</p>
+                    </div>
+                    <div class="tool-score">
+                      <span class="num">${t.score.toFixed(1)}</span>
+                      <span class="lbl">poäng</span>
+                    </div>
+                  </div>
+                  <p class="tool-desc" style="font-size:0.9rem;">${t.description}</p>
+                  <div class="tool-meta">
+                    <span class="pill">${window.RadarData.priceLabel(t)}</span>
+                    <span class="pill gdpr-${t.gdpr?.score || 0}">🔒 ${window.RadarData.gdprLabel(t.gdpr?.score || 0)}</span>
+                  </div>
+                  <div class="tool-actions">
+                    <a class="btn btn-primary" href="/go/?tool=${t.id}&src=basta" target="_blank" rel="sponsored noopener">Besök ${t.name}</a>
+                    <a class="btn btn-ghost" href="/kategori/${cat.id}.html#${t.id}">Läs mer</a>
+                    <a class="btn btn-ghost" href="/alternativ.html?tool=${t.id}">Se alternativ</a>
+                  </div>
+                  <p class="ad-note">Annonslänk – vi kan få provision. Påverkar inte priset eller rankingen.</p>
+                </article>`;
+                })
+                .join("")}
+            </div>
+            <p style="margin-top:12px;">
+              <a href="/kategori/${cat.id}.html">Se alla i ${cat.shortName || cat.name} →</a>
+            </p>
+          </section>
+        `;
+      });
+
+      root.innerHTML = html;
     })();
   </script>
 </body>

@@ -2,7 +2,6 @@
 /**
  * Byt produktionsdomän i ett steg.
  * Usage: node scripts/set-site-url.js https://din-domän.se
- *    or: npm run set-site-url -- https://din-domän.se
  */
 const fs = require("fs");
 const path = require("path");
@@ -10,7 +9,7 @@ const { execSync } = require("child_process");
 
 const url = process.argv[2];
 if (!url || !/^https?:\/\//.test(url)) {
-  console.error("Användning: npm run set-site-url -- https://din-domän.se");
+  console.error("Användning: node scripts/set-site-url.js https://din-domän.se");
   process.exit(1);
 }
 const clean = url.replace(/\/$/, "");
@@ -22,12 +21,14 @@ const old = site.siteUrl || "https://radar.se";
 site.siteUrl = clean;
 fs.writeFileSync(sitePath, JSON.stringify(site, null, 2) + "\n");
 
+// Replace in static HTML that hard-code the domain
 const files = ["index.html", "quiz.html", "scripts/template-kategori.html"];
 for (const f of files) {
   const fp = path.join(root, f);
   if (!fs.existsSync(fp)) continue;
   let t = fs.readFileSync(fp, "utf8");
   t = t.split(old).join(clean);
+  // also catch any leftover radar.se
   t = t.split("https://radar.se").join(clean);
   fs.writeFileSync(fp, t);
 }

@@ -1,14 +1,868 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url><loc>https://fred-radar.vercel.app/</loc><changefreq>weekly</changefreq><priority>1.0</priority></url>
-  <url><loc>https://fred-radar.vercel.app/quiz.html</loc><changefreq>monthly</changefreq><priority>0.9</priority></url>
-  <url><loc>https://fred-radar.vercel.app/basta.html</loc><changefreq>weekly</changefreq><priority>0.85</priority></url>
-  <url><loc>https://fred-radar.vercel.app/alternativ.html</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://fred-radar.vercel.app/alternativ/meta-ai.html</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://fred-radar.vercel.app/kategori/ai-writing.html</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://fred-radar.vercel.app/kategori/ai-image.html</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://fred-radar.vercel.app/kategori/produktivitet.html</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://fred-radar.vercel.app/kategori/ai-code.html</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://fred-radar.vercel.app/kategori/ai-data.html</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://fred-radar.vercel.app/kategori/ai-voice.html</loc><changefreq>weekly</changefreq><priority>0.7</priority></url>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xhtml="http://www.w3.org/1999/xhtml">
+  <url>
+    <loc>https://fred-radar.vercel.app/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://fred-radar.vercel.app/" />
+    <xhtml:link rel="alternate" hreflang="sv" href="https://fred-radar.vercel.app/sv" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://fred-radar.vercel.app/" />
+    <lastmod>2026-08-18</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+  <url>
+    <loc>https://fred-radar.vercel.app/sv</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://fred-radar.vercel.app/" />
+    <xhtml:link rel="alternate" hreflang="sv" href="https://fred-radar.vercel.app/sv" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://fred-radar.vercel.app/" />
+    <lastmod>2026-08-18</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+  <url>
+    <loc>https://fred-radar.vercel.app/quiz.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://fred-radar.vercel.app/quiz.html" />
+    <xhtml:link rel="alternate" hreflang="sv" href="https://fred-radar.vercel.app/sv/quiz.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://fred-radar.vercel.app/quiz.html" />
+    <lastmod>2026-08-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://fred-radar.vercel.app/sv/quiz.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://fred-radar.vercel.app/quiz.html" />
+    <xhtml:link rel="alternate" hreflang="sv" href="https://fred-radar.vercel.app/sv/quiz.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://fred-radar.vercel.app/quiz.html" />
+    <lastmod>2026-08-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://fred-radar.vercel.app/basta.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://fred-radar.vercel.app/basta.html" />
+    <xhtml:link rel="alternate" hreflang="sv" href="https://fred-radar.vercel.app/sv/basta.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://fred-radar.vercel.app/basta.html" />
+    <lastmod>2026-08-18</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+  </url>
+  <url>
+    <loc>https://fred-radar.vercel.app/sv/basta.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://fred-radar.vercel.app/basta.html" />
+    <xhtml:link rel="alternate" hreflang="sv" href="https://fred-radar.vercel.app/sv/basta.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://fred-radar.vercel.app/basta.html" />
+    <lastmod>2026-08-18</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+  </url>
+  <url>
+    <loc>https://fred-radar.vercel.app/alternativ.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://fred-radar.vercel.app/alternativ.html" />
+    <xhtml:link rel="alternate" hreflang="sv" href="https://fred-radar.vercel.app/sv/alternativ.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://fred-radar.vercel.app/alternativ.html" />
+    <lastmod>2026-08-18</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://fred-radar.vercel.app/sv/alternativ.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://fred-radar.vercel.app/alternativ.html" />
+    <xhtml:link rel="alternate" hreflang="sv" href="https://fred-radar.vercel.app/sv/alternativ.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://fred-radar.vercel.app/alternativ.html" />
+    <lastmod>2026-08-18</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://fred-radar.vercel.app/kategori/ai-writing.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://fred-radar.vercel.app/kategori/ai-writing.html" />
+    <xhtml:link rel="alternate" hreflang="sv" href="https://fred-radar.vercel.app/sv/kategori/ai-writing.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://fred-radar.vercel.app/kategori/ai-writing.html" />
+    <lastmod>2026-08-18</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://fred-radar.vercel.app/sv/kategori/ai-writing.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://fred-radar.vercel.app/kategori/ai-writing.html" />
+    <xhtml:link rel="alternate" hreflang="sv" href="https://fred-radar.vercel.app/sv/kategori/ai-writing.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://fred-radar.vercel.app/kategori/ai-writing.html" />
+    <lastmod>2026-08-18</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://fred-radar.vercel.app/kategori/ai-image.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://fred-radar.vercel.app/kategori/ai-image.html" />
+    <xhtml:link rel="alternate" hreflang="sv" href="https://fred-radar.vercel.app/sv/kategori/ai-image.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://fred-radar.vercel.app/kategori/ai-image.html" />
+    <lastmod>2026-08-18</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://fred-radar.vercel.app/sv/kategori/ai-image.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://fred-radar.vercel.app/kategori/ai-image.html" />
+    <xhtml:link rel="alternate" hreflang="sv" href="https://fred-radar.vercel.app/sv/kategori/ai-image.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://fred-radar.vercel.app/kategori/ai-image.html" />
+    <lastmod>2026-08-18</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://fred-radar.vercel.app/kategori/produktivitet.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://fred-radar.vercel.app/kategori/produktivitet.html" />
+    <xhtml:link rel="alternate" hreflang="sv" href="https://fred-radar.vercel.app/sv/kategori/produktivitet.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://fred-radar.vercel.app/kategori/produktivitet.html" />
+    <lastmod>2026-08-18</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://fred-radar.vercel.app/sv/kategori/produktivitet.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://fred-radar.vercel.app/kategori/produktivitet.html" />
+    <xhtml:link rel="alternate" hreflang="sv" href="https://fred-radar.vercel.app/sv/kategori/produktivitet.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://fred-radar.vercel.app/kategori/produktivitet.html" />
+    <lastmod>2026-08-18</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://fred-radar.vercel.app/kategori/ai-code.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://fred-radar.vercel.app/kategori/ai-code.html" />
+    <xhtml:link rel="alternate" hreflang="sv" href="https://fred-radar.vercel.app/sv/kategori/ai-code.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://fred-radar.vercel.app/kategori/ai-code.html" />
+    <lastmod>2026-08-18</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://fred-radar.vercel.app/sv/kategori/ai-code.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://fred-radar.vercel.app/kategori/ai-code.html" />
+    <xhtml:link rel="alternate" hreflang="sv" href="https://fred-radar.vercel.app/sv/kategori/ai-code.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://fred-radar.vercel.app/kategori/ai-code.html" />
+    <lastmod>2026-08-18</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://fred-radar.vercel.app/kategori/ai-data.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://fred-radar.vercel.app/kategori/ai-data.html" />
+    <xhtml:link rel="alternate" hreflang="sv" href="https://fred-radar.vercel.app/sv/kategori/ai-data.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://fred-radar.vercel.app/kategori/ai-data.html" />
+    <lastmod>2026-08-18</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://fred-radar.vercel.app/sv/kategori/ai-data.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://fred-radar.vercel.app/kategori/ai-data.html" />
+    <xhtml:link rel="alternate" hreflang="sv" href="https://fred-radar.vercel.app/sv/kategori/ai-data.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://fred-radar.vercel.app/kategori/ai-data.html" />
+    <lastmod>2026-08-18</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://fred-radar.vercel.app/kategori/ai-voice.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://fred-radar.vercel.app/kategori/ai-voice.html" />
+    <xhtml:link rel="alternate" hreflang="sv" href="https://fred-radar.vercel.app/sv/kategori/ai-voice.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://fred-radar.vercel.app/kategori/ai-voice.html" />
+    <lastmod>2026-08-18</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://fred-radar.vercel.app/sv/kategori/ai-voice.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://fred-radar.vercel.app/kategori/ai-voice.html" />
+    <xhtml:link rel="alternate" hreflang="sv" href="https://fred-radar.vercel.app/sv/kategori/ai-voice.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://fred-radar.vercel.app/kategori/ai-voice.html" />
+    <lastmod>2026-08-18</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://fred-radar.vercel.app/alternativ/chatgpt-plus.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://fred-radar.vercel.app/alternativ/chatgpt-plus.html" />
+    <xhtml:link rel="alternate" hreflang="sv" href="https://fred-radar.vercel.app/sv/alternativ/chatgpt-plus.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://fred-radar.vercel.app/alternativ/chatgpt-plus.html" />
+    <lastmod>2026-08-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://fred-radar.vercel.app/sv/alternativ/chatgpt-plus.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://fred-radar.vercel.app/alternativ/chatgpt-plus.html" />
+    <xhtml:link rel="alternate" hreflang="sv" href="https://fred-radar.vercel.app/sv/alternativ/chatgpt-plus.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://fred-radar.vercel.app/alternativ/chatgpt-plus.html" />
+    <lastmod>2026-08-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://fred-radar.vercel.app/alternativ/claude-pro.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://fred-radar.vercel.app/alternativ/claude-pro.html" />
+    <xhtml:link rel="alternate" hreflang="sv" href="https://fred-radar.vercel.app/sv/alternativ/claude-pro.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://fred-radar.vercel.app/alternativ/claude-pro.html" />
+    <lastmod>2026-08-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://fred-radar.vercel.app/sv/alternativ/claude-pro.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://fred-radar.vercel.app/alternativ/claude-pro.html" />
+    <xhtml:link rel="alternate" hreflang="sv" href="https://fred-radar.vercel.app/sv/alternativ/claude-pro.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://fred-radar.vercel.app/alternativ/claude-pro.html" />
+    <lastmod>2026-08-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://fred-radar.vercel.app/alternativ/jasper.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://fred-radar.vercel.app/alternativ/jasper.html" />
+    <xhtml:link rel="alternate" hreflang="sv" href="https://fred-radar.vercel.app/sv/alternativ/jasper.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://fred-radar.vercel.app/alternativ/jasper.html" />
+    <lastmod>2026-08-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://fred-radar.vercel.app/sv/alternativ/jasper.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://fred-radar.vercel.app/alternativ/jasper.html" />
+    <xhtml:link rel="alternate" hreflang="sv" href="https://fred-radar.vercel.app/sv/alternativ/jasper.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://fred-radar.vercel.app/alternativ/jasper.html" />
+    <lastmod>2026-08-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://fred-radar.vercel.app/alternativ/copyai.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://fred-radar.vercel.app/alternativ/copyai.html" />
+    <xhtml:link rel="alternate" hreflang="sv" href="https://fred-radar.vercel.app/sv/alternativ/copyai.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://fred-radar.vercel.app/alternativ/copyai.html" />
+    <lastmod>2026-08-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://fred-radar.vercel.app/sv/alternativ/copyai.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://fred-radar.vercel.app/alternativ/copyai.html" />
+    <xhtml:link rel="alternate" hreflang="sv" href="https://fred-radar.vercel.app/sv/alternativ/copyai.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://fred-radar.vercel.app/alternativ/copyai.html" />
+    <lastmod>2026-08-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://fred-radar.vercel.app/alternativ/writesonic.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://fred-radar.vercel.app/alternativ/writesonic.html" />
+    <xhtml:link rel="alternate" hreflang="sv" href="https://fred-radar.vercel.app/sv/alternativ/writesonic.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://fred-radar.vercel.app/alternativ/writesonic.html" />
+    <lastmod>2026-08-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://fred-radar.vercel.app/sv/alternativ/writesonic.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://fred-radar.vercel.app/alternativ/writesonic.html" />
+    <xhtml:link rel="alternate" hreflang="sv" href="https://fred-radar.vercel.app/sv/alternativ/writesonic.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://fred-radar.vercel.app/alternativ/writesonic.html" />
+    <lastmod>2026-08-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://fred-radar.vercel.app/alternativ/rytr.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://fred-radar.vercel.app/alternativ/rytr.html" />
+    <xhtml:link rel="alternate" hreflang="sv" href="https://fred-radar.vercel.app/sv/alternativ/rytr.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://fred-radar.vercel.app/alternativ/rytr.html" />
+    <lastmod>2026-08-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://fred-radar.vercel.app/sv/alternativ/rytr.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://fred-radar.vercel.app/alternativ/rytr.html" />
+    <xhtml:link rel="alternate" hreflang="sv" href="https://fred-radar.vercel.app/sv/alternativ/rytr.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://fred-radar.vercel.app/alternativ/rytr.html" />
+    <lastmod>2026-08-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://fred-radar.vercel.app/alternativ/midjourney.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://fred-radar.vercel.app/alternativ/midjourney.html" />
+    <xhtml:link rel="alternate" hreflang="sv" href="https://fred-radar.vercel.app/sv/alternativ/midjourney.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://fred-radar.vercel.app/alternativ/midjourney.html" />
+    <lastmod>2026-08-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://fred-radar.vercel.app/sv/alternativ/midjourney.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://fred-radar.vercel.app/alternativ/midjourney.html" />
+    <xhtml:link rel="alternate" hreflang="sv" href="https://fred-radar.vercel.app/sv/alternativ/midjourney.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://fred-radar.vercel.app/alternativ/midjourney.html" />
+    <lastmod>2026-08-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://fred-radar.vercel.app/alternativ/adobe-firefly.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://fred-radar.vercel.app/alternativ/adobe-firefly.html" />
+    <xhtml:link rel="alternate" hreflang="sv" href="https://fred-radar.vercel.app/sv/alternativ/adobe-firefly.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://fred-radar.vercel.app/alternativ/adobe-firefly.html" />
+    <lastmod>2026-08-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://fred-radar.vercel.app/sv/alternativ/adobe-firefly.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://fred-radar.vercel.app/alternativ/adobe-firefly.html" />
+    <xhtml:link rel="alternate" hreflang="sv" href="https://fred-radar.vercel.app/sv/alternativ/adobe-firefly.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://fred-radar.vercel.app/alternativ/adobe-firefly.html" />
+    <lastmod>2026-08-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://fred-radar.vercel.app/alternativ/leonardo-ai.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://fred-radar.vercel.app/alternativ/leonardo-ai.html" />
+    <xhtml:link rel="alternate" hreflang="sv" href="https://fred-radar.vercel.app/sv/alternativ/leonardo-ai.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://fred-radar.vercel.app/alternativ/leonardo-ai.html" />
+    <lastmod>2026-08-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://fred-radar.vercel.app/sv/alternativ/leonardo-ai.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://fred-radar.vercel.app/alternativ/leonardo-ai.html" />
+    <xhtml:link rel="alternate" hreflang="sv" href="https://fred-radar.vercel.app/sv/alternativ/leonardo-ai.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://fred-radar.vercel.app/alternativ/leonardo-ai.html" />
+    <lastmod>2026-08-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://fred-radar.vercel.app/alternativ/ideogram.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://fred-radar.vercel.app/alternativ/ideogram.html" />
+    <xhtml:link rel="alternate" hreflang="sv" href="https://fred-radar.vercel.app/sv/alternativ/ideogram.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://fred-radar.vercel.app/alternativ/ideogram.html" />
+    <lastmod>2026-08-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://fred-radar.vercel.app/sv/alternativ/ideogram.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://fred-radar.vercel.app/alternativ/ideogram.html" />
+    <xhtml:link rel="alternate" hreflang="sv" href="https://fred-radar.vercel.app/sv/alternativ/ideogram.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://fred-radar.vercel.app/alternativ/ideogram.html" />
+    <lastmod>2026-08-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://fred-radar.vercel.app/alternativ/canva-magic-media.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://fred-radar.vercel.app/alternativ/canva-magic-media.html" />
+    <xhtml:link rel="alternate" hreflang="sv" href="https://fred-radar.vercel.app/sv/alternativ/canva-magic-media.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://fred-radar.vercel.app/alternativ/canva-magic-media.html" />
+    <lastmod>2026-08-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://fred-radar.vercel.app/sv/alternativ/canva-magic-media.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://fred-radar.vercel.app/alternativ/canva-magic-media.html" />
+    <xhtml:link rel="alternate" hreflang="sv" href="https://fred-radar.vercel.app/sv/alternativ/canva-magic-media.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://fred-radar.vercel.app/alternativ/canva-magic-media.html" />
+    <lastmod>2026-08-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://fred-radar.vercel.app/alternativ/microsoft-designer.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://fred-radar.vercel.app/alternativ/microsoft-designer.html" />
+    <xhtml:link rel="alternate" hreflang="sv" href="https://fred-radar.vercel.app/sv/alternativ/microsoft-designer.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://fred-radar.vercel.app/alternativ/microsoft-designer.html" />
+    <lastmod>2026-08-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://fred-radar.vercel.app/sv/alternativ/microsoft-designer.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://fred-radar.vercel.app/alternativ/microsoft-designer.html" />
+    <xhtml:link rel="alternate" hreflang="sv" href="https://fred-radar.vercel.app/sv/alternativ/microsoft-designer.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://fred-radar.vercel.app/alternativ/microsoft-designer.html" />
+    <lastmod>2026-08-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://fred-radar.vercel.app/alternativ/notion-ai.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://fred-radar.vercel.app/alternativ/notion-ai.html" />
+    <xhtml:link rel="alternate" hreflang="sv" href="https://fred-radar.vercel.app/sv/alternativ/notion-ai.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://fred-radar.vercel.app/alternativ/notion-ai.html" />
+    <lastmod>2026-08-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://fred-radar.vercel.app/sv/alternativ/notion-ai.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://fred-radar.vercel.app/alternativ/notion-ai.html" />
+    <xhtml:link rel="alternate" hreflang="sv" href="https://fred-radar.vercel.app/sv/alternativ/notion-ai.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://fred-radar.vercel.app/alternativ/notion-ai.html" />
+    <lastmod>2026-08-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://fred-radar.vercel.app/alternativ/clickup-ai.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://fred-radar.vercel.app/alternativ/clickup-ai.html" />
+    <xhtml:link rel="alternate" hreflang="sv" href="https://fred-radar.vercel.app/sv/alternativ/clickup-ai.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://fred-radar.vercel.app/alternativ/clickup-ai.html" />
+    <lastmod>2026-08-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://fred-radar.vercel.app/sv/alternativ/clickup-ai.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://fred-radar.vercel.app/alternativ/clickup-ai.html" />
+    <xhtml:link rel="alternate" hreflang="sv" href="https://fred-radar.vercel.app/sv/alternativ/clickup-ai.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://fred-radar.vercel.app/alternativ/clickup-ai.html" />
+    <lastmod>2026-08-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://fred-radar.vercel.app/alternativ/motion.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://fred-radar.vercel.app/alternativ/motion.html" />
+    <xhtml:link rel="alternate" hreflang="sv" href="https://fred-radar.vercel.app/sv/alternativ/motion.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://fred-radar.vercel.app/alternativ/motion.html" />
+    <lastmod>2026-08-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://fred-radar.vercel.app/sv/alternativ/motion.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://fred-radar.vercel.app/alternativ/motion.html" />
+    <xhtml:link rel="alternate" hreflang="sv" href="https://fred-radar.vercel.app/sv/alternativ/motion.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://fred-radar.vercel.app/alternativ/motion.html" />
+    <lastmod>2026-08-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://fred-radar.vercel.app/alternativ/reclaim-ai.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://fred-radar.vercel.app/alternativ/reclaim-ai.html" />
+    <xhtml:link rel="alternate" hreflang="sv" href="https://fred-radar.vercel.app/sv/alternativ/reclaim-ai.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://fred-radar.vercel.app/alternativ/reclaim-ai.html" />
+    <lastmod>2026-08-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://fred-radar.vercel.app/sv/alternativ/reclaim-ai.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://fred-radar.vercel.app/alternativ/reclaim-ai.html" />
+    <xhtml:link rel="alternate" hreflang="sv" href="https://fred-radar.vercel.app/sv/alternativ/reclaim-ai.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://fred-radar.vercel.app/alternativ/reclaim-ai.html" />
+    <lastmod>2026-08-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://fred-radar.vercel.app/alternativ/sana.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://fred-radar.vercel.app/alternativ/sana.html" />
+    <xhtml:link rel="alternate" hreflang="sv" href="https://fred-radar.vercel.app/sv/alternativ/sana.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://fred-radar.vercel.app/alternativ/sana.html" />
+    <lastmod>2026-08-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://fred-radar.vercel.app/sv/alternativ/sana.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://fred-radar.vercel.app/alternativ/sana.html" />
+    <xhtml:link rel="alternate" hreflang="sv" href="https://fred-radar.vercel.app/sv/alternativ/sana.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://fred-radar.vercel.app/alternativ/sana.html" />
+    <lastmod>2026-08-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://fred-radar.vercel.app/alternativ/akiflow.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://fred-radar.vercel.app/alternativ/akiflow.html" />
+    <xhtml:link rel="alternate" hreflang="sv" href="https://fred-radar.vercel.app/sv/alternativ/akiflow.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://fred-radar.vercel.app/alternativ/akiflow.html" />
+    <lastmod>2026-08-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://fred-radar.vercel.app/sv/alternativ/akiflow.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://fred-radar.vercel.app/alternativ/akiflow.html" />
+    <xhtml:link rel="alternate" hreflang="sv" href="https://fred-radar.vercel.app/sv/alternativ/akiflow.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://fred-radar.vercel.app/alternativ/akiflow.html" />
+    <lastmod>2026-08-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://fred-radar.vercel.app/alternativ/zapier.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://fred-radar.vercel.app/alternativ/zapier.html" />
+    <xhtml:link rel="alternate" hreflang="sv" href="https://fred-radar.vercel.app/sv/alternativ/zapier.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://fred-radar.vercel.app/alternativ/zapier.html" />
+    <lastmod>2026-08-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://fred-radar.vercel.app/sv/alternativ/zapier.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://fred-radar.vercel.app/alternativ/zapier.html" />
+    <xhtml:link rel="alternate" hreflang="sv" href="https://fred-radar.vercel.app/sv/alternativ/zapier.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://fred-radar.vercel.app/alternativ/zapier.html" />
+    <lastmod>2026-08-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://fred-radar.vercel.app/alternativ/make.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://fred-radar.vercel.app/alternativ/make.html" />
+    <xhtml:link rel="alternate" hreflang="sv" href="https://fred-radar.vercel.app/sv/alternativ/make.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://fred-radar.vercel.app/alternativ/make.html" />
+    <lastmod>2026-08-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://fred-radar.vercel.app/sv/alternativ/make.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://fred-radar.vercel.app/alternativ/make.html" />
+    <xhtml:link rel="alternate" hreflang="sv" href="https://fred-radar.vercel.app/sv/alternativ/make.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://fred-radar.vercel.app/alternativ/make.html" />
+    <lastmod>2026-08-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://fred-radar.vercel.app/alternativ/perplexity.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://fred-radar.vercel.app/alternativ/perplexity.html" />
+    <xhtml:link rel="alternate" hreflang="sv" href="https://fred-radar.vercel.app/sv/alternativ/perplexity.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://fred-radar.vercel.app/alternativ/perplexity.html" />
+    <lastmod>2026-08-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://fred-radar.vercel.app/sv/alternativ/perplexity.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://fred-radar.vercel.app/alternativ/perplexity.html" />
+    <xhtml:link rel="alternate" hreflang="sv" href="https://fred-radar.vercel.app/sv/alternativ/perplexity.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://fred-radar.vercel.app/alternativ/perplexity.html" />
+    <lastmod>2026-08-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://fred-radar.vercel.app/alternativ/meta-ai.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://fred-radar.vercel.app/alternativ/meta-ai.html" />
+    <xhtml:link rel="alternate" hreflang="sv" href="https://fred-radar.vercel.app/sv/alternativ/meta-ai.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://fred-radar.vercel.app/alternativ/meta-ai.html" />
+    <lastmod>2026-08-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://fred-radar.vercel.app/sv/alternativ/meta-ai.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://fred-radar.vercel.app/alternativ/meta-ai.html" />
+    <xhtml:link rel="alternate" hreflang="sv" href="https://fred-radar.vercel.app/sv/alternativ/meta-ai.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://fred-radar.vercel.app/alternativ/meta-ai.html" />
+    <lastmod>2026-08-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://fred-radar.vercel.app/alternativ/chatgpt-free.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://fred-radar.vercel.app/alternativ/chatgpt-free.html" />
+    <xhtml:link rel="alternate" hreflang="sv" href="https://fred-radar.vercel.app/sv/alternativ/chatgpt-free.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://fred-radar.vercel.app/alternativ/chatgpt-free.html" />
+    <lastmod>2026-08-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://fred-radar.vercel.app/sv/alternativ/chatgpt-free.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://fred-radar.vercel.app/alternativ/chatgpt-free.html" />
+    <xhtml:link rel="alternate" hreflang="sv" href="https://fred-radar.vercel.app/sv/alternativ/chatgpt-free.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://fred-radar.vercel.app/alternativ/chatgpt-free.html" />
+    <lastmod>2026-08-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://fred-radar.vercel.app/alternativ/claude-free.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://fred-radar.vercel.app/alternativ/claude-free.html" />
+    <xhtml:link rel="alternate" hreflang="sv" href="https://fred-radar.vercel.app/sv/alternativ/claude-free.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://fred-radar.vercel.app/alternativ/claude-free.html" />
+    <lastmod>2026-08-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://fred-radar.vercel.app/sv/alternativ/claude-free.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://fred-radar.vercel.app/alternativ/claude-free.html" />
+    <xhtml:link rel="alternate" hreflang="sv" href="https://fred-radar.vercel.app/sv/alternativ/claude-free.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://fred-radar.vercel.app/alternativ/claude-free.html" />
+    <lastmod>2026-08-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://fred-radar.vercel.app/alternativ/gemini.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://fred-radar.vercel.app/alternativ/gemini.html" />
+    <xhtml:link rel="alternate" hreflang="sv" href="https://fred-radar.vercel.app/sv/alternativ/gemini.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://fred-radar.vercel.app/alternativ/gemini.html" />
+    <lastmod>2026-08-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://fred-radar.vercel.app/sv/alternativ/gemini.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://fred-radar.vercel.app/alternativ/gemini.html" />
+    <xhtml:link rel="alternate" hreflang="sv" href="https://fred-radar.vercel.app/sv/alternativ/gemini.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://fred-radar.vercel.app/alternativ/gemini.html" />
+    <lastmod>2026-08-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://fred-radar.vercel.app/alternativ/perplexity-free.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://fred-radar.vercel.app/alternativ/perplexity-free.html" />
+    <xhtml:link rel="alternate" hreflang="sv" href="https://fred-radar.vercel.app/sv/alternativ/perplexity-free.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://fred-radar.vercel.app/alternativ/perplexity-free.html" />
+    <lastmod>2026-08-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://fred-radar.vercel.app/sv/alternativ/perplexity-free.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://fred-radar.vercel.app/alternativ/perplexity-free.html" />
+    <xhtml:link rel="alternate" hreflang="sv" href="https://fred-radar.vercel.app/sv/alternativ/perplexity-free.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://fred-radar.vercel.app/alternativ/perplexity-free.html" />
+    <lastmod>2026-08-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://fred-radar.vercel.app/alternativ/grok-free.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://fred-radar.vercel.app/alternativ/grok-free.html" />
+    <xhtml:link rel="alternate" hreflang="sv" href="https://fred-radar.vercel.app/sv/alternativ/grok-free.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://fred-radar.vercel.app/alternativ/grok-free.html" />
+    <lastmod>2026-08-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://fred-radar.vercel.app/sv/alternativ/grok-free.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://fred-radar.vercel.app/alternativ/grok-free.html" />
+    <xhtml:link rel="alternate" hreflang="sv" href="https://fred-radar.vercel.app/sv/alternativ/grok-free.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://fred-radar.vercel.app/alternativ/grok-free.html" />
+    <lastmod>2026-08-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://fred-radar.vercel.app/alternativ/super-grok.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://fred-radar.vercel.app/alternativ/super-grok.html" />
+    <xhtml:link rel="alternate" hreflang="sv" href="https://fred-radar.vercel.app/sv/alternativ/super-grok.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://fred-radar.vercel.app/alternativ/super-grok.html" />
+    <lastmod>2026-08-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://fred-radar.vercel.app/sv/alternativ/super-grok.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://fred-radar.vercel.app/alternativ/super-grok.html" />
+    <xhtml:link rel="alternate" hreflang="sv" href="https://fred-radar.vercel.app/sv/alternativ/super-grok.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://fred-radar.vercel.app/alternativ/super-grok.html" />
+    <lastmod>2026-08-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://fred-radar.vercel.app/alternativ/capcut-ai.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://fred-radar.vercel.app/alternativ/capcut-ai.html" />
+    <xhtml:link rel="alternate" hreflang="sv" href="https://fred-radar.vercel.app/sv/alternativ/capcut-ai.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://fred-radar.vercel.app/alternativ/capcut-ai.html" />
+    <lastmod>2026-08-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://fred-radar.vercel.app/sv/alternativ/capcut-ai.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://fred-radar.vercel.app/alternativ/capcut-ai.html" />
+    <xhtml:link rel="alternate" hreflang="sv" href="https://fred-radar.vercel.app/sv/alternativ/capcut-ai.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://fred-radar.vercel.app/alternativ/capcut-ai.html" />
+    <lastmod>2026-08-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://fred-radar.vercel.app/alternativ/github-copilot.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://fred-radar.vercel.app/alternativ/github-copilot.html" />
+    <xhtml:link rel="alternate" hreflang="sv" href="https://fred-radar.vercel.app/sv/alternativ/github-copilot.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://fred-radar.vercel.app/alternativ/github-copilot.html" />
+    <lastmod>2026-08-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://fred-radar.vercel.app/sv/alternativ/github-copilot.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://fred-radar.vercel.app/alternativ/github-copilot.html" />
+    <xhtml:link rel="alternate" hreflang="sv" href="https://fred-radar.vercel.app/sv/alternativ/github-copilot.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://fred-radar.vercel.app/alternativ/github-copilot.html" />
+    <lastmod>2026-08-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://fred-radar.vercel.app/alternativ/cursor.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://fred-radar.vercel.app/alternativ/cursor.html" />
+    <xhtml:link rel="alternate" hreflang="sv" href="https://fred-radar.vercel.app/sv/alternativ/cursor.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://fred-radar.vercel.app/alternativ/cursor.html" />
+    <lastmod>2026-08-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://fred-radar.vercel.app/sv/alternativ/cursor.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://fred-radar.vercel.app/alternativ/cursor.html" />
+    <xhtml:link rel="alternate" hreflang="sv" href="https://fred-radar.vercel.app/sv/alternativ/cursor.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://fred-radar.vercel.app/alternativ/cursor.html" />
+    <lastmod>2026-08-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://fred-radar.vercel.app/alternativ/lovable.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://fred-radar.vercel.app/alternativ/lovable.html" />
+    <xhtml:link rel="alternate" hreflang="sv" href="https://fred-radar.vercel.app/sv/alternativ/lovable.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://fred-radar.vercel.app/alternativ/lovable.html" />
+    <lastmod>2026-08-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://fred-radar.vercel.app/sv/alternativ/lovable.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://fred-radar.vercel.app/alternativ/lovable.html" />
+    <xhtml:link rel="alternate" hreflang="sv" href="https://fred-radar.vercel.app/sv/alternativ/lovable.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://fred-radar.vercel.app/alternativ/lovable.html" />
+    <lastmod>2026-08-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://fred-radar.vercel.app/alternativ/bolt.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://fred-radar.vercel.app/alternativ/bolt.html" />
+    <xhtml:link rel="alternate" hreflang="sv" href="https://fred-radar.vercel.app/sv/alternativ/bolt.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://fred-radar.vercel.app/alternativ/bolt.html" />
+    <lastmod>2026-08-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://fred-radar.vercel.app/sv/alternativ/bolt.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://fred-radar.vercel.app/alternativ/bolt.html" />
+    <xhtml:link rel="alternate" hreflang="sv" href="https://fred-radar.vercel.app/sv/alternativ/bolt.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://fred-radar.vercel.app/alternativ/bolt.html" />
+    <lastmod>2026-08-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://fred-radar.vercel.app/alternativ/v0.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://fred-radar.vercel.app/alternativ/v0.html" />
+    <xhtml:link rel="alternate" hreflang="sv" href="https://fred-radar.vercel.app/sv/alternativ/v0.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://fred-radar.vercel.app/alternativ/v0.html" />
+    <lastmod>2026-08-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://fred-radar.vercel.app/sv/alternativ/v0.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://fred-radar.vercel.app/alternativ/v0.html" />
+    <xhtml:link rel="alternate" hreflang="sv" href="https://fred-radar.vercel.app/sv/alternativ/v0.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://fred-radar.vercel.app/alternativ/v0.html" />
+    <lastmod>2026-08-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://fred-radar.vercel.app/alternativ/elevenlabs.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://fred-radar.vercel.app/alternativ/elevenlabs.html" />
+    <xhtml:link rel="alternate" hreflang="sv" href="https://fred-radar.vercel.app/sv/alternativ/elevenlabs.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://fred-radar.vercel.app/alternativ/elevenlabs.html" />
+    <lastmod>2026-08-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://fred-radar.vercel.app/sv/alternativ/elevenlabs.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://fred-radar.vercel.app/alternativ/elevenlabs.html" />
+    <xhtml:link rel="alternate" hreflang="sv" href="https://fred-radar.vercel.app/sv/alternativ/elevenlabs.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://fred-radar.vercel.app/alternativ/elevenlabs.html" />
+    <lastmod>2026-08-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://fred-radar.vercel.app/alternativ/otter-ai.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://fred-radar.vercel.app/alternativ/otter-ai.html" />
+    <xhtml:link rel="alternate" hreflang="sv" href="https://fred-radar.vercel.app/sv/alternativ/otter-ai.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://fred-radar.vercel.app/alternativ/otter-ai.html" />
+    <lastmod>2026-08-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://fred-radar.vercel.app/sv/alternativ/otter-ai.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://fred-radar.vercel.app/alternativ/otter-ai.html" />
+    <xhtml:link rel="alternate" hreflang="sv" href="https://fred-radar.vercel.app/sv/alternativ/otter-ai.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://fred-radar.vercel.app/alternativ/otter-ai.html" />
+    <lastmod>2026-08-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://fred-radar.vercel.app/alternativ/fireflies.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://fred-radar.vercel.app/alternativ/fireflies.html" />
+    <xhtml:link rel="alternate" hreflang="sv" href="https://fred-radar.vercel.app/sv/alternativ/fireflies.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://fred-radar.vercel.app/alternativ/fireflies.html" />
+    <lastmod>2026-08-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://fred-radar.vercel.app/sv/alternativ/fireflies.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://fred-radar.vercel.app/alternativ/fireflies.html" />
+    <xhtml:link rel="alternate" hreflang="sv" href="https://fred-radar.vercel.app/sv/alternativ/fireflies.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://fred-radar.vercel.app/alternativ/fireflies.html" />
+    <lastmod>2026-08-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://fred-radar.vercel.app/alternativ/gamma.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://fred-radar.vercel.app/alternativ/gamma.html" />
+    <xhtml:link rel="alternate" hreflang="sv" href="https://fred-radar.vercel.app/sv/alternativ/gamma.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://fred-radar.vercel.app/alternativ/gamma.html" />
+    <lastmod>2026-08-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://fred-radar.vercel.app/sv/alternativ/gamma.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://fred-radar.vercel.app/alternativ/gamma.html" />
+    <xhtml:link rel="alternate" hreflang="sv" href="https://fred-radar.vercel.app/sv/alternativ/gamma.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://fred-radar.vercel.app/alternativ/gamma.html" />
+    <lastmod>2026-08-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
 </urlset>

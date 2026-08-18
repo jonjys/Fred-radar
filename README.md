@@ -1,42 +1,40 @@
-# Radar
+# Fred-Radar
 
 Smarta rekommendationer & jämförelser av AI- och produktivitetsverktyg – anpassat för svenska och nordiska användare.
 
-Radar är en statisk sajt (HTML/CSS/vanilla JS, ingen backend) som:
+**Live:** https://fred-radar.vercel.app  
+**Repo:** https://github.com/jonjys/Fred-radar
+
+Fred-Radar är en statisk sajt (HTML/CSS/vanilla JS, ingen backend) som:
 
 - viktar ett 6-frågors quiz mot verktygsdata för att ge en personlig ranking,
-- genererar kategorisidor och sitemap automatiskt från en enda datakälla (`data/tools.json`),
-- samlar alla utgående affiliate-länkar på ett ställe, med UTM-spårning och disclosure inbyggt, och
-- är förberedd för deploy på Vercel med noll konfiguration.
+- genererar kategorisidor, alternativ-sidor och sitemap automatiskt från `data/tools.json`,
+- samlar alla utgående affiliate-länkar på `/go/` med UTM och disclosure,
+- är förberedd för deploy på Vercel.
 
-## Launch checklist
+## Gör detta nu (människa)
 
-Snabb överblick – se respektive avsnitt nedan för detaljer. Bocka av i den här ordningen:
+1. Koppla Vercel-projektet till detta GitHub-repo (Connect Git) om det inte redan är gjort.
+2. Sätt Production Branch till `master` (eller `main`).
+3. Deploya: `npx vercel --prod` eller låt Vercel auto-deploya vid push.
+4. Ansök affiliate-koder (Make, ClickUp AI, Reclaim.ai först).
+5. Byt `siteUrl` i `data/site.json` när egen domän är klar → `npm run build`.
 
-- [ ] **Sätt riktig produktionsdomän** i `data/site.json` → `siteUrl` (idag placeholder `https://radar.se`), kör `npm run build`, committa. Uppdatera även `<link rel="canonical">`/OG-URL:er i `index.html` och `quiz.html` till samma domän (kategorisidorna görs automatiskt av generatorn).
-- [ ] **Fyll i minst 2–3 till affiliate-länkar** på riktigt (se prioritetstabellen under [Affiliate-länkar](#affiliate-länkar-tracking--disclosure)) – Copy.ai, ClickUp AI och Rytr är högst prioriterade.
-- [ ] **Sätt Production Branch i Vercel** till er faktiska produktionsbranch (se [Deploy](#deploy-vercel)).
-- [ ] **(Valfritt men rekommenderat) Slå på analytics** – `data/site.json` → `analytics.enabled: true` + `domain` när ni har ett Plausible/Fathom-konto.
-- [ ] **(Valfritt) Koppla nyhetsbrevet** till en riktig leverantör – `data/site.json` → `newsletter.endpoint` (se [Nyhetsbrev](#nyhetsbrev)).
-- [ ] **Låt någon GDPR-kunnig stämma av** `gdpr`-fälten i `tools.json` innan ni marknadsför GDPR-vänlighet aggressivt (se [GDPR-bedömningar](#gdpr-bedömningar--viktig-brasklapp)).
-- [ ] Kör `npm run build` en sista gång, kontrollera att `git status` är rent efteråt (byggsteget ska vara deterministiskt), committa, pusha.
-
-Allt annat (fler verktyg, riktig klickloggning, SEO-finslipning) kan läggas till löpande efter launch utan att blockera den.
-
-## Struktur
+## Struktur (kort)
 
 ```
-├── index.html                    # Landningssida
-├── quiz.html                     # 6-frågors quiz (logik i assets/js/quiz.js)
-├── kategori/                     # Genererade kategorisidor – redigera inte för hand
-│   ├── ai-writing.html
-│   ├── ai-image.html
-│   └── produktivitet.html
-├── go/index.html                 # Central redirect för alla utgående/affiliate-länkar
-├── sitemap.xml                   # Genererad – redigera inte för hand
-├── robots.txt                    # Genererad – redigera inte för hand
-├── data/
-│   ├── tools.json                # Källa till sanning: alla verktyg
+├── index.html, quiz.html, basta.html, alternativ.html, 404.html
+├── kategori/          # genererade kategorisidor
+├── alternativ/        # 21 SEO-sidor (en per verktyg)
+├── data/tools.json    # enda källan till sanning
+├── assets/js/         # partials, quiz, tool-cards
+└── scripts/           # generate-kategori, generate-alternativ, generate-sitemap
+```
+
+`npm run build` kör alla generatorer. Kör alltid innan commit.
+
+---
+
 │   ├── categories.json           # Kategorier (namn, ikon, beskrivning)
 │   └── site.json                 # Domän, analytics- och nyhetsbrevskonfiguration
 ├── assets/
@@ -241,7 +239,7 @@ Quizets e-postopt-in (sista frågan) gör två saker vid varje inskickad adress:
 `assets/js/analytics.js` är en privacy-vänlig loader, **av som standard** (verifierat: fyller inga nätverksanrop till Plausible/Fathom när `enabled: false`). Aktivera genom att i `data/site.json` sätta:
 
 ```json
-"analytics": { "provider": "plausible", "domain": "radar.se", "enabled": true }
+"analytics": { "provider": "plausible", "domain": "fred-radar.vercel.app", "enabled": true }
 ```
 
 Ingen kodändring, ingen miljövariabel, bara ett datafält. Byt `"provider"` till `"fathom"` för Fathom (då är `"domain"` egentligen Fathoms site-ID). Vercel Analytics är en separat integration (kräver `@vercel/analytics`-paketet) och hanteras inte av den här filen – lägg till separat om ni hellre vill använda den.

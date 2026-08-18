@@ -1,56 +1,101 @@
 <!doctype html>
-<html lang="sv">
+<html lang="en">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Alternativ till AI-verktyg | Fred-Radar</title>
-  <meta name="description" content="Jämför alternativ till AI-verktyg – samma kategori, rankat efter poäng, pris och GDPR." />
+  <title>Alternativ till AI-verktyg – jämför och byt | FRED-Radar</title>
+  <meta name="description" content="Hittade du ett AI-verktyg men vill se liknande alternativ? Välj ett verktyg och få rankade alternativ i samma kategori – baserat på poäng, pris och GDPR." />
   <link rel="canonical" href="https://fred-radar.vercel.app/alternativ.html" />
-  <meta property="og:site_name" content="Fred-Radar" />
+
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="FRED-Radar" />
+  <meta property="og:url" content="https://fred-radar.vercel.app/alternativ.html" />
+  <meta property="og:title" content="Alternativ till AI-verktyg – jämför och byt | FRED-Radar" />
+  <meta property="og:description" content="Välj ett verktyg du känner till och få rankade alternativ i samma kategori." />
+  <meta property="og:locale" content="sv_SE" />
+  <meta property="og:image" content="https://fred-radar.vercel.app/assets/og-image.svg" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Alternativ till AI-verktyg | FRED-Radar" />
+  <meta name="twitter:description" content="Välj ett verktyg du känner till och få rankade alternativ i samma kategori." />
+
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📡</text></svg>" />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="/assets/css/style.css" />
+  <style>
+    .alt-picker {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin: 20px 0 28px;
+    }
+    .alt-picker button {
+      appearance: none;
+      border: 1px solid var(--border, #2a2f3a);
+      background: var(--surface, #12151c);
+      color: inherit;
+      padding: 10px 14px;
+      border-radius: 10px;
+      cursor: pointer;
+      font: inherit;
+      font-size: 0.92rem;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: border-color .15s, background .15s;
+    }
+    .alt-picker button:hover,
+    .alt-picker button[aria-pressed="true"] {
+      border-color: var(--accent, #6ee7b7);
+      background: rgba(110, 231, 183, 0.08);
+    }
+    .alt-picker button .logo { font-size: 1.15rem; }
+    .alt-source {
+      background: var(--surface, #12151c);
+      border: 1px solid var(--border, #2a2f3a);
+      border-radius: 14px;
+      padding: 18px 20px;
+      margin-bottom: 28px;
+    }
+    .alt-source h2 { margin: 0 0 6px; font-size: 1.25rem; }
+    .alt-source .tagline { opacity: 0.75; margin: 0 0 10px; }
+    .alt-empty {
+      text-align: center;
+      padding: 40px 16px;
+      opacity: 0.8;
+    }
+    .why-alt {
+      font-size: 0.9rem;
+      margin: 8px 0 0;
+      opacity: 0.85;
+    }
+    .why-alt ul { margin: 6px 0 0; padding-left: 18px; }
+  </style>
 </head>
 <body>
   <div id="site-header"></div>
+
   <main>
-    <section class="hero" style="padding-top:48px;padding-bottom:28px;">
-      <div class="wrap">
-        <span class="eyebrow">Byt verktyg</span>
-        <h1>Hitta alternativ</h1>
-        <p class="lead">Välj ett verktyg du känner till – vi scannar alla i samma kategori.</p>
-        <label for="toolSelect" style="display:block;margin:16px 0 8px;font-weight:600">Välj verktyg</label>
-        <select id="toolSelect" style="max-width:360px;width:100%;padding:12px;border-radius:8px;background:var(--bg-elevated);color:var(--text);border:1px solid var(--border)"></select>
-      </div>
-    </section>
-    <section><div class="wrap" id="altRoot"></div></section>
+    <div class="wrap" style="padding-top: 28px; padding-bottom: 48px;">
+      <p class="eyebrow" style="margin-bottom: 8px;">Jämför &amp; byt</p>
+      <h1 style="margin: 0 0 8px;">Alternativ till AI-verktyg</h1>
+      <p class="lead" style="max-width: 640px; margin-bottom: 8px;">
+        Känner du redan till ett verktyg men vill se liknande alternativ? Välj nedan – vi scannar alla verktyg i samma kategori och rankar efter poäng, pris och GDPR.
+      </p>
+
+      <div id="pickerLabel" class="quiz-step-label" style="margin-top: 22px;">Välj ett verktyg du känner till</div>
+      <div class="alt-picker" id="toolPicker" role="group" aria-label="Välj verktyg"></div>
+
+      <div id="altResults"></div>
+    </div>
   </main>
+
   <div id="site-footer"></div>
+
+  <script src="/assets/js/i18n.js"></script>
   <script src="/assets/js/tool-card-template.js"></script>
   <script src="/assets/js/tools-data.js"></script>
   <script src="/assets/js/partials.js"></script>
   <script src="/assets/js/analytics.js"></script>
-  <script>
-  (async function () {
-    const data = await window.RadarData.load();
-    const sel = document.getElementById("toolSelect");
-    const root = document.getElementById("altRoot");
-    const tools = data.tools.slice().sort((a,b)=>a.name.localeCompare(b.name,"sv"));
-    const q = new URLSearchParams(location.search).get("tool");
-    sel.innerHTML = tools.map(t => `<option value="${t.id}">${t.logo||""} ${t.name}</option>`).join("");
-    if (q && tools.some(t=>t.id===q)) sel.value = q;
-    function render() {
-      const source = tools.find(t=>t.id===sel.value);
-      if (!source) { root.innerHTML = ""; return; }
-      const catSet = new Set(source.categories||[]);
-      const alts = tools.filter(t => t.id!==source.id && (t.categories||[]).some(c=>catSet.has(c)))
-        .sort((a,b)=>b.score-a.score).slice(0,6);
-      root.innerHTML = `<p style="margin-bottom:16px">Alternativ till <strong>${source.name}</strong> (${alts.length} st)</p><div class="tool-grid">` +
-        alts.map((t,i) => `<article class="tool-card"><span class="result-rank">${i+1}</span><div class="tool-card-top"><div class="tool-logo">${t.logo||"🛠️"}</div><div class="tool-heading"><h3>${t.name}</h3><p class="tagline">${t.tagline||""}</p></div><div class="tool-score"><span class="num">${Number(t.score).toFixed(1)}</span><span class="lbl">poäng</span></div></div><div class="tool-actions"><a class="btn btn-primary" href="/go/?tool=${t.id}&src=alternativ" target="_blank" rel="sponsored noopener">Besök</a><a class="btn btn-ghost" href="/kategori/${(t.categories||[])[0]||"ai-writing"}.html#${t.id}">Läs mer</a></div></article>`).join("") + "</div>";
-      const url = new URL(location.href); url.searchParams.set("tool", source.id); history.replaceState({}, "", url);
-    }
-    sel.addEventListener("change", render);
-    render();
-  })();
-  </script>
+  <script src="/assets/js/alternativ.js"></script>
 </body>
 </html>
