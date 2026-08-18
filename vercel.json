@@ -4,18 +4,34 @@
   "trailingSlash": false,
   "cleanUrls": true,
   "rewrites": [
-    { "source": "/sv", "destination": "/index.html" },
-    { "source": "/sv/", "destination": "/index.html" },
+    { "source": "/sv", "destination": "/sv.html" },
+    { "source": "/sv/", "destination": "/sv.html" },
+    { "source": "/best", "destination": "/basta.html" },
+    { "source": "/alternatives", "destination": "/alternativ.html" },
+    { "source": "/sv/best", "destination": "/basta.html" },
+    { "source": "/sv/alternatives", "destination": "/alternativ.html" },
+    { "source": "/sv/quiz", "destination": "/quiz.html" },
+    { "source": "/sv/basta", "destination": "/basta.html" },
+    { "source": "/sv/alternativ", "destination": "/alternativ.html" },
+    { "source": "/sv/om", "destination": "/om.html" },
+    { "source": "/sv/kategori/:path*", "destination": "/kategori/:path*" },
+    { "source": "/sv/alternativ/:path*", "destination": "/alternativ/:path*" },
+    { "source": "/sv/go", "destination": "/go/index.html" },
+    { "source": "/sv/go/:path*", "destination": "/go/:path*" },
     { "source": "/sv/:path*", "destination": "/:path*" }
   ],
   "headers": [
     {
       "source": "/assets/(.*)",
-      "headers": [{ "key": "Cache-Control", "value": "public, max-age=3600, must-revalidate" }]
+      "headers": [{ "key": "Cache-Control", "value": "public, max-age=60, must-revalidate" }]
     },
     {
       "source": "/data/(.*)",
-      "headers": [{ "key": "Cache-Control", "value": "public, max-age=300, must-revalidate" }]
+      "headers": [{ "key": "Cache-Control", "value": "public, max-age=60, must-revalidate" }]
+    },
+    {
+      "source": "/locales/(.*)",
+      "headers": [{ "key": "Cache-Control", "value": "public, max-age=60, must-revalidate" }]
     }
   ]
 }

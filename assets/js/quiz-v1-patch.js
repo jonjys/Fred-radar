@@ -167,6 +167,16 @@
     if (progressBar) progressBar.style.width = Math.round((state.step / qs.length) * 100) + "%";
   }
 
+  function escapeHtml(s) {
+    return String(s || "").replace(/[&<>"\']/g, function (ch) {
+      if (ch === '&') return '&' + 'amp;';
+      if (ch === '<') return '&' + 'lt;';
+      if (ch === '>') return '&' + 'gt;';
+      if (ch === '"') return '&' + 'quot;';
+      return '&#39;';
+    });
+  }
+
   function otherInputHTML() {
     const names = (state.tools || []).map((x) => x.name).filter(Boolean);
     const listId = "toolSuggest";
@@ -174,10 +184,10 @@
       '<div class="other-wrap" style="margin-top:14px;position:relative">' +
       '<label for="purposeOther" class="sr-only">' + t("quiz.otherPh") + "</label>" +
       '<input type="text" id="purposeOther" list="' + listId + '" placeholder="' + t("quiz.otherPh") + '" value="' +
-      (state.answers.purposeOther || "").replace(/"/g, """) +
+      escapeHtml(state.answers.purposeOther || "") +
       '" autocomplete="off" style="width:100%;max-width:420px;padding:12px;border-radius:8px;border:1px solid var(--border);background:var(--bg-elevated);color:var(--text)" />' +
       '<datalist id="' + listId + '">' +
-      names.map((n) => "<option value=\"" + n.replace(/"/g, """) + "\"></option>").join("") +
+      names.map(function (n) { return "<option value=\"" + escapeHtml(n) + "\"></option>"; }).join("") +
       "</datalist></div>"
     );
   }
@@ -306,6 +316,11 @@
     renderQuestion();
   }
 
-  if (window.FredI18n && window.FredI18n.whenReady) window.FredI18n.whenReady(boot);
-  else boot();
+  try { boot(); } catch (e) { root.textContent = "Quiz failed to start."; console.error(e); }
+  if (window.FredI18n && window.FredI18n.whenReady) {
+    window.FredI18n.whenReady(function () { try { renderQuestion(); } catch (e) { console.error(e); } });
+  }
+  window.addEventListener("fred-i18n-ready", function () {
+    if (!state.ranked.length) { try { renderQuestion(); } catch (e) {} }
+  });
 })();

@@ -1,16 +1,20 @@
 /**
  * FRED-Radar i18n
- * Default: English. /sv/... = Swedish.
- * Swedish browsers see a banner but stay on EN until they opt in.
+ * Default English. /sv/... = Swedish.
+ * Dictionaries are embedded (i18n-dict.js) so nav/quiz never wait on fetch.
  */
 (function (root) {
-  const STORAGE = "fred-lang";
-  const dicts = { en: null, sv: null };
+  const STORAGE = "fred_lang";
+  const embedded = (root.FRED_I18N_DICTS || {});
+  const dicts = {
+    en: embedded.en || {},
+    sv: embedded.sv || {},
+  };
   let lang = "en";
   let ready = false;
 
   function pathIsSv() {
-    const p = location.pathname.replace(/\/+$/, "") || "/";
+    const p = (location.pathname || "/").replace(/\/+$/, "") || "/";
     return p === "/sv" || p.startsWith("/sv/");
   }
 
@@ -21,10 +25,7 @@
 
   function stripSv(pathname) {
     if (pathname === "/sv") return "/";
-    if (pathname.startsWith("/sv/")) {
-      const rest = pathname.slice(3);
-      return rest || "/";
-    }
+    if (pathname.startsWith("/sv/")) return pathname.slice(3) || "/";
     return pathname || "/";
   }
 
@@ -41,26 +42,30 @@
   }
 
   function get(obj, path) {
-    return path.split(".").reduce((acc, k) => (acc && acc[k] != null ? acc[k] : undefined), obj);
+    return String(path).split(".").reduce(function (acc, k) {
+      return acc && acc[k] != null ? acc[k] : undefined;
+    }, obj);
+  }
+
+  function interpolate(s, vars) {
+    if (!vars || typeof s !== "string") return s;
+    Object.keys(vars).forEach(function (k) {
+      s = s.replace(new RegExp("\\{\\{\\s*" + k + "\\s*\\}\\}", "g"), String(vars[k]));
+    });
+    return s;
   }
 
   function t(key, vars) {
-    const pack = dicts[lang] || dicts.en || {};
-    let s = get(pack, key);
+    var s = get(dicts[lang] || {}, key);
     if (s == null) s = get(dicts.en || {}, key);
     if (s == null) return key;
     if (typeof s !== "string") return s;
-    if (vars) {
-      Object.keys(vars).forEach((k) => {
-        s = s.replace(new RegExp("\\{\\{\\s*" + k + "\\s*\\}\\}", "g"), String(vars[k]));
-      });
-    }
-    return s;
+    return interpolate(s, vars);
   }
 
   function localizeTool(tool) {
     if (!tool) return tool;
-    const block = lang === "sv" ? tool.sv : tool.en;
+    var block = lang === "sv" ? tool.sv : tool.en;
     if (!block) return tool;
     return Object.assign({}, tool, {
       tagline: block.tagline || tool.tagline,
@@ -72,42 +77,39 @@
   }
 
   function applyDom() {
-    document.documentElement.lang = t("htmlLang") || lang;
-    document.querySelectorAll("[data-i18n]").forEach((el) => {
-      const key = el.getAttribute("data-i18n");
-      if (!key) return;
-      el.textContent = t(key);
+    document.documentElement.lang = lang === "sv" ? "sv" : "en";
+    document.documentElement.setAttribute("data-lang", lang);
+    document.querySelectorAll("[data-i18n]").forEach(function (el) {
+      var key = el.getAttribute("data-i18n");
+      if (key) el.textContent = t(key);
     });
-    document.querySelectorAll("[data-i18n-html]").forEach((el) => {
-      const key = el.getAttribute("data-i18n-html");
-      if (!key) return;
-      el.innerHTML = t(key);
+    document.querySelectorAll("[data-i18n-html]").forEach(function (el) {
+      var key = el.getAttribute("data-i18n-html");
+      if (key) el.innerHTML = t(key);
     });
-    document.querySelectorAll("[data-i18n-placeholder]").forEach((el) => {
+    document.querySelectorAll("[data-i18n-placeholder]").forEach(function (el) {
       el.setAttribute("placeholder", t(el.getAttribute("data-i18n-placeholder")));
     });
-    document.querySelectorAll("[data-i18n-aria]").forEach((el) => {
+    document.querySelectorAll("[data-i18n-aria]").forEach(function (el) {
       el.setAttribute("aria-label", t(el.getAttribute("data-i18n-aria")));
     });
-    const titleEl = document.querySelector("title[data-i18n]");
+    var titleEl = document.querySelector("title[data-i18n]");
     if (titleEl) document.title = t(titleEl.getAttribute("data-i18n"));
-    const metaDesc = document.querySelector('meta[name="description"][data-i18n]');
+    var metaDesc = document.querySelector('meta[name="description"][data-i18n]');
     if (metaDesc) metaDesc.setAttribute("content", t(metaDesc.getAttribute("data-i18n")));
   }
 
   function showBanner() {
     if (lang !== "en") return;
-    let navLang = "";
-    try {
-      navLang = (navigator.language || navigator.userLanguage || "").toLowerCase();
-    } catch (e) {}
+    var navLang = "";
+    try { navLang = (navigator.language || navigator.userLanguage || "").toLowerCase(); } catch (e) {}
     if (!navLang.startsWith("sv")) return;
     try {
       if (localStorage.getItem(STORAGE)) return;
       if (sessionStorage.getItem("fred-sv-banner-dismissed")) return;
     } catch (e) {}
-
-    const bar = document.createElement("div");
+    if (document.querySelector(".lang-banner")) return;
+    var bar = document.createElement("div");
     bar.className = "lang-banner";
     bar.setAttribute("role", "status");
     bar.innerHTML =
@@ -115,20 +117,22 @@
       '<button type="button" class="lang-banner-cta" id="svBannerCta">' + t("banner.cta") + "</button> " +
       '<button type="button" class="lang-banner-x" id="svBannerX" aria-label="Dismiss">×</button>';
     document.body.insertBefore(bar, document.body.firstChild);
-    document.getElementById("svBannerCta")?.addEventListener("click", () => setLang("sv"));
-    document.getElementById("svBannerX")?.addEventListener("click", () => {
+    var cta = document.getElementById("svBannerCta");
+    if (cta) cta.addEventListener("click", function () { setLang("sv"); });
+    var x = document.getElementById("svBannerX");
+    if (x) x.addEventListener("click", function () {
       try { sessionStorage.setItem("fred-sv-banner-dismissed", "1"); } catch (e) {}
       bar.remove();
     });
   }
 
   function injectHreflang() {
-    const clean = stripSv(location.pathname);
-    const origin = "https://fred-radar.vercel.app";
-    const enHref = origin + (clean === "/" ? "/" : clean);
-    const svHref = origin + (clean === "/" ? "/sv" : "/sv" + clean);
+    var clean = stripSv(location.pathname);
+    var origin = "https://fred-radar.vercel.app";
+    var enHref = origin + (clean === "/" ? "/" : clean);
+    var svHref = origin + (clean === "/" ? "/sv" : "/sv" + clean);
     function upsert(rel, hreflang, href) {
-      let link = document.querySelector('link[rel="' + rel + '"][hreflang="' + hreflang + '"]');
+      var link = document.querySelector('link[rel="' + rel + '"][hreflang="' + hreflang + '"]');
       if (!link) {
         link = document.createElement("link");
         link.rel = rel;
@@ -142,61 +146,67 @@
     upsert("alternate", "x-default", enHref);
   }
 
-  async function loadJson(path) {
-    try {
-      const r = await fetch(path);
-      if (!r.ok) return null;
-      return await r.json();
-    } catch (e) {
-      return null;
-    }
-  }
-
-  async function init() {
-    lang = detectLang();
-    const [en, sv] = await Promise.all([
-      loadJson("/data/i18n/en.json"),
-      loadJson("/data/i18n/sv.json"),
-    ]);
-    dicts.en = en || {};
-    dicts.sv = sv || {};
-    ready = true;
+  function markReady() {
     applyDom();
-    injectHreflang();
-    showBanner();
-    root.dispatchEvent(new CustomEvent("fred-i18n-ready", { detail: { lang } }));
+    if (!ready) {
+      ready = true;
+      injectHreflang();
+      showBanner();
+    }
+    root.dispatchEvent(new CustomEvent("fred-i18n-ready", { detail: { lang: lang } }));
   }
 
   function setLang(next) {
     if (next !== "en" && next !== "sv") return;
     try { localStorage.setItem(STORAGE, next); } catch (e) {}
-    const dest = withLang(location.pathname + location.search + location.hash, next);
+    var dest = withLang(location.pathname + location.search + location.hash, next);
     if (dest !== location.pathname + location.search + location.hash) {
       location.href = dest;
       return;
     }
     lang = next;
-    applyDom();
-    root.dispatchEvent(new CustomEvent("fred-i18n-ready", { detail: { lang } }));
+    markReady();
   }
 
+  async function hydrateFromNetwork() {
+    async function load(path) {
+      try {
+        var r = await fetch(path, { cache: "no-cache" });
+        if (!r.ok) return null;
+        return await r.json();
+      } catch (e) { return null; }
+    }
+    var pack = await Promise.all([
+      load("/locales/en.json"),
+      load("/locales/sv.json"),
+      load("/data/i18n/en.json"),
+      load("/data/i18n/sv.json"),
+    ]);
+    if (pack[0] || pack[2]) dicts.en = Object.assign({}, dicts.en, pack[2] || {}, pack[0] || {});
+    if (pack[1] || pack[3]) dicts.sv = Object.assign({}, dicts.sv, pack[3] || {}, pack[1] || {});
+    markReady();
+  }
+
+  lang = detectLang();
+
   root.FredI18n = {
-    t,
+    t: t,
     get lang() { return lang; },
-    setLang,
-    withLang,
-    localizeTool,
-    pathIsSv,
-    ready: () => ready,
-    whenReady: (fn) => {
+    setLang: setLang,
+    withLang: withLang,
+    localizeTool: localizeTool,
+    pathIsSv: pathIsSv,
+    ready: function () { return ready; },
+    whenReady: function (fn) {
       if (ready) fn();
       else root.addEventListener("fred-i18n-ready", fn, { once: true });
     },
   };
 
-  if (document.readyState === "loading") {
-    document.addEventListener("DOMContentLoaded", init);
-  } else {
-    init();
+  function start() {
+    markReady();
+    hydrateFromNetwork();
   }
+  if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", start);
+  else start();
 })(typeof window !== "undefined" ? window : globalThis);
