@@ -1,7 +1,6 @@
 /**
  * FRED-Radar i18n
- * Default language: English.
- * /sv/... or localStorage fred-lang=sv → Swedish.
+ * Default: English. /sv/... = Swedish.
  * Swedish browsers see a banner but stay on EN until they opt in.
  */
 (function (root) {
@@ -17,10 +16,6 @@
 
   function detectLang() {
     if (pathIsSv()) return "sv";
-    try {
-      const stored = localStorage.getItem(STORAGE);
-      if (stored === "en" || stored === "sv") return stored;
-    } catch (e) {}
     return "en";
   }
 
@@ -116,7 +111,7 @@
     bar.className = "lang-banner";
     bar.setAttribute("role", "status");
     bar.innerHTML =
-      '<span>' + t("banner.text") + '</span> ' +
+      "<span>" + t("banner.text") + "</span> " +
       '<button type="button" class="lang-banner-cta" id="svBannerCta">' + t("banner.cta") + "</button> " +
       '<button type="button" class="lang-banner-x" id="svBannerX" aria-label="Dismiss">×</button>';
     document.body.insertBefore(bar, document.body.firstChild);

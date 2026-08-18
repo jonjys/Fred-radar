@@ -1,8 +1,10 @@
 /**
  * Loads tools.json + extras and normalizes fields.
+ * Never lets a generic "grok" free-tier leak in as SuperGrok.
  */
 window.RadarData = (function () {
   let cache = null;
+  const BLOCKED = new Set(["grok"]);
 
   async function loadJson(path) {
     try {
@@ -37,7 +39,10 @@ window.RadarData = (function () {
     const byId = new Map(tools.map((t) => [t.id, t]));
     for (const pack of [extra, extra2]) {
       if (!Array.isArray(pack)) continue;
-      for (const t of pack) byId.set(t.id, Object.assign({}, byId.get(t.id) || {}, t));
+      for (const t of pack) {
+        if (!t || !t.id || BLOCKED.has(t.id)) continue;
+        byId.set(t.id, Object.assign({}, byId.get(t.id) || {}, t));
+      }
     }
     tools = Array.from(byId.values()).map(normalize);
     cache = { tools, categories: categories || [] };
