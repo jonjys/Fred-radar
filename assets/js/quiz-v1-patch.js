@@ -1,5 +1,5 @@
 /**
- * FRED-Radar v1.0 quiz – Koda/Data/Röst, fritext, svenska, Meta AI scoring
+ * FRED-Radar v1.0 quiz – Grok tiers + Meta AI priority + honest limits
  */
 (function () {
   const QUESTIONS = [
@@ -15,7 +15,7 @@
     ]},
     { id: "budget", title: "Vad är din budget per månad?", options: [
       { value: "free", label: "Vill helst hålla mig gratis", emoji: "🆓" },
-      { value: "low", label: "Upp till ca 150 kr/mån", emoji: "💳" },
+      { value: "low", label: "Upp till 150 kr/mån (ca 399:- / 3 mån)", emoji: "💳" },
       { value: "medium", label: "Upp till ca 400 kr/mån", emoji: "💰" },
       { value: "high", label: "Pris är inte det viktigaste", emoji: "🏦" },
     ]},
@@ -61,12 +61,33 @@
     let score = tool.score * 10;
     const price = tool.pricing && tool.pricing.fromPriceSEK != null ? tool.pricing.fromPriceSEK : 9999;
     const budgetMax = BUDGET_MAX[answers.budget];
+    const hardLimits = !!tool.hardUsageLimits;
+
+    // SuperGrok / paid must NEVER appear when user chose free
+    if (answers.budget === "free" && price > 0) return null;
+
     if (price <= budgetMax) {
       score += 14;
-      if (answers.budget === "free" && price === 0) { score += 18; reasons.push("Helt gratis – matchar din budget"); }
+      if (answers.budget === "free" && price === 0) {
+        if (hardLimits) {
+          score += 4;
+          reasons.push("Gratis men med hårda användningsgränser");
+        } else {
+          score += 18;
+          reasons.push("Helt gratis – matchar din budget");
+        }
+      }
     } else {
       score += Math.max(-22, 14 - (price - budgetMax) / 15);
     }
+
+    if (hardLimits && (answers.budget === "free" || answers.priority === "price")) {
+      score -= 18;
+      if (!reasons.some(function (r) { return r.indexOf("gräns") !== -1; })) {
+        reasons.push("⚠️ Hårda veckogränsar – kan låsa dig");
+      }
+    }
+
     const gdprScore = (tool.gdpr && tool.gdpr.score) || 0;
     score += gdprScore * 4 * (GDPR_WEIGHT[answers.gdpr] || 1);
     if (answers.gdpr === "high" && gdprScore >= 4) reasons.push("Stark GDPR-anpassning");
@@ -83,11 +104,21 @@
     };
     score += (sub[answers.priority] || 0) * 2.6;
     if (answers.priority === "swedish" && tool.swedishSupport) { score += 12; reasons.push("Fungerar bra på svenska"); }
+
     if (answers.budget === "free" && answers.level === "beginner" && price === 0 && tool.difficulty === "beginner") {
       score += 10;
       if (tool.swedishSupport) score += 6;
+      if (tool.id === "meta-ai") score += 22;
+      if (hardLimits) score -= 12;
     }
-    if (tool.id === "meta-ai" && answers.budget === "free") { score += 8; reasons.push("Senast tillagt gratis-alternativ (Meta AI)"); }
+    if (tool.id === "meta-ai" && answers.budget === "free") {
+      score += 10;
+      reasons.push("Senast tillagt: gratis utan hårda veckogränsar");
+    }
+    if (tool.id === "grok-free" && answers.budget === "free") {
+      score -= 8;
+      reasons.push("Gratis men hårda gränser (∼50–100/dag)");
+    }
     if (!reasons.length) reasons.push("Bra allroundval baserat på dina svar");
     return { tool: tool, score: score, reasons: reasons.slice(0, 3) };
   }
@@ -103,7 +134,7 @@
           '<span class="opt-emoji">' + opt.emoji + '</span> ' + opt.label + '</button>';
       }).join('') + '</div>' +
       (q.id === 'purpose' && selected === 'other' ? '<div style="margin-top:14px"><input type="text" id="purposeOther" placeholder="Skriv vad du söker…" style="width:100%;max-width:420px;padding:12px;border-radius:8px;border:1px solid var(--border);background:var(--bg-elevated);color:var(--text)" /></div>' : '') +
-      (q.id === 'updates' && selected === 'yes' ? '<div class="quiz-email-row"><input type="email" id="emailInput" placeholder="din@mejladress.se" /></div>' : '') +
+      (q.id === 'updates' && selected === 'yes' ? '<div class="quiz-email-row"><label for="emailInput" class="sr-only">E-postadress</label><input type="email" id="emailInput" name="email" placeholder="din@mejladress.se" autocomplete="email" /></div>' : '') +
       '<div class="quiz-nav"><button class="btn btn-ghost" id="backBtn"' + (state.step === 0 ? ' style="visibility:hidden"' : '') + '>← Tillbaka</button>' +
       '<button class="btn btn-primary" id="nextBtn"' + (selected ? '' : ' disabled') + '>' +
       (state.step === QUESTIONS.length - 1 ? 'Visa mina rekommendationer →' : 'Nästa →') + '</button></div></div>';
@@ -130,12 +161,14 @@
     root.innerHTML = '<div class="quiz-step-label">Ditt resultat</div><div class="quiz-question"><h2>Här är våra tre bästa förslag åt dig</h2></div>' +
       '<div class="tool-grid" style="margin-top:20px;">' +
       ranked.map(function (r, i) {
+        var limits = (r.tool.pricing && r.tool.pricing.limitsNote) ? '<span class="pill" style="border-color:#f59e0b;color:#fbbf24">' + r.tool.pricing.limitsNote + '</span>' : '';
         return '<article class="tool-card result-card"><span class="result-rank">' + (i + 1) + '</span>' +
           '<div class="tool-card-top"><div class="tool-logo">' + (r.tool.logo || '🛠️') + '</div>' +
           '<div class="tool-heading"><h3>' + r.tool.name + '</h3><p class="tagline">' + (r.tool.tagline || '') + '</p></div>' +
           '<div class="tool-score"><span class="num">' + Number(r.tool.score).toFixed(1) + '</span><span class="lbl">poäng</span></div></div>' +
           '<div class="why-box"><strong>Varför:</strong><ul style="margin:8px 0 0;padding-left:18px;">' +
           r.reasons.map(function (x) { return '<li>' + x + '</li>'; }).join('') + '</ul></div>' +
+          '<div class="tool-meta"><span class="pill">' + (window.RadarData.priceLabel ? window.RadarData.priceLabel(r.tool) : '') + '</span>' + limits + '</div>' +
           '<div class="tool-actions"><a class="btn btn-primary" href="/go/?tool=' + r.tool.id + '&src=quiz" target="_blank" rel="sponsored noopener">Besök ' + r.tool.name + '</a>' +
           '<a class="btn btn-ghost" href="/alternativ.html?tool=' + r.tool.id + '">Se alternativ</a></div></article>';
       }).join('') + '</div>' +
