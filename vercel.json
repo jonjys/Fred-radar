@@ -3,6 +3,11 @@
   "outputDirectory": ".",
   "trailingSlash": false,
   "cleanUrls": true,
+  "rewrites": [
+    { "source": "/sv", "destination": "/index.html" },
+    { "source": "/sv/", "destination": "/index.html" },
+    { "source": "/sv/:path*", "destination": "/:path*" }
+  ],
   "headers": [
     {
       "source": "/assets/(.*)",
