@@ -6,23 +6,94 @@
     "categories": ["ai-writing", "ai-image", "ai-code", "ai-data"],
     "logo": "∞",
     "tagline": "Gratis allround-AI från Meta – chatt, bilder och kod",
-    "description": "Meta AI är helt gratis via webben och appar. Bra för allmän chatt, research, enkel kod och bildgenerering. Lätt för nybörjare och fungerar på svenska.",
+    "description": "Meta AI är helt gratis via webben och appar. Bra för allmän chatt, research, enkel kod och bildgenerering. Lätt för nybörjare och fungerar på svenska. Inga hårda veckogränser som stoppar dig efter en dag.",
     "website": "https://www.meta.ai",
     "affiliateUrl": "https://www.meta.ai",
     "hasAffiliateProgram": false,
     "affiliateStatus": "no-public-program",
-    "pricing": { "model": "free", "fromPriceSEK": 0, "currency": "SEK", "billingNote": "Helt gratis" },
-    "score": 8.2,
-    "scores": { "quality": 8, "easeOfUse": 9, "valueForMoney": 10, "support": 6 },
+    "pricing": {
+      "model": "free",
+      "fromPriceSEK": 0,
+      "currency": "SEK",
+      "billingNote": "Helt gratis – inga hårda veckogränser",
+      "limitsNote": "Inga kända hårda dag-/veckogränser för normal användning"
+    },
+    "score": 8.4,
+    "scores": { "quality": 8, "easeOfUse": 9.2, "valueForMoney": 10, "support": 6 },
     "gdpr": { "score": 4, "dataResidency": "USA/EU-optioner", "notes": "Meta erbjuder EU-datahantering för många användare." },
     "difficulty": "beginner",
     "bestFor": ["Allmän chatt", "Kod", "Bilder", "Nybörjare"],
-    "pros": ["Helt gratis", "Bra på svenska", "Enkel att komma igång"],
+    "pros": ["Helt gratis", "Bra på svenska", "Enkel att komma igång", "Inga hårda veckogränser"],
     "cons": ["Begränsad jämfört med pro-modeller"],
     "languages": ["sv", "en"],
     "swedishSupport": true,
     "featured": true,
-    "lastVerified": "2026-08-15"
+    "lastVerified": "2026-08-15",
+    "hardUsageLimits": false
+  },
+  {
+    "id": "grok-free",
+    "name": "Grok Free",
+    "vendor": "xAI",
+    "categories": ["ai-writing", "ai-code", "ai-data"],
+    "logo": "𝕏",
+    "tagline": "Gratis Grok – snabb och rolig, men med hårda gränser",
+    "description": "Gratisversionen av Grok. Bra kvalitet när den fungerar, men har strikta veckogränsar (ofta ∼50–100 meddelanden/dag). När gränsen nås låses du. Rekommenderas INTE som primärt gratisverktyg för daglig användning.",
+    "website": "https://x.com/i/grok",
+    "affiliateUrl": "https://x.com/i/grok",
+    "hasAffiliateProgram": false,
+    "affiliateStatus": "no-public-program",
+    "pricing": {
+      "model": "free",
+      "fromPriceSEK": 0,
+      "currency": "SEK",
+      "billingNote": "Gratis med hårda veckogränsar",
+      "limitsNote": "⚠️ ∼50–100 meddelanden/dag, sen stopp tills gränsen nollställs"
+    },
+    "score": 7.4,
+    "scores": { "quality": 8.5, "easeOfUse": 8, "valueForMoney": 6, "support": 5 },
+    "gdpr": { "score": 2, "dataResidency": "USA", "notes": "Begränsad GDPR-transparens." },
+    "difficulty": "beginner",
+    "bestFor": ["Allmän chatt", "Kod", "Humor"],
+    "pros": ["Hög kvalitet när tillgänglig", "Integrerad i X"],
+    "cons": ["Hårda veckogränsar", "Låser efter gräns", "Begränsad GDPR"],
+    "languages": ["sv", "en"],
+    "swedishSupport": true,
+    "featured": false,
+    "lastVerified": "2026-08-18",
+    "hardUsageLimits": true
+  },
+  {
+    "id": "super-grok",
+    "name": "SuperGrok",
+    "vendor": "xAI",
+    "categories": ["ai-writing", "ai-code", "ai-data"],
+    "logo": "𝕏",
+    "tagline": "Grok med högre gränser – 399 kr / 3 mån",
+    "description": "Betald SuperGrok. Högre gränser än Free, men tak finns. Kampanj ca 399 kr / 3 mån (∼133 kr/mån). Får ALDRIG visas när användare valt Gratis.",
+    "website": "https://x.com/i/premium",
+    "affiliateUrl": "https://x.com/i/premium",
+    "hasAffiliateProgram": false,
+    "affiliateStatus": "no-public-program",
+    "pricing": {
+      "model": "subscription",
+      "fromPriceSEK": 133,
+      "currency": "SEK",
+      "billingNote": "399 kr / 3 mån (kampanj) ≈ 133 kr/mån",
+      "limitsNote": "⚠️ Högre gränser än Free men tak finns. Kolla villkor."
+    },
+    "score": 8.6,
+    "scores": { "quality": 9, "easeOfUse": 8.5, "valueForMoney": 7.5, "support": 6 },
+    "gdpr": { "score": 2, "dataResidency": "USA", "notes": "Begränsad GDPR-transparens." },
+    "difficulty": "beginner",
+    "bestFor": ["Allmän chatt", "Kod", "Research"],
+    "pros": ["Stark modell", "Högre gränser än Free"],
+    "cons": ["Kostar", "Gränser finns", "GDPR begränsad"],
+    "languages": ["sv", "en"],
+    "swedishSupport": true,
+    "featured": false,
+    "lastVerified": "2026-08-18",
+    "hardUsageLimits": true
   },
   {
     "id": "chatgpt-free",
@@ -36,7 +107,7 @@
     "affiliateUrl": "https://chat.openai.com",
     "hasAffiliateProgram": false,
     "affiliateStatus": "no-public-program",
-    "pricing": { "model": "free", "fromPriceSEK": 0, "currency": "SEK", "billingNote": "Gratis med begränsningar" },
+    "pricing": { "model": "free", "fromPriceSEK": 0, "currency": "SEK", "billingNote": "Gratis med rate limits", "limitsNote": "Rate limits och äldre modell" },
     "score": 7.8,
     "scores": { "quality": 7.5, "easeOfUse": 9, "valueForMoney": 9, "support": 6 },
     "gdpr": { "score": 3, "dataResidency": "USA", "notes": "Data kan behandlas utanför EU." },
@@ -47,7 +118,8 @@
     "languages": ["sv", "en"],
     "swedishSupport": true,
     "featured": false,
-    "lastVerified": "2026-08"
+    "lastVerified": "2026-08",
+    "hardUsageLimits": false
   },
   {
     "id": "claude-free",
@@ -61,7 +133,7 @@
     "affiliateUrl": "https://claude.ai",
     "hasAffiliateProgram": false,
     "affiliateStatus": "no-public-program",
-    "pricing": { "model": "free", "fromPriceSEK": 0, "currency": "SEK", "billingNote": "Gratis med dagliga gränser" },
+    "pricing": { "model": "free", "fromPriceSEK": 0, "currency": "SEK", "billingNote": "Gratis med dagliga gränser", "limitsNote": "Dagliga/periodiska gränser" },
     "score": 8.0,
     "scores": { "quality": 8.5, "easeOfUse": 8, "valueForMoney": 9, "support": 6 },
     "gdpr": { "score": 4, "dataResidency": "USA", "notes": "Kolla aktuell policy." },
@@ -72,7 +144,8 @@
     "languages": ["sv", "en"],
     "swedishSupport": true,
     "featured": false,
-    "lastVerified": "2026-08"
+    "lastVerified": "2026-08",
+    "hardUsageLimits": false
   },
   {
     "id": "gemini",
@@ -86,7 +159,7 @@
     "affiliateUrl": "https://gemini.google.com",
     "hasAffiliateProgram": false,
     "affiliateStatus": "no-public-program",
-    "pricing": { "model": "free", "fromPriceSEK": 0, "currency": "SEK", "billingNote": "Gratisnivå; Advanced är betald" },
+    "pricing": { "model": "free", "fromPriceSEK": 0, "currency": "SEK", "billingNote": "Gratisnivå; Advanced är betald", "limitsNote": "Gratisnivå med vissa gränser" },
     "score": 8.1,
     "scores": { "quality": 8, "easeOfUse": 9, "valueForMoney": 9.5, "support": 7 },
     "gdpr": { "score": 3, "dataResidency": "EU tillgängligt för många konton", "notes": "Varierar med Google-konto." },
@@ -97,7 +170,8 @@
     "languages": ["sv", "en"],
     "swedishSupport": true,
     "featured": true,
-    "lastVerified": "2026-08"
+    "lastVerified": "2026-08",
+    "hardUsageLimits": false
   },
   {
     "id": "perplexity-free",
@@ -111,7 +185,7 @@
     "affiliateUrl": "https://www.perplexity.ai",
     "hasAffiliateProgram": false,
     "affiliateStatus": "no-public-program",
-    "pricing": { "model": "free", "fromPriceSEK": 0, "currency": "SEK", "billingNote": "Gratis med begränsningar" },
+    "pricing": { "model": "free", "fromPriceSEK": 0, "currency": "SEK", "billingNote": "Gratis med begränsningar", "limitsNote": "Begränsningar vs Pro" },
     "score": 7.9,
     "scores": { "quality": 8, "easeOfUse": 9, "valueForMoney": 9, "support": 6 },
     "gdpr": { "score": 3, "dataResidency": "USA", "notes": "Kolla aktuell datahantering." },
@@ -122,6 +196,7 @@
     "languages": ["sv", "en"],
     "swedishSupport": true,
     "featured": false,
-    "lastVerified": "2026-08"
+    "lastVerified": "2026-08",
+    "hardUsageLimits": false
   }
 ]
