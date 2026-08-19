@@ -1,13 +1,10 @@
 # Radar
 
-Smarta rekommendationer & jämförelser av AI- och produktivitetsverktyg – anpassat för svenska och nordiska användare.
+**Radar finns för att göra det enkelt och ärligt att välja rätt AI-verktyg — utan att gissa, utan att lita på sponsrade "bäst i test"-listor, och utan att behöva vara jurist för att veta om ett verktyg är tryggt att använda.**
 
-Radar är en statisk sajt (HTML/CSS/vanilla JS, ingen backend) som:
+Målet är en levande rekommendationstjänst för AI- och produktivitetsverktyg, byggd för svenska och nordiska förhållanden — som i stort sett sköter sig själv. Inte ännu en generisk topplista sponsrad av den som betalar mest, utan en plattform som väger kvalitet, pris och dataskydd ärligt, förklarar *varför* den rekommenderar något, och tjänar sina pengar öppet utan att det styr rankingen.
 
-- viktar ett 6-frågors quiz mot verktygsdata för att ge en personlig ranking,
-- genererar kategorisidor och sitemap automatiskt från en enda datakälla (`data/tools.json`),
-- samlar alla utgående affiliate-länkar på ett ställe, med UTM-spårning och disclosure inbyggt, och
-- är förberedd för deploy på Vercel med noll konfiguration.
+**Vad den ska bli:** det första och mest pålitliga stället en nordisk privatperson eller ett litet företag går till när AI-verktygsdjungeln känns övermäktig — och en verksamhet som växer och underhåller sig själv med minimal manuell insats, där förtroendet den bygger hos användarna är det som driver intäkterna, inte tvärtom.
 
 ## Gör detta nu (människa)
 
